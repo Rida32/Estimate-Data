@@ -1,18 +1,45 @@
-import React, { useEffect } from "react";
+import React, { useState  } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppData } from "./AppContext";
 import DataPreview from "./DataPreview";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+
+
 
 
 const Table = () => {
   const navigate = useNavigate();
   const { estimates, setmainPayload } = useAppData();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [rowToDelete, setRowToDelete] = useState(null);
    
-  const deleteRow = (indexToDelete) => {
-    estimates.splice(indexToDelete, 1);
-    setmainPayload([...estimates]);
+  // const deleteRow = (indexToDelete) => {
+  //   estimates.splice(indexToDelete, 1);
+  //   setmainPayload([...estimates]);
+  // };
+  const handleDeleteClick = (index) => {
+    setRowToDelete(index);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setRowToDelete(null);
+  };
+
+  const confirmDelete = () => {
+    if (rowToDelete !== null) {
+      estimates.splice(rowToDelete, 1);
+      setmainPayload([...estimates]);
+    }
+    closeModal();
   };
   
   return (
@@ -68,7 +95,7 @@ const Table = () => {
                     <td>
                     <IconButton
                             className="delete-button d-flex flex-column justify-content-center"
-                            onClick={() => deleteRow(index)}>
+                            onClick={() => handleDeleteClick(index)}>
                             <DeleteIcon style={{ color: 'red', fontSize: 24 }}/>
                     </IconButton>
 
@@ -90,6 +117,30 @@ const Table = () => {
           </button>
         </div>
       </div>
+
+      {/* Confirmation Modal */}
+      <Dialog
+        open={isModalOpen}
+        onClose={closeModal}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Confirm Delete"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this row?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeModal} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={confirmDelete} color="error" autoFocus>
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
+
     </>
   );
 };
