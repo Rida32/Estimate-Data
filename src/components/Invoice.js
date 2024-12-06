@@ -4,9 +4,7 @@ import Items from "./Items";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAppData } from "./AppContext";
 import MultipleImageUpload from "./MultipleImageUpload";
-import Table from "./Table";
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+
 
 
 
