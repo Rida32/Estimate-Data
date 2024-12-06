@@ -35,7 +35,7 @@ function InvoiceDetails({formData, setFormData,submitClicked}) {
                 value={formData.customers}
                 onChange={handleChange}
               />
-              {submitClicked && !formData.customers &&<span className="text-error">Please fill the filed above</span>}
+              {submitClicked && !formData.customers &&<span className="text-error">Please fill the above filed</span>}
             </div>
             <div className="form-group">
               <label> Estimate No</label>
@@ -83,7 +83,7 @@ function InvoiceDetails({formData, setFormData,submitClicked}) {
                 value={formData.date}
                 onChange={handleChange}
               />
-               {submitClicked && !formData.date &&<span className="text-error">Please fill the filed above</span>}
+               {submitClicked && !formData.date &&<span className="text-error">Please fill the above filed</span>}
             </div>
             <div className="form-group">
               <label>Contact</label>

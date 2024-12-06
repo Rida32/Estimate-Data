@@ -14,7 +14,6 @@ function Items({items, setItems}) {
   });
   const navigate=useNavigate()
 
-  // Update state on input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewItem((prevState) => ({

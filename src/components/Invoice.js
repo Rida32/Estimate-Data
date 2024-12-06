@@ -5,6 +5,9 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useAppData } from "./AppContext";
 import MultipleImageUpload from "./MultipleImageUpload";
 import Table from "./Table";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
 
 
 
@@ -23,7 +26,8 @@ function Invoice() {
   const [images, setImages] = useState([]);
   const [submitClicked, setSubmitClicked] = useState(false);
   const navigate = useNavigate();
-  const { mainPayload ,setmainPayload,setEstimates,estimates} = useAppData();
+  const { mainPayload ,setmainPayload,setEstimates,estimates,snackbar, setSnackbar} = useAppData();
+    
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,12 +47,20 @@ function Invoice() {
       !formData.customers ||
       !formData.date
     ) {
-      alert("Please fill all required fields");
+      setSnackbar({
+        open: true,
+        message: "Please fill all required fields",
+        severity: "error",
+      });
 
       return;
     }
     if (items.length <= 0) {
-      alert("Please fill atleast one form");
+      setSnackbar({
+        open: true,
+        message: "Please fill at least one row",
+        severity: "error",
+      });
       return;
     }
 
@@ -59,8 +71,13 @@ function Invoice() {
     };
 
     setEstimates([...estimates,estimate]);
-    navigate("/table");
-    alert("Estimate saved successfully!");
+    navigate("/");
+    setSnackbar({
+      open: true,
+      message: "Estimate saved successfully!",
+      severity: "success",
+    });
+  
     setFormData({
       customers: "",
       estimateNo: "",

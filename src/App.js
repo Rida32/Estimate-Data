@@ -8,6 +8,7 @@ import Invoice from './components/Invoice';
 import Layout from './components/Layout';
 import DataPreview from './components/DataPreview';
 import Table from './components/Table';
+import SnakBar from "./components/SnakBar";
 
 
 function App() {
@@ -15,13 +16,14 @@ function App() {
   return (
  <>
   <DataProvider>
+      <SnakBar />
       <BrowserRouter>
         <Routes>
           {/* <Route index element={<Invoice />} /> */}
           <Route path="/" element={<Layout />} >
-          <Route index element={<Invoice />} />
-          <Route path="/dataPreview" element={<DataPreview />} />
-          <Route path="/table" element={<Table />} />
+          <Route path="form" element={<Invoice />} />
+          <Route path="dataPreview" element={<DataPreview />} />
+          <Route index element={<Table />} />
           </Route>
         </Routes>
 
