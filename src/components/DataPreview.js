@@ -85,9 +85,9 @@ function DataPreview() {
       </div>
       <MultipleImageUpload images={mainPayload.images} sowButton={false}/>
 
-      <div>
+      <div className="d-flex justify-content-end">
         <button
-          className="button d-flex flex-column justify-content-end endtext-end align-items"
+          className="button-bback mb-3 me-3"
           onClick={() => {
             navigate("/");
           }}

@@ -106,9 +106,9 @@ const Table = () => {
             </table>
           </div>
         </div>
-        <div>
+        <div className=" d-flex justify-content-end endtext-end align-items-end" style={{ height: '75vh' }}>
           <button
-            className="back-button button d-flex flex-column justify-content-end endtext-end align-items"
+            className="back-button mb-3 me-3"
             onClick={() => {
               navigate("/");
             }}

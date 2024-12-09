@@ -124,6 +124,7 @@ function Invoice() {
           <div className="row justify-content-between">
             <div className="col-md-4">
 
+              
               <label>Comments</label>
               <div className="textarea-with-button">
                 <textarea
