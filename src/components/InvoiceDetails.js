@@ -81,8 +81,9 @@ function InvoiceDetails({formData, setFormData,submitClicked}) {
             <div className="form-group">
               <label> Tags </label>
               <Autocomplete
+                multiple
                 options={tagOptions}
-                value={formData.tags}
+                value={formData.tags || []}
                 freeSolo
                 onChange={(event, newValue) => handleAutocompleteChange('tags', newValue)}
                 renderInput={(params) => (

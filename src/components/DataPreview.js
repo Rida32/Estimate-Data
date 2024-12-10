@@ -90,7 +90,7 @@ function DataPreview() {
 
       <div className="d-flex justify-content-end">
         <CustomButton
-          className="button-bback mb-3 me-3" style={{WidthFull: "10vh"}}
+           style={{WidthFull: "10vh"}}
           onClick={() => {
             navigate("/");
           }}

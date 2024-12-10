@@ -1,10 +1,10 @@
 import React from 'react';
 
-const CustomButton = ({ onClick, children, disabled }) => {
+const CustomButton = ({ onClick, children, disabled, className }) => {
   return (
     <button
       onClick={onClick}
-      className={`CustomButton text-center }`}
+      className={`CustomButton text-center ${className}}`}
       disabled={disabled}
     >
       {children}
