@@ -92,6 +92,7 @@ input, select{
 .form-group .MuiAutocomplete-root {
   width: 100%; 
   box-sizing: border-box; 
+  border-color: #333;
   
 }
 

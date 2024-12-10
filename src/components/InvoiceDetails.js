@@ -40,6 +40,7 @@ function InvoiceDetails({formData, setFormData,submitClicked}) {
               <Autocomplete
                 options={customerOptions}
                 value={formData.customers}
+                freeSolo
                 onChange={(event, newValue) => handleAutocompleteChange('customers', newValue)}
                 renderInput={(params) => (
                   <TextField
@@ -47,6 +48,13 @@ function InvoiceDetails({formData, setFormData,submitClicked}) {
                     placeholder="Name"
                     error={submitClicked && !formData.customers}
                     helperText={submitClicked && !formData.customers ? 'Please fill the above field' : ''}
+                    sx={{
+                      '& .MuiOutlinedInput-root.Mui-focused': {
+                        '& fieldset': {
+                          borderColor: 'black',
+                        },
+                      },
+                    }}
                   />
                 )}
               />
@@ -73,11 +81,23 @@ function InvoiceDetails({formData, setFormData,submitClicked}) {
             <div className="form-group">
               <label> Tags </label>
               <Autocomplete
-                multiple
                 options={tagOptions}
-                value={formData.tags || []}
+                value={formData.tags}
+                freeSolo
                 onChange={(event, newValue) => handleAutocompleteChange('tags', newValue)}
-                renderInput={(params) => <TextField {...params} placeholder="Tags" />}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="Tags"
+                    sx={{
+                      '& .MuiOutlinedInput-root.Mui-focused': {
+                        '& fieldset': {
+                          borderColor: 'black',
+                        },
+                      },
+                    }}
+                  />
+                )}
               />
             </div>
               {/* <input
@@ -126,20 +146,25 @@ function InvoiceDetails({formData, setFormData,submitClicked}) {
             </div>
             <div className="form-group">
               <label>Status</label>
-              <TextField
-                select
-                name="status"
+              <Autocomplete
+                options={statusOptions}
                 value={formData.status}
-                onChange={handleChange}
-                placeholder="Select Status"
-                style={{ width: "100%", boxsizing: "border-box", }}
-              >
-                {statusOptions.map((option) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
+                freeSolo
+                onChange={(event, newValue) => handleAutocompleteChange('status', newValue)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="Select Status"
+                    sx={{
+                      '& .MuiOutlinedInput-root.Mui-focused': {
+                        '& fieldset': {
+                          borderColor: 'black',
+                        },
+                      },
+                    }}
+                  />
+                )}
+              />
             </div>
               {/* <input
                 type="text"
