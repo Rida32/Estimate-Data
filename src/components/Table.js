@@ -10,6 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
+import CustomButton from './CustomButton';
 
 
 
@@ -48,10 +49,10 @@ const Table = () => {
         <div className="data-form-container">
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginLeft: "25px" }}>
          <h2 style={{ fontSize: "25px", margin: 0, fontWeight:"bold", }}>Estimate</h2>
-         <button className="button-add btn"
+         <CustomButton className="button-add btn"
             onClick={() => {navigate("/form");}}>
               Add
-         </button>
+         </CustomButton>
         </div>
           <div className="table-responsive">
             <table className="estimate table table-bordered">
@@ -107,14 +108,14 @@ const Table = () => {
           </div>
         </div>
         <div className=" d-flex justify-content-end endtext-end align-items-end" style={{ height: '75vh' }}>
-          <button
+          <CustomButton
             className="back-button mb-3 me-3"
             onClick={() => {
               navigate("/");
             }}
           >
             back
-          </button>
+          </CustomButton>
         </div>
       </div>
 

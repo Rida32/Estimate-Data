@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppData } from "./AppContext";
 import MultipleImageUpload from "./MultipleImageUpload";
+import CustomButton from './CustomButton';
+import { WidthFull } from "@mui/icons-material";
+
 
 
 function DataPreview() {
@@ -16,7 +19,7 @@ function DataPreview() {
     <div className="preview">
       <div>
   <div className="data-form-container">
-    <h2>Estimate Details</h2>
+    <h2 className="Estimate">Estimate Details</h2>
     <div className="table-responsive">
       <table className="table table-bordered">
         <thead>
@@ -86,14 +89,14 @@ function DataPreview() {
       <MultipleImageUpload images={mainPayload.images} sowButton={false}/>
 
       <div className="d-flex justify-content-end">
-        <button
-          className="button-bback mb-3 me-3"
+        <CustomButton
+          className="button-bback mb-3 me-3" style={{WidthFull: "10vh"}}
           onClick={() => {
             navigate("/");
           }}
         >
           back
-        </button>
+        </CustomButton>
       </div>
     </div>
   );

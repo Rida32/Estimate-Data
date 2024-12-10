@@ -2,7 +2,10 @@ import { createContext, useContext, useState } from "react";
 
 const AppContext = createContext();
 export const DataProvider = ({ children }) => {
-  const [mainPayload, setmainPayload] = useState({itemsData:[]});
+  const [mainPayload, setmainPayload] = useState({formData: {},
+  items: [], 
+  images: []
+});
   const [estimates, setEstimates] = useState([]);
   const [snackbar, setSnackbar] = useState({
     open: false,

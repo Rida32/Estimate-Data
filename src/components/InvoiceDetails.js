@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { Autocomplete, TextField, MenuItem } from '@mui/material';
 
 
 function InvoiceDetails({formData, setFormData,submitClicked}) {
- 
+  const navigate=useNavigate()
+  const customerOptions = ['Ali', 'Hassan', 'Fatima']; 
+  const tagOptions = ['Urgent', 'Pending', 'Approved'];
+  const statusOptions = ['Draft', 'Sent', 'Paid'];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -12,9 +16,14 @@ function InvoiceDetails({formData, setFormData,submitClicked}) {
       [name]: value,
     }));
   };
-  const navigate=useNavigate()
 
-
+  const handleAutocompleteChange = (name, value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  
 
   return (
     <>
@@ -28,7 +37,21 @@ function InvoiceDetails({formData, setFormData,submitClicked}) {
               <label>
                 Customers <span className="text-danger">*</span>
               </label>
-              <input
+              <Autocomplete
+                options={customerOptions}
+                value={formData.customers}
+                onChange={(event, newValue) => handleAutocompleteChange('customers', newValue)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="Name"
+                    error={submitClicked && !formData.customers}
+                    helperText={submitClicked && !formData.customers ? 'Please fill the above field' : ''}
+                  />
+                )}
+              />
+            </div>
+              {/* <input
                 type="text"
                 placeholder="Name"
                 name="customers"  
@@ -36,7 +59,7 @@ function InvoiceDetails({formData, setFormData,submitClicked}) {
                 onChange={handleChange}
               />
               {submitClicked && !formData.customers &&<span className="text-error">Please fill the above filed</span>}
-            </div>
+            </div> */}
             <div className="form-group">
               <label> Estimate No</label>
               <input
@@ -48,24 +71,30 @@ function InvoiceDetails({formData, setFormData,submitClicked}) {
                  />
             </div>
             <div className="form-group">
-              <label>
-                Tags 
-              </label>
-              <input
+              <label> Tags </label>
+              <Autocomplete
+                multiple
+                options={tagOptions}
+                value={formData.tags || []}
+                onChange={(event, newValue) => handleAutocompleteChange('tags', newValue)}
+                renderInput={(params) => <TextField {...params} placeholder="Tags" />}
+              />
+            </div>
+              {/* <input
                 type="text"
                 name="tags"
                 placeholder="Tags" 
                 value={formData.tags}
                 onChange={handleChange}  
                 />
-            </div>
+            </div> */}
             <div className="form-group">
               <label>
                 Approved Date 
               </label>
               <input
                 type="date"
-                placeholder="dd/mm/yyyy"
+                placeholder="yyyy/mm/dd"
                 name="approvedDate"
                 value={formData.approvedDate}
                 onChange={handleChange}
@@ -80,6 +109,7 @@ function InvoiceDetails({formData, setFormData,submitClicked}) {
               <input
                 type="date"
                 name="date"
+                placeholder="yyyy/mm/dd"
                 value={formData.date}
                 onChange={handleChange}
               />
@@ -96,13 +126,28 @@ function InvoiceDetails({formData, setFormData,submitClicked}) {
             </div>
             <div className="form-group">
               <label>Status</label>
-              <input
+              <TextField
+                select
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                placeholder="Select Status"
+                style={{ width: "100%", boxsizing: "border-box", }}
+              >
+                {statusOptions.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </div>
+              {/* <input
                 type="text"
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
               />
-            </div>
+            </div> */}
           </div>
 
        

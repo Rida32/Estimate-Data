@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CustomButton from './CustomButton';
 
 
 function Items({items, setItems}) {
@@ -12,6 +13,8 @@ function Items({items, setItems}) {
     rate: "",
     costPrice: "",
   });
+  const [editItemId, setEditItemId] = useState(null);
+  const [editableField, setEditableField] = useState(null);
   const navigate=useNavigate()
 
   const handleInputChange = (e) => {
@@ -20,6 +23,14 @@ function Items({items, setItems}) {
       ...prevState,
       [name]: value,
     }));
+  };
+  const handleEditField = (itemId, fieldName) => {
+    setEditItemId(itemId);
+    setEditableField(fieldName);
+  };
+
+  const handleBlur = () => {
+    setEditableField(null);
   };
 
   
@@ -31,6 +42,25 @@ function Items({items, setItems}) {
       newItem.rate &&
       newItem.costPrice
     ) {
+      if (editItemId !== null) {
+        setItems((prevItems) =>
+          prevItems.map((item) =>
+            item.id === editItemId
+              ? {
+                  ...item,
+                  item: newItem.item,
+                  description: newItem.description,
+                  qty: parseInt(newItem.qty),
+                  rate: parseFloat(newItem.rate),
+                  amount: parseInt(newItem.qty) * parseFloat(newItem.rate),
+                  costPrice: parseFloat(newItem.costPrice),
+                }
+              : item
+          )
+        );
+        setEditItemId(null);
+      } else {
+
       const newItemData = {
         id: items.length + 1,
         item: newItem.item,
@@ -43,7 +73,7 @@ function Items({items, setItems}) {
       };
 
       setItems((prevItems) => [...prevItems, newItemData]);
-
+    }
       
       setNewItem({
         item: "",
@@ -58,7 +88,22 @@ function Items({items, setItems}) {
     }
     
   };
-
+  const handleEditValueChange = (e, itemId, fieldName) => {
+    const value = e.target.value;
+  
+  setItems((prevItems) =>
+    prevItems.map((item) =>
+      item.id === itemId
+        ? {
+            ...item,
+            [fieldName]: fieldName === "qty" || fieldName === "rate" || fieldName === "costPrice"
+              ? parseFloat(value)
+              : value,
+          }
+        : item
+    )
+  );
+};
 
   return (
     <div className="card">
@@ -80,23 +125,76 @@ function Items({items, setItems}) {
           <tbody>
             {items.map((item) => (
                 <tr key={item.id}>
-                    <td>{item.item}</td>
-                    <td>
-                       {item.description}
-                    </td>
-                    <td className="text-center">
-                       {item.qty} 
-                    </td>
-                    <td className="text-end">
-                        {item.rate}
-                    </td>
+                <td onClick={() => handleEditField(item.id, "item")}>
+                  {editableField === "item" && editItemId === item.id ? (
+                    <input
+                      type="text"
+                      value={item.item}
+                      onChange={(e) => handleEditValueChange(e, item.id, "item")}
+                      onBlur={handleBlur}
+                      autoFocus
+                    />
+                  ) : (
+                    item.item
+                  )}
+                </td>
+                <td onClick={() => handleEditField(item.id, "description")}>
+                  {editableField === "description" && editItemId === item.id ? (
+                    <input
+                      type="text"
+                      value={item.description}
+                      onChange={(e) => handleEditValueChange(e, item.id, "description")}
+                      onBlur={handleBlur}
+                      autoFocus
+                    />
+                  ) : (
+                    item.description
+                  )}
+                </td>
+                <td className="text-center" onClick={() => handleEditField(item.id, "qty")}>
+                  {editableField === "qty" && editItemId === item.id ? (
+                    <input
+                      type="number"
+                      value={item.qty}
+                      onChange={(e) => handleEditValueChange(e, item.id, "qty")}
+                      onBlur={handleBlur}
+                      autoFocus
+                    />
+                  ) : (
+                    item.qty
+                  )}
+                </td>
+                <td className="text-end" onClick={() => handleEditField(item.id, "rate")}>
+                  {editableField === "rate" && editItemId === item.id ? (
+                    <input
+                      type="number"
+                      value={item.rate}
+                      onChange={(e) => handleEditValueChange(e, item.id, "rate")}
+                      onBlur={handleBlur}
+                      autoFocus
+                    />
+                  ) : (
+                    item.rate
+                  )}
+                </td>
                     <td className="text-end">{item.qty * item.rate}</td>
-                    <td className="text-end">
-                      {item.costPrice} 
-                    </td>
+                    <td className="text-end" onClick={() => handleEditField(item.id, "costPrice")}>
+                  {editableField === "costPrice" && editItemId === item.id ? (
+                    <input
+                      type="number"
+                      value={item.costPrice}
+                      onChange={(e) => handleEditValueChange(e, item.id, "costPrice")}
+                      onBlur={handleBlur}
+                      autoFocus
+                    />
+                  ) : (
+                    item.costPrice
+                  )}
+                </td>
                    
                     <td>
-                        <button className="btn btn-danger" onClick={() => setItems((prevItems) =>prevItems.filter((i) => i.id !== item.id))} >Delete</button>
+                    
+                        <CustomButton className="btn " onClick={() => setItems((prevItems) =>prevItems.filter((i) => i.id !== item.id))} >Delete</CustomButton>
                     </td>
                 </tr>
             ))}
@@ -156,9 +254,10 @@ function Items({items, setItems}) {
                 />
               </td>
               <td>
-                <button className="btn btn-success" onClick={addItem}>
+                <CustomButton className="btn" onClick={addItem}
+                >
                   Add
-                </button>
+                </CustomButton>
               </td>
             </tr>
           </tbody>

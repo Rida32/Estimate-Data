@@ -4,7 +4,7 @@ import Items from "./Items";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAppData } from "./AppContext";
 import MultipleImageUpload from "./MultipleImageUpload";
-
+import CustomButton from './CustomButton';
 
 
 
@@ -137,13 +137,16 @@ function Invoice() {
                 ></textarea>
                 
               </div>{" "}
+              <div className="left-align">
               <MultipleImageUpload images={images} setImages={setImages}/>
+            </div>
             </div>
             
             <div className="col-md-2  d-flex flex-column justify-content-end align-items-end">
-              <button className="btn btn-primary align-items-center" onClick={handleSubmit}>
+              <CustomButton className="savee-button btn align-items-center" onClick={handleSubmit}
+              >
                 Save
-              </button>{" "}<br></br>
+              </CustomButton>{" "}<br></br>
               
             </div>
           </div>
