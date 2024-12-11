@@ -70,8 +70,8 @@ const MultipleImageUpload = ({images=[], setImages=()=>{}, sowButton=true}) => {
                 position: "absolute",
                 top: "5px",
                 right: "5px",
-                backgroundColor: "red",
-                color: "#fff",
+                color: "red",
+                backgroundColor: "transparent", 
                 border: "none",
                 borderRadius: "50%",
                 cursor: "pointer",
@@ -79,7 +79,7 @@ const MultipleImageUpload = ({images=[], setImages=()=>{}, sowButton=true}) => {
                 height: "20px",
               }}
             >
-              D
+              <i className="fa fa-trash" aria-hidden="true"></i>
             </button>
           </div>
         ))}

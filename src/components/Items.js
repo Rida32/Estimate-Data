@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomButton from './CustomButton';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 
 function Items({items, setItems}) {
  
-
   const [newItem, setNewItem] = useState({
     item: "",
     description: "",
@@ -15,6 +16,7 @@ function Items({items, setItems}) {
   });
   const [editItemId, setEditItemId] = useState(null);
   const [editableField, setEditableField] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const navigate=useNavigate()
 
   const handleInputChange = (e) => {
@@ -31,6 +33,9 @@ function Items({items, setItems}) {
 
   const handleBlur = () => {
     setEditableField(null);
+  };
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   
@@ -84,7 +89,7 @@ function Items({items, setItems}) {
       });
       
     } else {
-      alert("Please fill in all fields before adding the item.");
+      setSnackbarOpen(true); // Trigger the snackbar
     }
     
   };
@@ -194,7 +199,9 @@ function Items({items, setItems}) {
                    
                     <td>
                     
-                        <CustomButton className="btn " onClick={() => setItems((prevItems) =>prevItems.filter((i) => i.id !== item.id))} >Delete</CustomButton>
+                        <CustomButton className="btn " onClick={() => setItems((prevItems) =>prevItems.filter((i) => i.id !== item.id))} >
+                        <i className="fa fa-trash" aria-hidden="true"></i>
+                        </CustomButton>
                     </td>
                 </tr>
             ))}
@@ -263,6 +270,22 @@ function Items({items, setItems}) {
           </tbody>
         </table>
       </div>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      sx={{ zIndex: 9999 }}
+      >
+        <MuiAlert
+         variant="filled"
+          onClose={handleSnackbarClose}
+          severity="warning"
+          sx={{ width: '100%' }}
+        >
+          Please fill in all fields before adding the item.
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }

@@ -23,6 +23,7 @@ function Invoice() {
   const [items, setItems] = useState([]);
   const [images, setImages] = useState([]);
   const [submitClicked, setSubmitClicked] = useState(false);
+  const [discount, setDiscount] = useState(0);
   const navigate = useNavigate();
   const { mainPayload ,setmainPayload,setEstimates,estimates,snackbar, setSnackbar} = useAppData();
     
@@ -119,6 +120,8 @@ function Invoice() {
         submitClicked={submitClicked}
       />
       <Items items={items} setItems={setItems} />
+
+      
       <div className="form-group customer-message-container mt-3 card mb-5">
         <div className="card-body">
           <div className="row justify-content-between">

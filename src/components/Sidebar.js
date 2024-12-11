@@ -8,7 +8,6 @@ const Sidebar = () => {
     { name: 'Dashboard', icon: '🏠',  },
     { name: 'Customers', icon: '👤',  },
     { name: 'Staff Management', icon: '👥',  },
-    ,
     { name: 'Estimates', icon: '📊', path: '/' },
     { name: 'Sales', icon: '🛒',  },
     { name: 'Bill', icon: '🧾' },
@@ -23,10 +22,10 @@ const Sidebar = () => {
       {menuItems?.map((item, index) => (
         <div className="menu-item"
          key={index}
-         onClick={() => navigate(item.path)} 
+         onClick={() => navigate(item.path)}
          style={{ cursor: 'pointer' }}>
-          <span className="icon">{item.icon}</span>
-          <span className="name">{item.name}</span>
+          <span className="icon fs-4">{item.icon}</span>
+          <span className="name ms-2 d-none d-md-inline">{item.name}</span>
         </div>
       ))}
     </div>

@@ -51,41 +51,29 @@ function DataPreview() {
 
 
       <div className="invoice-form-container">
-        <h2>Item Details</h2>
-            <>
-              <div className="nam d-flex w-100">
-                <div className="col-3">
-                  <h6>Name</h6>
-                </div>
-                <div className="qty col-3">
-                  <h6>qty</h6>
-                </div>
-                <div className="rate col-3">
-                  <h6>Rate</h6>
-                </div>
-                <div className="amount col-3">
-                  <h6>Amount</h6>
-                </div>
+          <h2>Item Details</h2>
+          <table className="invoice-items-table">
+            <thead>
+            <tr>
+           <th>Name</th>
+           <th>Qty</th>
+           <th>Rate</th>
+           <th>Amount</th>
+           </tr>
+            </thead>
+          <tbody>
+               {mainPayload.items.map((item, index) => (
+               <tr key={index}>
+                   <td>{item.item}</td>
+                   <td>{item.qty}</td>
+                   <td>{item.rate}</td>
+                   <td>{item.qty * item.rate}</td>
+               </tr>
+                ))}
+              </tbody>
+             </table>
               </div>
-              {mainPayload.items.map((item, index) => (
-                <div className="d-flex w-100">
-                <div className="iteem col-3">
-                  <p>{item.item}</p>
-                </div>
-                <div className="itqt col-3">
-                  
-                  <p>{item.qty}</p>
-                </div>
-                <div className="itra col-3">
-                <p>{item.rate}</p>
-                </div>
-                <div className="itqr col-3">
-                <p>{item.qty*item.rate}</p>
-                </div>
-              </div>
-              ))}
-            </>
-      </div>
+
       <MultipleImageUpload images={mainPayload.images} sowButton={false}/>
 
       <div className="d-flex justify-content-end">
