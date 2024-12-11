@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import CustomButton from './CustomButton';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 function Items({items, setItems}) {
@@ -197,12 +199,14 @@ function Items({items, setItems}) {
                   )}
                 </td>
                    
-                    <td>
+                  <td>
                     
-                        <CustomButton className="btn " onClick={() => setItems((prevItems) =>prevItems.filter((i) => i.id !== item.id))} >
-                        <i className="fa fa-trash" aria-hidden="true"></i>
-                        </CustomButton>
-                    </td>
+                    <IconButton
+                         className="btn delete-icon d-flex flex-column justify-content-center" onClick={() =>
+                         setItems((prevItems) => prevItems.filter((i) => i.id !== item.id)) }>
+                         <DeleteIcon style={{ color: 'red', fontSize: 24 }}/>
+                    </IconButton>
+                  </td>
                 </tr>
             ))}
           <tr>

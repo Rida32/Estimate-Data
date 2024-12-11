@@ -8,7 +8,6 @@ import CustomButton from './CustomButton';
 
 
 
-
 function Invoice() {
   const [formData, setFormData] = useState({
         customers: "",
@@ -23,7 +22,7 @@ function Invoice() {
   const [items, setItems] = useState([]);
   const [images, setImages] = useState([]);
   const [submitClicked, setSubmitClicked] = useState(false);
-  const [discount, setDiscount] = useState(0);
+
   const navigate = useNavigate();
   const { mainPayload ,setmainPayload,setEstimates,estimates,snackbar, setSnackbar} = useAppData();
     
@@ -39,6 +38,9 @@ function Invoice() {
   useEffect(() => {
     setSubmitClicked(false);
   }, [formData]);
+
+  const total = items.reduce((sum, item) => sum + (item.qty * item.rate || 0), 0);
+  const totalExpenses = items.reduce((sum, item) => sum + (item.qty * item.costPrice || 0), 0);
 
   const handleSubmit = () => {
     setSubmitClicked(true);
@@ -90,6 +92,9 @@ function Invoice() {
     setItems([]);
     setImages([]);
 
+    const total = items.reduce((sum, item) => sum + (item.qty * item.rate), 0);
+  const totalExpenses = items.reduce((sum, item) => sum + (item.qty * item.costPrice), 0);
+
     // const mainPayload = {
     //   formData: formData,
     //   itemsData: items,
@@ -123,11 +128,9 @@ function Invoice() {
 
       
       <div className="form-group customer-message-container mt-3 card mb-5">
-        <div className="card-body">
-          <div className="row justify-content-between">
+        <div className="card-body">  
+          <div className="row justify-content-between">        
             <div className="col-md-4">
-
-              
               <label>Comments</label>
               <div className="textarea-with-button">
                 <textarea
@@ -144,14 +147,26 @@ function Invoice() {
               <MultipleImageUpload images={images} setImages={setImages}/>
             </div>
             </div>
-            
-            <div className="col-md-2  d-flex flex-column justify-content-end align-items-end">
+            {/* Calculation box on the right side */}
+            <div className="col-md-4 text-end">
+              <div className="calculation-box card p-3 mb-4">
+                <h5 className="text-center">Calculations</h5>
+                <div className="d-flex justify-content-right">
+                  <span>Total:</span>
+                  <span>${total.toFixed(2)}</span>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <span>Total Expenses:</span>
+                  <span>${totalExpenses.toFixed(2)}</span>
+                </div>
+              </div>
               <CustomButton className="savee-button btn align-items-center" onClick={handleSubmit}
               >
                 Save
-              </CustomButton>{" "}<br></br>
-              
+              </CustomButton>
             </div>
+            
+            
           </div>
         </div>
       </div>
