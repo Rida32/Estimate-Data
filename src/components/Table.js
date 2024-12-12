@@ -58,6 +58,7 @@ const Table = () => {
             <table className="estimate table table-bordered">
               <thead>
                 <tr className="table-row">
+                  <th className="table-header">ID</th>
                   <th className="table-header">Customers</th>
                   <th className="table-header">Estimate No</th>
                   <th className="table-header">Tags</th>
@@ -71,6 +72,10 @@ const Table = () => {
               <tbody>
                 {estimates.map((estimates, index) => (
                   <tr>
+                  <td  className="table-cell"
+                    style={{ cursor: "pointer" }} key={index}
+                    onClick={() => {setmainPayload(estimates);navigate("/dataPreview");}}>
+                    {estimates.id}</td>
                     <td  className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
                     onClick={() => {setmainPayload(estimates);navigate("/dataPreview");}}>

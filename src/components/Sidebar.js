@@ -8,7 +8,7 @@ const Sidebar = () => {
     { name: 'Dashboard', icon: '🏠',  },
     { name: 'Customers', icon: '👤',  },
     { name: 'Staff Management', icon: '👥',  },
-    { name: 'Estimates', icon: '📊', path: '/' },
+    { name: 'Estimates', icon: '📊', path: '/table' },
     { name: 'Sales', icon: '🛒',  },
     { name: 'Bill', icon: '🧾' },
     { name: 'Invoice', icon: '📄' },

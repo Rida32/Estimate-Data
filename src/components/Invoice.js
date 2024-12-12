@@ -69,6 +69,7 @@ function Invoice() {
       formData,
       items,
       images,
+      id:estimates.length+1
     };
 
     setEstimates([...estimates,estimate]);
