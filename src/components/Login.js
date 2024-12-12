@@ -7,15 +7,19 @@ const Login = () => {
     const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const isButtonEnabled = email.trim() !== '' && password.trim() !== '';
  
   const handleSignIn = () => {
     setIsSubmitted(true);
-    if (isButtonEnabled) {
-      navigate("/table");
-    }
-  };
+    if (email.trim() === "rida@gmail.com" && password.trim() === "1234") {
+        setErrorMessage("");
+        navigate("/table");
+      } else {
+        setErrorMessage("Invalid email or password. Please try again.");
+      }
+    };
 
   
   return (
@@ -52,6 +56,7 @@ const Login = () => {
               <span className="text-danger">Please fill the above field</span>
             )}
           </div>
+          {errorMessage && <div className="text-danger mb-3">{errorMessage}</div>}
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div>
               <input type="checkbox" id="rememberMe" className="form-check-input me-2" />
@@ -68,8 +73,9 @@ const Login = () => {
               type="button"
               className="btn btn-success btn-block"
               onClick={handleSignIn}
+              disabled={!isButtonEnabled}
             >
-              SIGN ME IN
+              SIGN IN
             </button>
           </div>
           <div className="text-center mt-3">

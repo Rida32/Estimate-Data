@@ -62,7 +62,7 @@ function DataPreview() {
            </tr>
             </thead>
           <tbody>
-               {mainPayload.items.map((item, index) => (
+               {mainPayload?.items.map((item, index) => (
                <tr key={index}>
                    <td>{item.item}</td>
                    <td>{item.qty}</td>
@@ -80,7 +80,7 @@ function DataPreview() {
         <CustomButton
            style={{WidthFull: "10vh"}}
           onClick={() => {
-            navigate("/");
+            navigate("/table");
           }}
         >
           back

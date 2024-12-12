@@ -24,7 +24,15 @@ function Invoice() {
   const [submitClicked, setSubmitClicked] = useState(false);
 
   const navigate = useNavigate();
-  const { mainPayload ,setmainPayload,setEstimates,estimates,snackbar, setSnackbar} = useAppData();
+  const { mainPayload ,setmainPayload,setEstimates,estimates,snackbar, setSnackbar, estimateData, setEstimateData} = useAppData();
+
+  useEffect(() => {
+    if (estimateData) {
+      setFormData(estimateData.formData || {}); // Fill form data
+      setItems( estimateData.items || []); // Fill items
+      setImages(estimateData.images || []); // Fill images
+    }
+  }, [estimateData]);
     
 
   const handleChange = (e) => {
@@ -64,21 +72,29 @@ function Invoice() {
       });
       return;
     }
-
-    const estimate = {
+    const updatedEstimate = {
       formData,
       items,
       images,
-      id:estimates.length+1
+      id: estimateData.id || estimates.length + 1,
     };
-
-    setEstimates([...estimates,estimate]);
-    navigate("/");
+    if (estimateData.id) {
+      setEstimates((prevEstimates) =>
+        prevEstimates.map((estimate) =>
+          estimate.id === estimateData.id ? updatedEstimate : estimate
+        )
+      );
+    } else {
+      // Add new estimate to the array
+      setEstimates((prevEstimates) => [...prevEstimates, updatedEstimate]);
+    }
+    
     setSnackbar({
       open: true,
       message: "Estimate saved successfully!",
       severity: "success",
     });
+    navigate("/table");
   
     setFormData({
       customers: "",
@@ -93,28 +109,8 @@ function Invoice() {
     setItems([]);
     setImages([]);
 
-    const total = items.reduce((sum, item) => sum + (item.qty * item.rate), 0);
-  const totalExpenses = items.reduce((sum, item) => sum + (item.qty * item.costPrice), 0);
 
-    // const mainPayload = {
-    //   formData: formData,
-    //   itemsData: items,
-    //   images: images,
-    // };
-    // setmainPayload(mainPayload)
-    // navigate("/table");
-    // console.log("mainPayload is:", mainPayload);
-    // alert("Form Submitted Successfully");
-    // setItems([]);
-    // setFormData({
-    //   customers: "",
-    //     estimateNo: "",
-    //     tags: "",
-    //     approvedDate: "",
-    //     date: "",
-    //     contact:"",
-    //     status:"",
-    // });
+
   };
 
   return (

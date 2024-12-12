@@ -11,20 +11,19 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import CustomButton from './CustomButton';
+import EditIcon from "@mui/icons-material/Edit";
+
 
 
 
 
 const Table = () => {
   const navigate = useNavigate();
-  const { estimates, setmainPayload } = useAppData();
+  const { estimates, setmainPayload, estimateData, setEstimateData } = useAppData();
   const [isModalOpen, setModalOpen] = useState(false);
   const [rowToDelete, setRowToDelete] = useState(null);
    
-  // const deleteRow = (indexToDelete) => {
-  //   estimates.splice(indexToDelete, 1);
-  //   setmainPayload([...estimates]);
-  // };
+
   const handleDeleteClick = (index) => {
     setRowToDelete(index);
     setModalOpen(true);
@@ -41,6 +40,11 @@ const Table = () => {
       setmainPayload([...estimates]);
     }
     closeModal();
+  };
+
+  const handleEditClick = (row) => {
+    setEstimateData(row); // Set the selected row data to AppContext
+    navigate("/form"); // Navigate to the form page
   };
   
   return (
@@ -70,42 +74,47 @@ const Table = () => {
                 </tr>
               </thead>
               <tbody>
-                {estimates.map((estimates, index) => (
+                {estimates.map((row, index) => (
                   <tr>
                   <td  className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(estimates);navigate("/dataPreview");}}>
-                    {estimates.id}</td>
+                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>
+                    {row.id}</td>
                     <td  className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(estimates);navigate("/dataPreview");}}>
-                    {estimates.formData?.customers}</td>
+                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>
+                    {row.formData?.customers}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(estimates);navigate("/dataPreview");}}>{estimates.formData?.estimateNo}</td>
+                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>{row.formData?.estimateNo}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(estimates);navigate("/dataPreview");}}>{estimates.formData?.tags}</td>
+                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>{row.formData?.tags}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(estimates);navigate("/dataPreview");}}>{estimates.formData?.approvedDate}</td>
+                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>{row.formData?.approvedDate}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(estimates);navigate("/dataPreview");}}>{estimates.formData?.date}</td>
+                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>{row.formData?.date}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(estimates);navigate("/dataPreview");}}>{estimates.formData?.contact}</td>
+                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>{row.formData?.contact}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(estimates);navigate("/dataPreview");}}>{estimates.formData?.status}</td>
-                    <td>
-                    <IconButton
-                            className="delete-button d-flex flex-column justify-content-center"
-                            onClick={() => handleDeleteClick(index)}>
-                            <DeleteIcon style={{ color: 'red', fontSize: 24 }}/>
-                    </IconButton>
+                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>{row.formData?.status}</td>
 
-                        </td>
+
+                   <td className="d-flex justify-content-between align-items-center">
+                      <IconButton className="delete-button"
+                        onClick={() => handleEditClick(row)}>
+                      <EditIcon style={{ color: "blue", fontSize: 24 }} />
+                      </IconButton>
+                      <IconButton className="delete-button"
+                         onClick={() => handleDeleteClick(index)}>
+                      <DeleteIcon style={{ color: 'red', fontSize: 24 }} />
+                       </IconButton>
+                   </td>
+
                   </tr>
                 ))}
               </tbody>
