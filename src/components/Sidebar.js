@@ -6,9 +6,9 @@ import React, { useState } from 'react'
 const Sidebar = () => {
   const menuItems = [
     { name: 'Dashboard', icon: '🏠',  },
-    { name: 'Customers', icon: '👤',  },
+    { name: 'Customers', icon: '👤', path: '/customerRecord' },
     { name: 'Staff Management', icon: '👥',  },
-    { name: 'Estimates', icon: '📊', path: '/table' },
+    { name: 'Estimates', icon: '📊', path: '/estimates' },
     { name: 'Sales', icon: '🛒',  },
     { name: 'Bill', icon: '🧾' },
     { name: 'Invoice', icon: '📄' },

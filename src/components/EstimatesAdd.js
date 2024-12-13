@@ -8,7 +8,8 @@ import CustomButton from './CustomButton';
 
 
 
-function Invoice() {
+
+function EstimatesAdd() {
   const [formData, setFormData] = useState({
         customers: "",
         estimateNo: "",
@@ -94,7 +95,7 @@ function Invoice() {
       message: "Estimate saved successfully!",
       severity: "success",
     });
-    navigate("/table");
+    navigate("/estimates");
   
     setFormData({
       customers: "",
@@ -167,8 +168,9 @@ function Invoice() {
           </div>
         </div>
       </div>
+     
     </>
   );
 }
 
-export default Invoice;
+export default EstimatesAdd;

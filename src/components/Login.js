@@ -15,7 +15,7 @@ const Login = () => {
     setIsSubmitted(true);
     if (email.trim() === "rida@gmail.com" && password.trim() === "1234") {
         setErrorMessage("");
-        navigate("/table");
+        navigate("/estimates");
       } else {
         setErrorMessage("Invalid email or password. Please try again.");
       }

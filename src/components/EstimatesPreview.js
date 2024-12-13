@@ -7,7 +7,7 @@ import { WidthFull } from "@mui/icons-material";
 
 
 
-function DataPreview() {
+function EstimatesPreview () {
   const navigate = useNavigate();
   const { mainPayload } = useAppData();
 
@@ -80,7 +80,7 @@ function DataPreview() {
         <CustomButton
            style={{WidthFull: "10vh"}}
           onClick={() => {
-            navigate("/table");
+            navigate("/estimates");
           }}
         >
           back
@@ -90,4 +90,4 @@ function DataPreview() {
   );
 }
 
-export default DataPreview;
+export default EstimatesPreview;

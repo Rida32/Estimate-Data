@@ -1,15 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { DataProvider } from "./components/AppContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Invoice from './components/Invoice';
 import Layout from './components/Layout';
-import DataPreview from './components/DataPreview';
-import Table from './components/Table';
 import SnakBar from "./components/SnakBar";
 import Login from './components/Login';
+import EstimatesPreview from './components/EstimatesPreview';
+import EstimatesAdd from './components/EstimatesAdd';
+import Estimates from './components/Estimates';
+import Customers from './components/Customers';
+import CustomerRecord from './components/CustomerRecord';
+
+
 
 
 
@@ -21,12 +23,14 @@ function App() {
       <SnakBar />
       <BrowserRouter>
         <Routes>
-          {/* <Route index element={<Invoice />} /> */}
+         
           <Route index element={<Login />} />
           <Route path="/" element={<Layout />} >
-          <Route path="form" element={<Invoice />} />
-          <Route path="table" element={<Table />} />
-          <Route path="dataPreview" element={<DataPreview />} />
+          <Route path="estimates/add" element={<EstimatesAdd />} />
+          <Route path="estimates" element={<Estimates />} />
+          <Route path="estimates/Preview" element={<EstimatesPreview />} />
+          <Route path="customers" element={<Customers />} />
+          <Route path="customerRecord" element={<CustomerRecord />} />
           </Route>
         </Routes>
 

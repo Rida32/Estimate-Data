@@ -546,6 +546,151 @@ h2 {
 .Estimate{
   margin-left: 5px;
 }
+.customers {
+  width: 100%;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.customerhead {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.row {
+  margin-bottom: 8px;
+}
+
+.customersinfo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  width: 23%; 
+}
+
+.customersinfo:nth-child(5) {
+  width: 48%;
+}
+
+.customersinfo label {
+  font-size: 14px;
+  font-weight: normal;
+  margin-bottom: 5px;
+}
+
+.customersinfo input,
+.customer-notes {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.textarea-with-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.customer-notes {
+  width: 48%; 
+  resize: none;
+}
 
 
+
+.container-customer {
+  
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+/* General container styling */
+.record-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Record header styling */
+.Record {
+  margin-bottom: 20px;
+}
+
+.Record h2 {
+  color: #333;
+}
+
+.customer-btn {
+  background-color: rgb(124, 156, 61);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.customer-btn:hover {
+  background-color: rgb(139, 162, 94);
+}
+
+/* Table styling */
+.customer-table {
+  overflow-x: auto;
+}
+
+.customertab {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.customer-header {
+  background-color: rgb(206, 206, 206);
+  color: rgb(0, 0, 0);
+  text-align: left;
+  padding: 10px;
+
+  font-weight: bold;
+}
+
+.customer-row th {
+  border: 1px solid #ddd;
+}
+
+.customer-row th, 
+.customer-row td {
+  padding: 10px;
+  text-align: left;
+}
+
+.customertab tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.customertab tr:hover {
+  background-color: #ddd;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .Record {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .customer-btn {
+    margin-top: 10px;
+  }
+}
 

@@ -1,7 +1,6 @@
 import React, { useState  } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppData } from "./AppContext";
-import DataPreview from "./DataPreview";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Dialog from '@mui/material/Dialog';
@@ -17,7 +16,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 
 
-const Table = () => {
+const Estimates = () => {
   const navigate = useNavigate();
   const { estimates, setmainPayload, estimateData, setEstimateData } = useAppData();
   const [isModalOpen, setModalOpen] = useState(false);
@@ -54,7 +53,7 @@ const Table = () => {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginLeft: "25px" }}>
          <h2 style={{ fontSize: "25px", margin: 0, fontWeight:"bold", }}>Estimate</h2>
          <CustomButton className="button-add btn"
-            onClick={() => {navigate("/form");}}>
+            onClick={() => {navigate("/estimates/add");}}>
               Add
          </CustomButton>
         </div>
@@ -75,43 +74,43 @@ const Table = () => {
               </thead>
               <tbody>
                 {estimates.map((row, index) => (
-                  <tr>
+                  <tr key={index}>
                   <td  className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>
+                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>
                     {row.id}</td>
                     <td  className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>
+                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>
                     {row.formData?.customers}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>{row.formData?.estimateNo}</td>
+                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.formData?.estimateNo}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>{row.formData?.tags}</td>
+                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.formData?.tags}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>{row.formData?.approvedDate}</td>
+                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.formData?.approvedDate}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>{row.formData?.date}</td>
+                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.formData?.date}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>{row.formData?.contact}</td>
+                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.formData?.contact}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/dataPreview");}}>{row.formData?.status}</td>
+                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.formData?.status}</td>
 
 
                    <td className="d-flex justify-content-between align-items-center">
                       <IconButton className="delete-button"
                         onClick={() => handleEditClick(row)}>
-                      <EditIcon style={{ color: "blue", fontSize: 24 }} />
+                      <EditIcon style={{ color: "blue", fontSize: 24 }}/>
                       </IconButton>
                       <IconButton className="delete-button"
                          onClick={() => handleDeleteClick(index)}>
-                      <DeleteIcon style={{ color: 'red', fontSize: 24 }} />
+                      <DeleteIcon style={{ color: 'red', fontSize: 24 }}/>
                        </IconButton>
                    </td>
 
@@ -160,4 +159,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default Estimates;
