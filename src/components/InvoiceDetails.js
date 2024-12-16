@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Autocomplete, TextField, MenuItem } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
+import { useAppData } from './AppContext';
 
 
-function InvoiceDetails({formData, setFormData,submitClicked}) {
+function InvoiceDetails ({formData, setFormData,submitClicked}) {
   const navigate=useNavigate()
-  const customerOptions = ['Ali', 'Hassan', 'Fatima']; 
+  const { customers } = useAppData();
+  const customerOptions = customers.map((customer) => customer.CustomerName); 
   const tagOptions = ['Urgent', 'Pending', 'Approved'];
   const statusOptions = ['Draft', 'Sent', 'Paid'];
 

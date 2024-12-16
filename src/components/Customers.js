@@ -1,7 +1,6 @@
-
+import React, { useEffect, useState  } from "react";
 import CustomButton from './CustomButton'
 import { Navigate, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
 import { useAppData } from "./AppContext";
 
 const Customers = () => {
@@ -16,19 +15,23 @@ const Customers = () => {
     notes: "",
   });
 
-  const [errors, setErrors] = useState({});
-  const { snackbar, setSnackbar, handleSnackbarClose , customers, setCustomers} = useAppData();
- 
 
+  const [errors, setErrors] = useState({});
+  const { snackbar, setSnackbar, handleSnackbarClose , customers, setCustomers, customerChange, setCustomerChange} = useAppData();
+   
+  useEffect(() => {
+    if (customerChange) {
+      setCustomerData(customerChange);  // Set the customer data to be edited
+    }
+  }, [customerChange]);
   
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCustomerData({
-      ...customerData,
+    setCustomerData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
   };
-
   
   const validate = () => {
     const newErrors = {};
@@ -50,12 +53,26 @@ const Customers = () => {
  
   const handleSave = () => {
     if (validate()) {
+    
       setSnackbar({
         open: true,
         message: "Customer details saved successfully!",
         severity: "success",
       });
-      setCustomers([...customers, customerData])
+      if (customerData.id !== undefined) {
+        setCustomers((prevCustomers) =>
+          prevCustomers.map((customer) =>
+            customer.id === customerData.id
+              ? { ...customer, ...customerData } 
+              : customer
+          )
+        );
+      } else {
+       
+        const newCustomer = { ...customerData, id: customers.length + 1 }; 
+        setCustomers((prevCustomers) => [...prevCustomers, newCustomer]);
+      }
+  
 
       setCustomerData({
         CustomerName: "",
@@ -66,9 +83,9 @@ const Customers = () => {
         address: "",
         notes: "",
       });
-      navigate("/customerRecord")
-
+      setCustomerChange(null);
       setErrors({});
+      navigate("/customerRecord");
     }
   };
 

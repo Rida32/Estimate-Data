@@ -43,7 +43,7 @@ const Estimates = () => {
 
   const handleEditClick = (row) => {
     setEstimateData(row); // Set the selected row data to AppContext
-    navigate("/form"); // Navigate to the form page
+    navigate("/estimates/add"); // Navigate to the form page
   };
   
   return (

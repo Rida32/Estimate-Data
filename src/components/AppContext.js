@@ -19,6 +19,9 @@ export const DataProvider = ({ children }) => {
     items: [],
     images: [],
   });
+  const [customerChange, setCustomerChange] = useState({
+    customerData: {},
+  });
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") return;
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -38,6 +41,9 @@ export const DataProvider = ({ children }) => {
         handleSnackbarClose,
         customers,
         setCustomers,
+        customerChange,
+         setCustomerChange
+       
       }}
     >
       {children}

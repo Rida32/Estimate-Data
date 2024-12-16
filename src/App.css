@@ -693,4 +693,8 @@ h2 {
     margin-top: 10px;
   }
 }
+.error-text{
+  color: red;
+  font-size: small;
+}
 

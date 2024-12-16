@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState  } from "react";
 
-const Login = () => {
+const CreateAccount = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,7 +29,7 @@ const Login = () => {
       <div className="card shadow-sm p-4" style={{ width: '400px', borderRadius: '10px' }}>
         <h5 className="text-center mb-3">Personal Information</h5>
         <p className="text-center text-muted mb-4">
-          Enter your e-mail address and your password.
+          Create Your  Account
         </p>
         <form>
           <div className="mb-3">
@@ -57,30 +57,18 @@ const Login = () => {
             )}
           </div>
           {errorMessage && <div className="text-danger mb-3">{errorMessage}</div>}
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <div>
-              <input type="checkbox" id="rememberMe" className="form-check-input me-2" />
-              <label htmlFor="rememberMe" className="form-check-label">
-                Remember me
-              </label>
-            </div>
-            <a href="#" className="text-decoration-none text-success">
-              Forgot Password ?
-            </a>
-          </div>
+         
           <div className="d-grid">
             <button
               type="button"
               className="btn btn-success btn-block"
               onClick={handleSignIn}
-              // disabled={!isButtonEnabled}
+             
             >
               SIGN IN
             </button>
           </div>
-          <div className="mt-3 text-center" >
-            <a href="#" onClick={()=>{navigate("/CreateAccount");}}> Create Account</a>
-          </div>
+         
           <div className="text-center mt-3">
             <a href="#" className="text-decoration-none text-muted me-3">
               Privacy Policy
@@ -98,4 +86,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default CreateAccount

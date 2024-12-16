@@ -10,6 +10,7 @@ import EstimatesAdd from './components/EstimatesAdd';
 import Estimates from './components/Estimates';
 import Customers from './components/Customers';
 import CustomerRecord from './components/CustomerRecord';
+import CreateAccount from './components/CreateAccount';
 
 
 
@@ -24,7 +25,9 @@ function App() {
       <BrowserRouter>
         <Routes>
          
+          
           <Route index element={<Login />} />
+          <Route path="/CreateAccount" element={<CreateAccount />} />
           <Route path="/" element={<Layout />} >
           <Route path="estimates/add" element={<EstimatesAdd />} />
           <Route path="estimates" element={<Estimates />} />
