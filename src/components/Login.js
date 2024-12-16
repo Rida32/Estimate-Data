@@ -21,14 +21,16 @@ const Login = () => {
     }
   
     try {
-      const response = await axios.post("http://192.168.18.35:9000/api/v2/auth/signup", {
+      const response = await axios.post("http://192.168.18.35:9000/api/v2/auth/login", {
         email: email.trim(),
         password: password.trim(),
+
       });
-  
+      console.log("test", response.data)
+      navigate("/estimates"); 
       if (response.data.success) {
         setErrorMessage("");
-        navigate("/estimates"); 
+
       } else {
         setErrorMessage(response.data.message || "Invalid email or password. Please try again.");
       }
