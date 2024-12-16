@@ -1,6 +1,7 @@
 
 import { useNavigate } from "react-router-dom";
 import React, { useState  } from "react";
+import axios from 'axios';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -10,17 +11,34 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const isButtonEnabled = email.trim() !== '' && password.trim() !== '';
- 
-  const handleSignIn = () => {
-    setIsSubmitted(true);
-    if (email.trim() === "rida@gmail.com" && password.trim() === "1234") {
-        setErrorMessage("");
-        navigate("/estimates");
-      } else {
-        setErrorMessage("Invalid email or password. Please try again.");
-      }
-    };
 
+  const handleSignIn = async () => {
+    setIsSubmitted(true);
+
+    if (!email.trim() || !password.trim()) {
+      setErrorMessage("Please fill in all fields.");
+      return;
+    }
+  
+    try {
+      const response = await axios.post("http://192.168.18.35:9000/api/v2/auth/signup", {
+        email: email.trim(),
+        password: password.trim(),
+      });
+  
+      if (response.data.success) {
+        setErrorMessage("");
+        navigate("/estimates"); 
+      } else {
+        setErrorMessage(response.data.message || "Invalid email or password. Please try again.");
+      }
+    } catch (error) {
+
+      console.error("Login error:", error);
+      setErrorMessage("An error occurred while logging in. Please try again later.");
+    }
+  };
+  
   
   return (
     <>
