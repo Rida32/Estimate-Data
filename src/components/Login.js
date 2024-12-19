@@ -2,6 +2,8 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState  } from "react";
 import axios from 'axios';
+import { useAppData } from "./AppContext";
+import SnakBar from "./SnakBar";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -9,6 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const { handleSnackbarOpen } = useAppData();
 
   const isButtonEnabled = email.trim() !== '' && password.trim() !== '';
 
@@ -16,7 +19,7 @@ const Login = () => {
     setIsSubmitted(true);
 
     if (!email.trim() || !password.trim()) {
-      setErrorMessage("Please fill in all fields.");
+      handleSnackbarOpen("Please fill in all fields.", "error");
       return;
     }
   
@@ -27,24 +30,22 @@ const Login = () => {
 
       });
       console.log("test", response.data)
-      navigate("/estimates"); 
-      if (response.data.success) {
-        setErrorMessage("");
-
-      } else {
-        setErrorMessage(response.data.message || "Invalid email or password. Please try again.");
-      }
+      
+    
+        handleSnackbarOpen("Login successful!", "success");
+        navigate("/estimates");
+      
     } catch (error) {
 
       console.error("Login error:", error);
-      setErrorMessage("An error occurred while logging in. Please try again later.");
+      handleSnackbarOpen(error?.response?.data?.message || "Unknown Error has occured" , "error");
     }
   };
   
   
   return (
     <>
-    
+    <SnakBar />
     <div className="d-flex justify-content-center align-items-center vh-100">
       <div className="card shadow-sm p-4" style={{ width: '400px', borderRadius: '10px' }}>
         <h5 className="text-center mb-3">Personal Information</h5>
@@ -93,7 +94,7 @@ const Login = () => {
               type="button"
               className="btn btn-success btn-block"
               onClick={handleSignIn}
-              // disabled={!isButtonEnabled}
+              
             >
               SIGN IN
             </button>

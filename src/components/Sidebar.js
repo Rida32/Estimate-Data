@@ -7,7 +7,7 @@ const Sidebar = () => {
   const menuItems = [
     { name: 'Dashboard', icon: '🏠',  },
     { name: 'Customers', icon: '👤', path: '/customerRecord' },
-    { name: 'Staff Management', icon: '👥',  },
+    { name: 'Staff Management', icon: '👥', path: "/staffmanagement"  },
     { name: 'Estimates', icon: '📊', path: '/estimates' },
     { name: 'Sales', icon: '🛒',  },
     { name: 'Bill', icon: '🧾' },

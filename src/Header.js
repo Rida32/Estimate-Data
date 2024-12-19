@@ -1,13 +1,19 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+    const navigate = useNavigate();
+
     return (
         <header style={styles.header}>
             <div style={styles.logo}>MyLogo</div>
-            <nav style={styles.nav}>
+            <nav style={styles.navGroup}>
                 <a href="#" style={styles.navLink}>Home</a>
                 <a href="#" style={styles.navLink}>About</a>
                 <a href="#" style={styles.navLink}>Contact</a>
+                <a href="#" onClick={() => navigate("/")} style={styles.navLink}>
+                <i className="fas fa-sign-out-alt"></i>
+                </a>
             </nav>
         </header>
     );
@@ -29,7 +35,13 @@ const styles = {
     },
     nav: {
         display: 'flex',
-        gap: '15px'
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+    },
+    navGroup: {
+        display: 'flex',
+        gap: '15px',
     },
     navLink: {
         color: '#fff',

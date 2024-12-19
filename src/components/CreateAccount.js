@@ -2,38 +2,51 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState  } from "react";
 import axios from 'axios';
+import { useAppData } from "./AppContext";
 
 const CreateAccount = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [newUser, setNewUser] = useState({})
+  const [newUser, setNewUser] = useState({
+    userType: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: ""
+  })
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const { handleSnackbarOpen } = useAppData();
 
-  const isButtonEnabled = email.trim() !== '' && password.trim() !== '';
+ 
  
   const handleSignIn = async () => {
-    // setIsSubmitted(true);
-    // if (!email.trim() || !password.trim()) {
-    //     setErrorMessage("Please fill in all fields.");
-    //     return;
-    //   }
-  
+   setIsSubmitted(true);
+
+    if (!newUser.email.endsWith("@gmail.com")) {
+      setErrorMessage("Please enter a valid Gmail address.");
+      return;
+    }
+
+    if (newUser.password !== confirmPassword) {
+      setPasswordError("Passwords do not match.");
+      return;
+    }
+    setPasswordError("");
+    setErrorMessage("");
+
       try {
         const response = await axios.post("http://192.168.18.35:9000/api/v2/auth/signup", newUser
         );
         console.log("test", response)
-  
-        // if (response.data.success) {
-        //   setErrorMessage("");
-        //   navigate("/login");
-        // } else {
-        //   setErrorMessage(response.data.message || "Error creating account. Please try again.");
-        // }
+        handleSnackbarOpen("Account created successfully!", "success");
+
       } catch (error) {
         console.error("Sign-up error:", error);
         setErrorMessage("An error occurred while creating your account. Please try again later.");
+
+        handleSnackbarOpen("Failed to create account. Try again.", "error");
       }
     }
   
@@ -41,26 +54,27 @@ const CreateAccount = () => {
     <>
     
     <div className="d-flex justify-content-center align-items-center vh-100">
-      <div className="card shadow-sm p-4" style={{ width: '400px', borderRadius: '10px' }}>
-        <h5 className="text-center mb-3">Personal Information</h5>
+      <div className="card shadow-sm p-4" style={{ width: '500px', borderRadius: '10px' }}>
+        <h5 className="text-center mb-3" style={{ fontWeight: 'bold', fontSize: '20px' }}>Personal Information</h5>
         <p className="text-center text-muted mb-4">
           Create Your  Account
         </p>
         <form>
-        <div className="mb-3">
-
-            <input
-             
+        <div className="mb-3"><label className="label">User Type</label>
+            <select 
               className="form-control"
-              placeholder="usertype"
               value={newUser.userType}
-              onChange={(e) => setNewUser({...newUser, userType:e.target.value})}
-            />
+              onChange={(e) => setNewUser({...newUser, userType:e.target.value})}>
+                <option value="">Select User Type</option>
+                <option value="0">Admin</option>
+                <option value="1">User</option>
+                <option value="2">Customer</option>
+              </select>
             {isSubmitted && newUser.userType.trim() === '' && (
               <span className="text-danger">Please fill the above field</span>
             )}
           </div>
-        <div className="mb-3">
+        <div className="mb-3"><label className="label">First Name</label>
             <input
              
               className="form-control"
@@ -72,11 +86,11 @@ const CreateAccount = () => {
               <span className="text-danger">Please fill the above field</span>
             )}
           </div>
-          <div className="mb-3">
+          <div className="mb-3"><label className="label">Last Name</label>
             <input
               
               className="form-control"
-              placeholder="lastname"
+              placeholder="surname"
               value={newUser.lastName}
               onChange={(e) => setNewUser({...newUser, lastName:e.target.value})}
             />
@@ -84,7 +98,7 @@ const CreateAccount = () => {
               <span className="text-danger">Please fill the above field</span>
             )}
           </div>
-          <div className="mb-3">
+          <div className="mb-3"><label className="label">Gmail</label>
             <input
               type="email"
               className="form-control"
@@ -95,8 +109,9 @@ const CreateAccount = () => {
             {isSubmitted && newUser.email.trim() === '' && (
               <span className="text-danger">Please fill the above field</span>
             )}
+            {/* {errorMessage && <span className="text-danger">{errorMessage}</span>} */}
           </div>
-          <div className="mb-3">
+          <div className="mb-3"><label className="label">Password</label>
             <input
               type="password"
               className="form-control"
@@ -107,6 +122,18 @@ const CreateAccount = () => {
             {isSubmitted && newUser.password.trim() === '' && (
               <span className="text-danger">Please fill the above field</span>
             )}
+          </div>
+          <div className="mb-3"><label className="label">Confirm Password</label>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Confirm"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            {passwordError && (
+                <span className="text-danger">{passwordError}</span> // Show mismatch error
+              )}
           </div>
           {errorMessage && <div className="text-danger mb-3">{errorMessage}</div>}
          

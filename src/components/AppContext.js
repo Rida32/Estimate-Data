@@ -22,6 +22,9 @@ export const DataProvider = ({ children }) => {
   const [customerChange, setCustomerChange] = useState({
     customerData: {},
   });
+  const handleSnackbarOpen = (message, severity) => {
+    setSnackbar({ open: true, message, severity });
+  };
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") return;
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -39,6 +42,7 @@ export const DataProvider = ({ children }) => {
         setEstimateData,
         setSnackbar,
         handleSnackbarClose,
+        handleSnackbarOpen,
         customers,
         setCustomers,
         customerChange,

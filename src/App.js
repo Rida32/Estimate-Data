@@ -11,6 +11,7 @@ import Estimates from './components/Estimates';
 import Customers from './components/Customers';
 import CustomerRecord from './components/CustomerRecord';
 import CreateAccount from './components/CreateAccount';
+import StaffManagement from './StaffManagement';
 
 
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="estimates/Preview" element={<EstimatesPreview />} />
           <Route path="customers" element={<Customers />} />
           <Route path="customerRecord" element={<CustomerRecord />} />
+          <Route path="staffmanagement" element={<StaffManagement />} />
           </Route>
         </Routes>
 
