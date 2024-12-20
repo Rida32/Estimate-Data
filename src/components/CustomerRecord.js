@@ -10,12 +10,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
+import Cookies from "js-cookie";
 
 const CustomerRecord = () => {
   const navigate = useNavigate();
   const { customers, setCustomers, customerChange, setCustomerChange } = useAppData();
   const [isModalOpen, setModalOpen] = useState(false);
   const [rowToDelete, setRowToDelete] = useState(null);
+  const token = Cookies.get("token");
   
    
 
@@ -48,6 +50,7 @@ const CustomerRecord = () => {
 
   return (
     <>
+    {/* <h5>{token}token</h5> */}
       <div style={{ height: "100%" }}>
         <div className="record-container">
           <div>

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useAppData } from "./AppContext";
 import SnakBar from "./SnakBar";
 import useAPi from "./hooks/useAPi";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const { handleSnackbarOpen } = useAppData();
   const { postData } = useAPi();
+ 
+
 
   const isButtonEnabled = email.trim() !== "" && password.trim() !== "";
 
@@ -28,8 +31,10 @@ const Login = () => {
       { email: email.trim(), password: password.trim() },
       (data) => {
         handleSnackbarOpen("Login successful!", "success");
+        Cookies.set("token", data.token)
         navigate("/estimates");
         console.log("test", data);
+       
       },
       (error) => {
         handleSnackbarOpen(
