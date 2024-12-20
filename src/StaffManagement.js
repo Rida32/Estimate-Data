@@ -11,7 +11,7 @@ const StaffManagement = () => {
       
       const fetchUsers = async () => {
         try {
-            const response = await axios.get("http://192.168.18.35:9000/api/v2/auth/users"
+            const response = await axios.get("http://192.168.18.35:9000/api/auth/users"
             );
             console.log("test", response.data)
             setUsers(response.data.data)

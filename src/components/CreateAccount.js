@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import React, { useState  } from "react";
 import axios from 'axios';
 import { useAppData } from "./AppContext";
+import useAPi from "./hooks/useAPi";
+import validator from "validator";
 
 const CreateAccount = () => {
     const navigate = useNavigate();
@@ -18,38 +20,47 @@ const CreateAccount = () => {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { handleSnackbarOpen } = useAppData();
+  const { postData } = useAPi();
 
  
- 
-  const handleSignIn = async () => {
-   setIsSubmitted(true);
-
-    if (!newUser.email.endsWith("@gmail.com")) {
-      setErrorMessage("Please enter a valid Gmail address.");
-      return;
-    }
-
-    if (newUser.password !== confirmPassword) {
-      setPasswordError("Passwords do not match.");
-      return;
-    }
-    setPasswordError("");
-    setErrorMessage("");
-
-      try {
-        const response = await axios.post("http://192.168.18.35:9000/api/v2/auth/signup", newUser
-        );
-        console.log("test", response)
-        handleSnackbarOpen("Account created successfully!", "success");
-
-      } catch (error) {
-        console.error("Sign-up error:", error);
-        setErrorMessage("An error occurred while creating your account. Please try again later.");
-
-        handleSnackbarOpen("Failed to create account. Try again.", "error");
+    const handleLogIn = ()=>{
+      setIsSubmitted(true);
+      if (!validator.isEmail(newUser.email)) {
+        setErrorMessage("Please enter a valid Gmail address.");
+        return;
       }
-    }
   
+      if (newUser.password !== confirmPassword) {
+        setPasswordError("Passwords do not match.");
+        return;
+      }
+      setPasswordError("");
+    setErrorMessage("");
+    postData(
+      `/auth/signup`,
+      newUser,
+      (data)=>{
+        console.log("test", data)
+        handleSnackbarOpen("Account created successfully!", "success");
+        setNewUser({
+          userType: "",
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+        });
+        setConfirmPassword("");
+        navigate("/");
+      },
+      (error)=>{
+        handleSnackbarOpen("Failed to create account. Try again.", "error");
+      },
+
+
+
+    );
+    }
+
   return (
     <>
     
@@ -132,7 +143,7 @@ const CreateAccount = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
             {passwordError && (
-                <span className="text-danger">{passwordError}</span> // Show mismatch error
+                <span className="text-danger">{passwordError}</span>
               )}
           </div>
           {errorMessage && <div className="text-danger mb-3">{errorMessage}</div>}
@@ -141,7 +152,7 @@ const CreateAccount = () => {
             <button
               type="button"
               className="btn btn-success btn-block"
-              onClick={handleSignIn}
+              onClick={handleLogIn}
              
             >
               SIGN IN
