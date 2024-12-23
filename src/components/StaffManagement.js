@@ -54,7 +54,7 @@ const StaffManagement = () => {
           {loading ? (
               <tr>
                 <td colSpan="4" style={{ textAlign: "center" }}>
-                  <div className="spinner"></div>
+                  <div className="loader"></div>
                 </td>
               </tr>
             ) : (
