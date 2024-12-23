@@ -10,6 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const { handleSnackbarOpen } = useAppData();
   const { postData } = useAPi();
@@ -26,10 +27,12 @@ const Login = () => {
       handleSnackbarOpen("Please fill in all fields.", "error");
       return;
     }
+    setIsLoading(true);
     postData(
       `/auth/login`,
       { email: email.trim(), password: password.trim() },
       (data) => {
+        setIsLoading(false);
         handleSnackbarOpen("Login successful!", "success");
         Cookies.set("token", data.token)
         navigate("/estimates");
@@ -105,8 +108,15 @@ const Login = () => {
                 type="button"
                 className="btn btn-success btn-block"
                 onClick={handleLogIn}
+                disabled={isLoading}
               >
-                SIGN IN
+                 {isLoading ? ( 
+                  <div className="spinner-border spinner-border-sm" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                ) : (
+                  "SIGN IN"
+                )}
               </button>
             </div>
             <div className="mt-3 text-center">

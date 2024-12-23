@@ -11,7 +11,7 @@ import Estimates from './components/Estimates';
 import Customers from './components/Customers';
 import CustomerRecord from './components/CustomerRecord';
 import CreateAccount from './components/CreateAccount';
-import StaffManagement from './StaffManagement';
+import StaffManagement from './components/StaffManagement';
 
 
 

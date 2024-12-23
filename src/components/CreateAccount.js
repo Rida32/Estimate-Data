@@ -1,7 +1,6 @@
 
 import { useNavigate } from "react-router-dom";
 import React, { useState  } from "react";
-import axios from 'axios';
 import { useAppData } from "./AppContext";
 import useAPi from "./hooks/useAPi";
 import validator from "validator";
@@ -10,6 +9,7 @@ const CreateAccount = () => {
     const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const [newUser, setNewUser] = useState({
     userType: "",
     firstName: "",
@@ -36,6 +36,9 @@ const CreateAccount = () => {
       }
       setPasswordError("");
     setErrorMessage("");
+    setLoading(true);
+
+    setTimeout(() => {
     postData(
       `/auth/signup`,
       newUser,
@@ -50,15 +53,18 @@ const CreateAccount = () => {
           password: "",
         });
         setConfirmPassword("");
+        setLoading(false);
         navigate("/");
       },
       (error)=>{
         handleSnackbarOpen("Failed to create account. Try again.", "error");
+        setLoading(false);
       },
 
 
 
     );
+  }, 3000);
     }
 
   return (
@@ -151,11 +157,21 @@ const CreateAccount = () => {
           <div className="d-grid">
             <button
               type="button"
-              className="btn btn-success btn-block"
+              className="btn btn-success btn-block d-flex align-items-center justify-content-center"
               onClick={handleLogIn}
-             
+              disabled={loading} 
             >
-              SIGN IN
+             {loading ? (
+              <> <span
+                  className="spinner-border spinner-border-sm text-light me-2"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                    Loading...
+                    </>
+                     ) : (
+              "SIGN IN"
+            )}
             </button>
           </div>
          
