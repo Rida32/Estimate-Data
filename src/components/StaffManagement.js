@@ -1,11 +1,11 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import useAPi from "./hooks/useAPi";
+import useAPiAuth from "./hooks/useApiAuth";
+
 
 const StaffManagement = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { getData } = useAPi();
+  const { getData } = useAPiAuth();
 
   const getUser = () => {
     getData(

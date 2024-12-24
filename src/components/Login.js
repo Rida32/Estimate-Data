@@ -34,7 +34,11 @@ const Login = () => {
       (data) => {
         setIsLoading(false);
         handleSnackbarOpen("Login successful!", "success");
-        Cookies.set("token", data.token)
+        Cookies.set("token", data.token);
+        Cookies.set("email", data.email);
+        Cookies.set("firstName", data.firstName);
+        Cookies.set("lastName", data.lastName);
+
         navigate("/estimates");
         console.log("test", data);
        

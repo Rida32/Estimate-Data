@@ -16,7 +16,7 @@ const CreateAccount = () => {
     lastName: "",
     email: "",
     password: ""
-  })
+  });
   const [passwordError, setPasswordError] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { handleSnackbarOpen } = useAppData();
