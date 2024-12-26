@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import InvoiceDetails from "./InvoiceDetails";
 import Items from "./Items";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppData } from "./AppContext";
 import MultipleImageUpload from "./MultipleImageUpload";
 import CustomButton from './CustomButton';
-
-
+import useAPi from "./hooks/useAPi";
+import useAPiAuth from "./hooks/useApiAuth";
 
 
 function EstimatesAdd() {
@@ -23,6 +23,7 @@ function EstimatesAdd() {
   const [items, setItems] = useState([]);
   const [images, setImages] = useState([]);
   const [submitClicked, setSubmitClicked] = useState(false);
+  const { postData } = useAPi();
 
   const navigate = useNavigate();
   const { mainPayload ,setmainPayload,setEstimates,estimates,snackbar, setSnackbar, estimateData, setEstimateData} = useAppData();
@@ -88,29 +89,49 @@ function EstimatesAdd() {
     } else {
       // Add new estimate to the array
       setEstimates((prevEstimates) => [...prevEstimates, updatedEstimate]);
-    }
+    } 
+    // const payload = {
+    //   ...formData,
+    //   //  items,
+    //   //  images,
+    // };
     
-    setSnackbar({
-      open: true,
-      message: "Estimate saved successfully!",
-      severity: "success",
-    });
-    navigate("/estimates");
-  
-    setFormData({
-      customers: "",
-      estimateNo: "",
-      tags: "",
-      approvedDate: "",
-      date: "",
-      contact: "",
-      status: "",
-      comments: "",
-    });
-    setItems([]);
-    setImages([]);
+   console.log(formData);
+    postData(
+      `/estimates/add`,
+      formData,
+      (data)=>{
+        console.log("API Success:", data)
+        setSnackbar({
+          open: true,
+          message: "Estimate saved successfully!",
+          severity: "success",
+        });
+       
+        setFormData({
+          customers: "",
+          estimateNo: "",
+          tags: "",
+          approvedDate: "",
+          date: "",
+          contact: "",
+          status: "",
+          comments: "",
+        });
+        setItems([]);
+        setImages([]);
+        navigate("/estimates");
+      },
+      (error)=>{
+        console.error("user error:", error);
+        setSnackbar({
+        open: true,
+        message: "Failed to save estimate",
+        severity: "error",
+      });
+      },
 
-
+    );
 
   };
 

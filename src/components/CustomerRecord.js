@@ -1,4 +1,4 @@
-import React, { useState  } from "react";
+import React, { useEffect, useState  } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppData } from "./AppContext";
 import EditIcon from "@mui/icons-material/Edit";
@@ -11,13 +11,15 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import Cookies from "js-cookie";
+import useAPiAuth from "./hooks/useApiAuth";
 
 const CustomerRecord = () => {
   const navigate = useNavigate();
   const { customers, setCustomers, customerChange, setCustomerChange } = useAppData();
   const [isModalOpen, setModalOpen] = useState(false);
   const [rowToDelete, setRowToDelete] = useState(null);
-  const token = Cookies.get("token");
+  // const token = Cookies.get("token");
+  const { getData } = useAPiAuth();
   
    
 
@@ -45,6 +47,25 @@ const CustomerRecord = () => {
     setCustomerChange({ ...row, id: row.id });
     navigate("/customers");
   };
+
+  const getUser = () => {
+    getData(
+      `/customers/get-all`,
+      (data) => {
+        console.log("test", data);
+        setCustomers(data.data);
+        
+      },
+      (error) => {
+        console.error("user error:", error);
+      }
+    );
+  };
+
+  useEffect(() => {
+      getUser(); 
+
+  }, []);
   
   
 

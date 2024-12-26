@@ -1,4 +1,4 @@
-import React, { useState  } from "react";
+import React, { useEffect, useState  } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppData } from "./AppContext";
 import IconButton from '@mui/material/IconButton';
@@ -11,17 +11,14 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import CustomButton from './CustomButton';
 import EditIcon from "@mui/icons-material/Edit";
-
-
-
-
+import useAPiAuth from "./hooks/useApiAuth";
 
 const Estimates = () => {
   const navigate = useNavigate();
   const { estimates, setmainPayload, estimateData, setEstimateData } = useAppData();
   const [isModalOpen, setModalOpen] = useState(false);
   const [rowToDelete, setRowToDelete] = useState(null);
-   
+  const { getData } = useAPiAuth();
 
   const handleDeleteClick = (index) => {
     setRowToDelete(index);
@@ -42,9 +39,29 @@ const Estimates = () => {
   };
 
   const handleEditClick = (row) => {
-    setEstimateData(row); // Set the selected row data to AppContext
-    navigate("/estimates/add"); // Navigate to the form page
+    setEstimateData(row); 
+    navigate("/estimates/add"); 
   };
+
+  
+  const getUser = () => {
+    
+    getData(
+      `/estimates/get-all`,
+      (data)=>{
+        console.log("test", data);
+        setEstimateData(data.data);
+      },
+      (error) => {
+        console.error("user error:", error);
+      },
+    );
+  };
+  useEffect(() => {
+      getUser(); 
+
+  }, []);
+
   
   return (
     <>

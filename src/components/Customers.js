@@ -2,9 +2,11 @@ import React, { useEffect, useState  } from "react";
 import CustomButton from './CustomButton'
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAppData } from "./AppContext";
+import useAPi from "./hooks/useAPi";
 
 const Customers = () => {
   const navigate = useNavigate();
+  const { postData } = useAPi();
   const [customerData, setCustomerData] = useState({
     CustomerName: "",
     firstname: "",
@@ -72,20 +74,37 @@ const Customers = () => {
         const newCustomer = { ...customerData, id: customers.length + 1 }; 
         setCustomers((prevCustomers) => [...prevCustomers, newCustomer]);
       }
+      postData(
+        `/customers/add`,
+        customerData,
+        (data)=>{
+          console.log("test", data);
+          setCustomerData({
+            CustomerName: "",
+            firstname: "",
+            lastname: "",
+            email: "",
+            internalname: "",
+            address: "",
+            notes: "",
+          });
+          setCustomerChange(null);
+          setErrors({});
+          navigate("/customerRecord");
+        },
+        (error)=>{
+          console.error("user error:", error);
+          setSnackbar({
+          open: true,
+          message: "Failed to save estimate",
+          severity: "error",
+        });
+        },
+
+      );
   
 
-      setCustomerData({
-        CustomerName: "",
-        firstname: "",
-        lastname: "",
-        email: "",
-        internalname: "",
-        address: "",
-        notes: "",
-      });
-      setCustomerChange(null);
-      setErrors({});
-      navigate("/customerRecord");
+      
     }
   };
 

@@ -7,7 +7,7 @@ const useAPi = () => {
     endPoint,
     data,
     success = () => {},
-    errorFun = () => {}
+    errorFun = () => {},
   ) => {
     try {
       const response = await axios.post(`${baseUrl}/api${endPoint}`,data);
