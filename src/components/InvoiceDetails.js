@@ -7,7 +7,7 @@ import { useAppData } from './AppContext';
 function InvoiceDetails ({formData, setFormData,submitClicked}) {
   const navigate=useNavigate()
   const { customers } = useAppData();
-  const customerOptions = customers.map((customer) => customer.CustomerName); 
+  const customerOptions = customers.map((customer) => customer.firstName); 
   const tagOptions = ['Urgent', 'Pending', 'Approved'];
   const statusOptions = ['Draft', 'Sent', 'Paid'];
 

@@ -113,7 +113,7 @@ const CustomerRecord = () => {
                     return (
                       <tr key={index}>
                         <td>{index + 1} </td>
-                        <td>{customer.CustomerName} </td>
+                        <td>{customer.firstName || "N/A"} </td>
                         <td>{customer.email} </td>
 
                         <td 

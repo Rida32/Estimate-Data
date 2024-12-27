@@ -1,12 +1,13 @@
 import React, { useEffect, useState  } from "react";
 import CustomButton from './CustomButton'
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppData } from "./AppContext";
 import useAPi from "./hooks/useAPi";
+import useAPiAuth from "./hooks/useApiAuth";
 
 const Customers = () => {
   const navigate = useNavigate();
-  const { postData } = useAPi();
+  const { postData } = useAPiAuth();
   const [customerData, setCustomerData] = useState({
     CustomerName: "",
     firstname: "",
@@ -74,9 +75,17 @@ const Customers = () => {
         const newCustomer = { ...customerData, id: customers.length + 1 }; 
         setCustomers((prevCustomers) => [...prevCustomers, newCustomer]);
       }
+      const payload = {
+        firstName: customerData.firstname,
+        lastName: customerData.lastname,  
+        email: customerData.email,       
+        address: customerData.address,     
+      };
+      console.log("Payload to send:", payload);
       postData(
         `/customers/add`,
-        customerData,
+        // customerData,
+        payload,
         (data)=>{
           console.log("test", data);
           setCustomerData({

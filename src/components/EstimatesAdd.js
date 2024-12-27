@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useAppData } from "./AppContext";
 import MultipleImageUpload from "./MultipleImageUpload";
 import CustomButton from './CustomButton';
-import useAPi from "./hooks/useAPi";
 import useAPiAuth from "./hooks/useApiAuth";
 
 
@@ -23,7 +22,7 @@ function EstimatesAdd() {
   const [items, setItems] = useState([]);
   const [images, setImages] = useState([]);
   const [submitClicked, setSubmitClicked] = useState(false);
-  const { postData } = useAPi();
+  const { postData } = useAPiAuth();
 
   const navigate = useNavigate();
   const { mainPayload ,setmainPayload,setEstimates,estimates,snackbar, setSnackbar, estimateData, setEstimateData} = useAppData();
@@ -90,16 +89,29 @@ function EstimatesAdd() {
       // Add new estimate to the array
       setEstimates((prevEstimates) => [...prevEstimates, updatedEstimate]);
     } 
-    // const payload = {
-    //   ...formData,
-    //   //  items,
-    //   //  images,
-    // };
-    
-   console.log(formData);
+    const payload = {
+      estimateNumber: formData.estimateNo, 
+      customerId: formData.customers,     
+      customerName: customers.firstName,                  
+      contact: formData.contact,
+      date: formData.date,
+      approvedDate: formData.approvedDate,
+      tags: formData.tags,
+      comments: formData.comments,
+      status: formData.status,
+      items: items.map(item => ({
+        name: item.name,
+        qty: item.qty,
+        rate: item.rate,
+        costPrice: item.costPrice,
+      })), // Converted items to array of objects
+    };
+  
+    console.log("Payload to send:", payload); // Debug the payload
     postData(
       `/estimates/add`,
-      formData,
+      // formData,
+      payload,
       (data)=>{
         console.log("API Success:", data)
         setSnackbar({
