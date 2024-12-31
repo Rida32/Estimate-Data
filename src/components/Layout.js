@@ -22,10 +22,31 @@ const Layout = () => {
     </>
   );
 };
+// const styles = {
+//   container: {
+//     display: "flex",
+//    flexDirection: "row", // Changed to column layout
+//     minHeight: "100vh", // Ensure the layout spans the full viewport height
+//   },
+//   sidebar: {
+//     width: "20%",
+//     background: "#f4f4f4",
+//     borderRight: "1px solid #ddd",
+//   },
+//   mainContent: {
+//     flex: 1, // Allow main content to expand and push footer down
+//     overflow: "auto",
+//     width: "80%",
+//     //     height: "100vh",
+//   },
+// };
+
 
 const styles = {
   container: {
     display: "flex",
+    flexDirection: "row",
+    minHeight: "100vh",
   },
   sidebar: {
     width: "20%",
@@ -34,7 +55,7 @@ const styles = {
   },
   mainContent: {
     width: "80%",
-    height: "100vh",
+    // height: "100vh",
     overFlow: "auto"
   },
 };

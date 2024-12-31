@@ -15,37 +15,72 @@ const Footer = () => {
     );
 };
 
+// const styles = {
+//     footer: {
+//         display: 'flex',
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//         padding: '20px',
+//         backgroundColor: '#333',
+//         color: '#fff',
+//         boxShadow: '0 -2px 5px rgba(0, 0, 0, 0.1)'
+//     },
+//     footerContent: {
+//         textAlign: 'center'
+//     },
+//     text: {
+//         marginBottom: '10px',
+//         fontSize: '14px'
+//     },
+//     nav: {
+//         display: 'flex',
+//         gap: '15px',
+//         justifyContent: 'center'
+//     },
+//     navLink: {
+//         color: '#fff',
+//         textDecoration: 'none',
+//         fontSize: '14px',
+//         transition: 'color 0.3s ease',
+//     },
+//     navLinkHover: {
+//         color: '#ddd'
+//     }
+// };
 const styles = {
     footer: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '20px',
-        backgroundColor: '#333',
-        color: '#fff',
-        boxShadow: '0 -2px 5px rgba(0, 0, 0, 0.1)'
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "20px",
+      backgroundColor: "#333",
+      color: "#fff",
+      boxShadow: "0 -2px 5px rgba(0, 0, 0, 0.1)",
+      position: "relative", // Ensure it's part of the flow
+      width: "100%", // Take the full width
     },
     footerContent: {
-        textAlign: 'center'
+      textAlign: "center",
     },
     text: {
-        marginBottom: '10px',
-        fontSize: '14px'
+      marginBottom: "10px",
+      fontSize: "14px",
     },
     nav: {
-        display: 'flex',
-        gap: '15px',
-        justifyContent: 'center'
+      display: "flex",
+      gap: "15px",
+      justifyContent: "center",
     },
     navLink: {
-        color: '#fff',
-        textDecoration: 'none',
-        fontSize: '14px',
-        transition: 'color 0.3s ease',
+      color: "#fff",
+      textDecoration: "none",
+      fontSize: "14px",
+      transition: "color 0.3s ease",
     },
     navLinkHover: {
-        color: '#ddd'
-    }
-};
+      color: "#ddd",
+    },
+  };
+  
 
 export default Footer;

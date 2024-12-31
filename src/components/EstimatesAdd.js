@@ -9,6 +9,7 @@ import useAPiAuth from "./hooks/useApiAuth";
 
 
 function EstimatesAdd() {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
         customers: "",
         estimateNo: "",
@@ -22,7 +23,7 @@ function EstimatesAdd() {
   const [items, setItems] = useState([]);
   const [images, setImages] = useState([]);
   const [submitClicked, setSubmitClicked] = useState(false);
-  const { postData } = useAPiAuth();
+  const { postData ,getData} = useAPiAuth();
 
   const navigate = useNavigate();
   const { mainPayload ,setmainPayload,setEstimates,estimates,snackbar, setSnackbar, estimateData, setEstimateData} = useAppData();
@@ -53,8 +54,9 @@ function EstimatesAdd() {
 
   const handleSubmit = () => {
     setSubmitClicked(true);
+    setIsLoading(true);
     if (
-      !formData.customers ||
+      !formData.customerId ||
       !formData.date
     ) {
       setSnackbar({
@@ -62,6 +64,7 @@ function EstimatesAdd() {
         message: "Please fill all required fields",
         severity: "error",
       });
+      setIsLoading(false);
 
       return;
     }
@@ -71,32 +74,33 @@ function EstimatesAdd() {
         message: "Please fill at least one row",
         severity: "error",
       });
+      setIsLoading(false);
       return;
     }
-    const updatedEstimate = {
-      formData,
-      items,
-      images,
-      id: estimateData.id || estimates.length + 1,
-    };
-    if (estimateData.id) {
-      setEstimates((prevEstimates) =>
-        prevEstimates.map((estimate) =>
-          estimate.id === estimateData.id ? updatedEstimate : estimate
-        )
-      );
-    } else {
-      // Add new estimate to the array
-      setEstimates((prevEstimates) => [...prevEstimates, updatedEstimate]);
-    } 
+    // const updatedEstimate = {
+    //   formData,
+    //   items,
+    //   images,
+    //   id: estimateData.id || estimates.length + 1,
+    // };
+    // if (estimateData.id) {
+    //   setEstimates((prevEstimates) =>
+    //     prevEstimates.map((estimate) =>
+    //       estimate.id === estimateData.id ? updatedEstimate : estimate
+    //     )
+    //   );
+    // } else {
+    //   // Add new estimate to the array
+    //   setEstimates((prevEstimates) => [...prevEstimates, updatedEstimate]);
+    // } 
     const payload = {
       estimateNumber: formData.estimateNo, 
-      customerId: formData.customers,     
-      customerName: customers.firstName,                  
+      customerId: formData.customerId,     
+      customerName: formData.customerName,                  
       contact: formData.contact,
       date: formData.date,
       approvedDate: formData.approvedDate,
-      tags: formData.tags,
+      tags: formData.tags.join(", "),
       comments: formData.comments,
       status: formData.status,
       items: items.map(item => ({
@@ -104,10 +108,10 @@ function EstimatesAdd() {
         qty: item.qty,
         rate: item.rate,
         costPrice: item.costPrice,
-      })), // Converted items to array of objects
+      })),
     };
   
-    console.log("Payload to send:", payload); // Debug the payload
+    console.log("Payload to send:", payload);
     postData(
       `/estimates/add`,
       // formData,
@@ -132,6 +136,10 @@ function EstimatesAdd() {
         });
         setItems([]);
         setImages([]);
+
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
         navigate("/estimates");
       },
       (error)=>{
@@ -141,11 +149,31 @@ function EstimatesAdd() {
         message: "Failed to save estimate",
         severity: "error",
       });
+      setIsLoading(false);
       },
 
     );
 
   };
+const [customers, setCustomers] = useState([])
+  const getUser = () => {
+    getData(
+      `/customers/get-all`,
+      (data) => {
+        console.log("test", data);
+        setCustomers(data.data);
+        
+      },
+      (error) => {
+        console.error("user error:", error);
+      }
+    );
+  };
+
+  useEffect(() => {
+      getUser(); 
+
+  }, []);  
 
   return (
     <>
@@ -154,6 +182,7 @@ function EstimatesAdd() {
         formData={formData}
         setFormData={setFormData}
         submitClicked={submitClicked}
+        customers ={customers}
       />
       <Items items={items} setItems={setItems} />
 
@@ -191,9 +220,11 @@ function EstimatesAdd() {
                   <span>${totalExpenses.toFixed(2)}</span>
                 </div>
               </div>
-              <CustomButton className="savee-button btn align-items-center" onClick={handleSubmit}
+              <CustomButton className="savee-button btn align-items-center"
+               onClick={handleSubmit}
+               disabled={isLoading} 
               >
-                Save
+              {isLoading ? <span>Loading...</span> : "Save"}
               </CustomButton>
             </div>
             

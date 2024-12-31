@@ -12,12 +12,16 @@ import Button from '@mui/material/Button';
 import CustomButton from './CustomButton';
 import EditIcon from "@mui/icons-material/Edit";
 import useAPiAuth from "./hooks/useApiAuth";
+import { formatDateToCustomString } from "./Utils";
+
 
 const Estimates = () => {
   const navigate = useNavigate();
-  const { estimates, setmainPayload, estimateData, setEstimateData } = useAppData();
+  const {  setmainPayload,  } = useAppData();
   const [isModalOpen, setModalOpen] = useState(false);
   const [rowToDelete, setRowToDelete] = useState(null);
+  const [estimateData, setEstimateData] =useState([]);
+  const [estimates, setEstimates] = useState([]);
   const { getData } = useAPiAuth();
 
   const handleDeleteClick = (index) => {
@@ -50,7 +54,7 @@ const Estimates = () => {
       `/estimates/get-all`,
       (data)=>{
         console.log("test", data);
-        setEstimateData(data.data);
+        setEstimates(data.data);
       },
       (error) => {
         console.error("user error:", error);
@@ -99,25 +103,25 @@ const Estimates = () => {
                     <td  className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
                     onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>
-                    {row.formData?.customers}</td>
+                    {row.customerName}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.formData?.estimateNo}</td>
+                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.estimateNumber}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.formData?.tags}</td>
+                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.tags}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.formData?.approvedDate}</td>
+                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{formatDateToCustomString(row.approvedDate)}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.formData?.date}</td>
+                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{formatDateToCustomString(row.date)}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.formData?.contact}</td>
+                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.contact}</td>
                     <td className="table-cell"
                     style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.formData?.status}</td>
+                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.status}</td>
 
 
                    <td className="d-flex justify-content-between align-items-center">

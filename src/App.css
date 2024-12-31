@@ -523,7 +523,7 @@ h2 {
   justify-content: flex-start; 
   align-items: center;
 }
-.CustomButton{
+ /* .CustomButton{
   padding: 10px 10px;
   width: 10vh; 
   background-color: #858687;
@@ -535,14 +535,45 @@ h2 {
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(147, 147, 147, 0.1);
   transition: all 0.3s ease;
-}
+} */
 .CustomButton:hover {
   background-color: #a3a3a3;
   box-shadow: 0 6px 8px rgba(150, 150, 150, 0.2);
   transform: translateY(-2px);
   color: white; 
 
+} 
+.CustomButton {
+  display: inline-block;
+  padding: 10px 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #6c757d; /* Match your theme */
+  border: none;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
+.savee-button {
+  display: inline-flex; /* Use inline-flex for alignment */
+  align-items: center; /* Center the content vertically */
+  justify-content: center; /* Center the content horizontally */
+  padding: 10px 20px; /* Add consistent padding */
+  font-size: 16px; /* Set font size */
+  color: #ffffff; /* Text color */
+  background-color: #6c757d; /* Background color */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Add smooth hover and click effects */
+  cursor: pointer; /* Pointer cursor for buttons */
+}
+
+.savee-button:hover {
+  transform: scale(1.02); 
+  transform: translateY(-2px);
+}
+
+
 .Estimate{
   margin-left: 5px;
 }
