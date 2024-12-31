@@ -1,19 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
 import { DataProvider } from "./components/AppContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from './components/Layout';
 import SnakBar from "./components/SnakBar";
 import Login from './components/Login';
-import EstimatesPreview from './components/EstimatesPreview';
-import EstimatesAdd from './components/EstimatesAdd';
-import Estimates from './components/Estimates';
-import Customers from './components/Customers';
-import CustomerRecord from './components/CustomerRecord';
+import EstimatesPreview from './components/estimates/EstimatesPreview';
+import EstimatesAdd from './components/estimates/EstimatesAdd';
+import Estimates from './components/estimates/Estimates';
+import Customers from './components/customers/Customers';  //this
+import CustomerRecord from './components/customers/CustomerRecord';  //this
 import CreateAccount from './components/CreateAccount';
 import StaffManagement from './components/StaffManagement';
-
-
 
 
 
@@ -25,8 +22,7 @@ function App() {
       <SnakBar />
       <BrowserRouter>
         <Routes>
-         
-          
+
           <Route index element={<Login />} />
           <Route path="/CreateAccount" element={<CreateAccount />} />
           <Route path="/" element={<Layout />} >

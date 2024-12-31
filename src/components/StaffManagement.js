@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useAPiAuth from "./hooks/useApiAuth";
 
 
+
 const StaffManagement = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +26,7 @@ const StaffManagement = () => {
   useEffect(() => {
     setTimeout(() => {
       getUser(); 
-    }, 3000);
+    }, 1000);
 
   }, []);
   return (

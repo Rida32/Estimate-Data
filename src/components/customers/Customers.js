@@ -1,9 +1,8 @@
 import React, { useEffect, useState  } from "react";
-import CustomButton from './CustomButton'
+import CustomButton from '../CustomButton'
 import { useNavigate } from "react-router-dom";
-import { useAppData } from "./AppContext";
-import useAPi from "./hooks/useAPi";
-import useAPiAuth from "./hooks/useApiAuth";
+import { useAppData } from "../AppContext";
+import useAPiAuth from "../hooks/useApiAuth";
 
 const Customers = () => {
   const navigate = useNavigate();

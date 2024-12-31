@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Autocomplete, TextField } from "@mui/material";
-import { useAppData } from "./AppContext";
 
-function InvoiceDetails({ formData, setFormData, submitClicked, customers }) {
+
+function EstimatesDetails({ formData, setFormData, submitClicked, customers }) {
   const navigate = useNavigate();
   // const { customers } = useAppData();
   const tagOptions = ["Urgent", "Pending", "Approved"];
@@ -206,4 +206,4 @@ function InvoiceDetails({ formData, setFormData, submitClicked, customers }) {
   );
 }
 
-export default InvoiceDetails;
+export default EstimatesDetails;

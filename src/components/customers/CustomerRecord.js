@@ -1,6 +1,6 @@
 import React, { useEffect, useState  } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppData } from "./AppContext";
+import { useAppData } from "../AppContext";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -10,7 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-import useAPiAuth from "./hooks/useApiAuth";
+import useAPiAuth from "../hooks/useApiAuth";
 
 const CustomerRecord = () => {
   const navigate = useNavigate();

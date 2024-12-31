@@ -1,6 +1,6 @@
 import React, { useEffect, useState  } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppData } from "./AppContext";
+import { useAppData } from "../AppContext";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Dialog from '@mui/material/Dialog';
@@ -9,10 +9,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-import CustomButton from './CustomButton';
+import CustomButton from '../CustomButton';
 import EditIcon from "@mui/icons-material/Edit";
-import useAPiAuth from "./hooks/useApiAuth";
-import { formatDateToCustomString } from "./Utils";
+import useAPiAuth from "../hooks/useApiAuth";
+import { formatDateToCustomString } from "../Utils";
 
 
 const Estimates = () => {
@@ -141,7 +141,7 @@ const Estimates = () => {
             </table>
           </div>
         </div>
-        <div className=" d-flex justify-content-end endtext-end align-items-end" style={{ height: '75vh' }}>
+        <div className=" d-flex justify-content-end endtext-end align-items-end" style={{ height: '75vh', minHeight:'20px' }}>
           <CustomButton
             className="back-button mb-3 me-3"
             onClick={() => {

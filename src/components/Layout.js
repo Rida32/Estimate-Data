@@ -49,12 +49,12 @@ const styles = {
     minHeight: "100vh",
   },
   sidebar: {
-    width: "20%",
+    width: "16%",
     background: "#f4f4f4",
     borderRight: "1px solid #ddd",
   },
   mainContent: {
-    width: "80%",
+    width: "84%",
     // height: "100vh",
     overFlow: "auto"
   },

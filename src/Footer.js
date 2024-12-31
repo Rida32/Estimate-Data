@@ -56,8 +56,14 @@ const styles = {
       backgroundColor: "#333",
       color: "#fff",
       boxShadow: "0 -2px 5px rgba(0, 0, 0, 0.1)",
-      position: "relative", // Ensure it's part of the flow
-      width: "100%", // Take the full width
+      position: "relative", 
+      width: "100%", 
+      position: "relative", 
+      bottom: 0,
+      left: 0,
+      right: 0, 
+      width: "100%", 
+      zIndex: 10,
     },
     footerContent: {
       textAlign: "center",

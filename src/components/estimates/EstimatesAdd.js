@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import InvoiceDetails from "./InvoiceDetails";
-import Items from "./Items";
+import EstimatesDetails from "../estimates/EstimatesDetails";
+import Items from "../Items";
 import { useNavigate } from "react-router-dom";
-import { useAppData } from "./AppContext";
-import MultipleImageUpload from "./MultipleImageUpload";
-import CustomButton from './CustomButton';
-import useAPiAuth from "./hooks/useApiAuth";
+import { useAppData } from "../AppContext";
+import MultipleImageUpload from "../MultipleImageUpload";
+import CustomButton from '../CustomButton';
+import useAPiAuth from "../hooks/useApiAuth";
 
 
 function EstimatesAdd() {
@@ -178,7 +178,7 @@ const [customers, setCustomers] = useState([])
   return (
     <>
       <header className="Invoice">Add Estimate </header>
-      <InvoiceDetails
+      <EstimatesDetails
         formData={formData}
         setFormData={setFormData}
         submitClicked={submitClicked}

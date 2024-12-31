@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppData } from "./AppContext";
-import MultipleImageUpload from "./MultipleImageUpload";
-import CustomButton from './CustomButton';
-import { WidthFull } from "@mui/icons-material";
+import { useAppData } from "../AppContext";
+import MultipleImageUpload from "../MultipleImageUpload";
+import CustomButton from '../CustomButton';
+
 
 
 
