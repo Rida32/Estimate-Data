@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import useAPiAuth from "./hooks/useApiAuth";
 
 
-
 const StaffManagement = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,9 +30,10 @@ const StaffManagement = () => {
   }, []);
   return (
     <>
-      <div style={{ padding: "20px", height: "100%" }}>
+      <div className="record-container" style={{ padding: "20px", height: "100%" }}>
         <h2>Staff Management</h2>
-        <table
+        <div className="customer-table">
+        <table className="customertab"
           border="1"
           cellPadding="8"
           cellSpacing="0"
@@ -44,11 +44,11 @@ const StaffManagement = () => {
           }}
         >
           <thead>
-            <tr>
-              <th style={{ textAlign: "left" }}>User Type</th>
-              <th style={{ textAlign: "left" }}>First Name</th>
-              <th style={{ textAlign: "left" }}>Last Name</th>
-              <th style={{ textAlign: "left" }}>Email</th>
+            <tr className="customer-row ">
+              <th className="customer-header" style={{ textAlign: "left" }}>User Type</th>
+              <th className="customer-header" style={{ textAlign: "left" }}>First Name</th>
+              <th className="customer-header" style={{ textAlign: "left" }}>Last Name</th>
+              <th className="customer-header" style={{ textAlign: "left" }}>Email</th>
             </tr>
           </thead>
           <tbody>
@@ -70,6 +70,7 @@ const StaffManagement = () => {
           )}
           </tbody>
         </table>
+        </div>
       </div>
     </>
   );

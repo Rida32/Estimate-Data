@@ -125,10 +125,10 @@ const Estimates = () => {
 
 
                    <td className="d-flex justify-content-between align-items-center">
-                      <IconButton className="delete-button"
+                      {/* <IconButton className="delete-button"
                         onClick={() => handleEditClick(row)}>
                       <EditIcon style={{ color: "blue", fontSize: 24 }}/>
-                      </IconButton>
+                      </IconButton> */}
                       <IconButton className="delete-button"
                          onClick={() => handleDeleteClick(index)}>
                       <DeleteIcon style={{ color: 'red', fontSize: 24 }}/>
