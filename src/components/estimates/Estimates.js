@@ -3,49 +3,50 @@ import { useNavigate } from "react-router-dom";
 import { useAppData } from "../AppContext";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
 import CustomButton from '../CustomButton';
-import EditIcon from "@mui/icons-material/Edit";
 import useAPiAuth from "../hooks/useApiAuth";
 import { formatDateToCustomString } from "../Utils";
+// import Dialog from '@mui/material/Dialog';
+// import DialogActions from '@mui/material/DialogActions';
+// import DialogContent from '@mui/material/DialogContent';
+// import DialogContentText from '@mui/material/DialogContentText';
+// import DialogTitle from '@mui/material/DialogTitle';
+// import Button from '@mui/material/Button';
+// import EditIcon from "@mui/icons-material/Edit";
+
 
 
 const Estimates = () => {
   const navigate = useNavigate();
   const {  setmainPayload,  } = useAppData();
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [rowToDelete, setRowToDelete] = useState(null);
-  const [estimateData, setEstimateData] =useState([]);
   const [estimates, setEstimates] = useState([]);
   const { getData } = useAPiAuth();
+  // const [isModalOpen, setModalOpen] = useState(false);
+  // const [rowToDelete, setRowToDelete] = useState(null);
+  // const [estimateData, setEstimateData] =useState([]);
 
-  const handleDeleteClick = (index) => {
-    setRowToDelete(index);
-    setModalOpen(true);
-  };
+  // const handleDeleteClick = (index) => {
+  //   setRowToDelete(index);
+  //   setModalOpen(true);
+  // };
 
-  const closeModal = () => {
-    setModalOpen(false);
-    setRowToDelete(null);
-  };
+  // const closeModal = () => {
+  //   setModalOpen(false);
+  //   setRowToDelete(null);
+  // };
 
-  const confirmDelete = () => {
-    if (rowToDelete !== null) {
-      estimates.splice(rowToDelete, 1);
-      setmainPayload([...estimates]);
-    }
-    closeModal();
-  };
+  // const confirmDelete = () => {
+  //   if (rowToDelete !== null) {
+  //     estimates.splice(rowToDelete, 1);
+  //     setmainPayload([...estimates]);
+  //   }
+  //   closeModal();
+  // };
 
-  const handleEditClick = (row) => {
-    setEstimateData(row); 
-    navigate("/estimates/add"); 
-  };
+  // const handleEditClick = (row) => {
+  //   setEstimateData(row); 
+  //   navigate("/estimates/add"); 
+  // };
 
   
   const getUser = () => {
@@ -78,19 +79,23 @@ const Estimates = () => {
               Add
          </CustomButton>
         </div>
+        <div className="customer-table">
           <div className="table-responsive">
-            <table className="estimate table table-bordered">
-              <thead>
-                <tr className="table-row">
-                  <th className="table-header">ID</th>
-                  <th className="table-header">Customers</th>
-                  <th className="table-header">Estimate No</th>
-                  <th className="table-header">Tags</th>
-                  <th className="table-header">Approved Date</th>
-                  <th className="table-header">Date</th>
-                  <th className="table-header">Contact</th>
-                  <th className="table-header">Status</th>
-                  <th className="table-header">Action</th>
+            <table
+            className="customertab "
+            //  className="estimate table table-bordered" 
+             >
+              <thead >
+                <tr className="customer-row">
+                  <th className="customer-header">ID</th>
+                  <th className="customer-header">Customers</th>
+                  <th className="customer-header">Estimate No</th>
+                  <th className="customer-header">Tags</th>
+                  <th className="customer-header">Approved Date</th>
+                  <th className="customer-header">Date</th>
+                  <th className="customer-header">Contact</th>
+                  <th className="customer-header">Status</th>
+                  <th className="customer-header">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -130,7 +135,8 @@ const Estimates = () => {
                       <EditIcon style={{ color: "blue", fontSize: 24 }}/>
                       </IconButton> */}
                       <IconButton className="delete-button"
-                         onClick={() => handleDeleteClick(index)}>
+                        //  onClick={() => handleDeleteClick(index)}
+                         >
                       <DeleteIcon style={{ color: 'red', fontSize: 24 }}/>
                        </IconButton>
                    </td>
@@ -139,6 +145,7 @@ const Estimates = () => {
                 ))}
               </tbody>
             </table>
+          </div>
           </div>
         </div>
         <div className=" d-flex justify-content-end endtext-end align-items-end" style={{ height: '75vh', minHeight:'20px' }}>
@@ -154,7 +161,7 @@ const Estimates = () => {
       </div>
 
       {/* Confirmation Modal */}
-      <Dialog
+      {/* <Dialog
         open={isModalOpen}
         onClose={closeModal}
         aria-labelledby="alert-dialog-title"
@@ -174,7 +181,7 @@ const Estimates = () => {
             Confirm
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
 
     </>
   );

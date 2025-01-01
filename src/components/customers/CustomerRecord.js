@@ -1,51 +1,53 @@
 import React, { useEffect, useState  } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAppData } from "../AppContext";
+import { useNavigate , useSearchParams } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
 import useAPiAuth from "../hooks/useApiAuth";
+// import Dialog from '@mui/material/Dialog';
+// import DialogActions from '@mui/material/DialogActions';
+// import DialogContent from '@mui/material/DialogContent';
+// import DialogContentText from '@mui/material/DialogContentText';
+// import DialogTitle from '@mui/material/DialogTitle';
+// import Button from '@mui/material/Button';
+// import { useAppData } from "../AppContext";
+
 
 const CustomerRecord = () => {
   const navigate = useNavigate();
-  const { customers, setCustomers, customerChange, setCustomerChange } = useAppData();
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [rowToDelete, setRowToDelete] = useState(null);
-  // const token = Cookies.get("token");
   const { getData } = useAPiAuth();
+  const [customers, setCustomers,] =useState([]);
+  // const {  customerChange, setCustomerChange } = useAppData();
+  // const [isModalOpen, setModalOpen] = useState(false);
+  // const [rowToDelete, setRowToDelete] = useState(null);
+  // const token = Cookies.get("token");
   
-   
+  
+  // const handleDeleteClick = (index) => {
+  //   setRowToDelete(index);
+  //   setModalOpen(true);
+  // };
 
-  const handleDeleteClick = (index) => {
-    setRowToDelete(index);
-    setModalOpen(true);
-  };
+  // const closeModal = () => {
+  //   setModalOpen(false);
+  //   setRowToDelete(null);
+  // };
+  // const confirmDelete = () => {
+  //   if (rowToDelete !== null) {
+  //     const updatedCustomers = customers.filter((_, index) => index !== rowToDelete);
+  //     setCustomers(updatedCustomers);
+  //   }
+  //   closeModal();
+  // };
+  // const handleEditClick = (row, id) => {
+  //   setCustomerChange({ ...row, id: row.id });
+  //   navigate("/customers");
+  // };
 
-  const closeModal = () => {
-    setModalOpen(false);
-    setRowToDelete(null);
-  };
-
-  const confirmDelete = () => {
-    if (rowToDelete !== null) {
-      const updatedCustomers = customers.filter((_, index) => index !== rowToDelete);
-      setCustomers(updatedCustomers);
-    }
-    closeModal();
+  const handleEditClick = (id) => {
+        navigate(`/customers?id=${id}`);
   };
   
-
-
-  const handleEditClick = (row, id) => {
-    setCustomerChange({ ...row, id: row.id });
-    navigate("/customers");
-  };
 
   const getUser = () => {
     getData(
@@ -110,19 +112,21 @@ const CustomerRecord = () => {
                 <tbody>
                   {customers.map((customer, index) => {
                     return (
-                      <tr key={index}>
-                        <td>{index + 1} </td>
-                        <td>{customer.firstName || "N/A"} </td>
-                        <td>{customer.email} </td>
+                      <tr key= {index}>
+                        <td> {index + 1} </td>
+                        <td> {customer.firstName || "N/A"} </td>
+                        <td> {customer.email} </td>
 
                         <td 
                         className="d-flex justify-content-between align-items-center">
                       <IconButton className="delete-button"
-                        onClick={() => handleEditClick(customer)}>
+                        onClick={() => handleEditClick( customer.id)}
+                        >
                       <EditIcon style={{ color: "blue", fontSize: 24 }}/>
                       </IconButton>
                       <IconButton className="delete-button"
-                         onClick={() => handleDeleteClick(index)}>
+                        //  onClick={() => handleDeleteClick(index)}
+                         >
                       <DeleteIcon style={{ color: 'red', fontSize: 24 }}/>
                        </IconButton></td>
 
@@ -136,7 +140,7 @@ const CustomerRecord = () => {
         </div>
       </div>
 
-      <Dialog
+      {/* <Dialog
         open={isModalOpen}
         onClose={closeModal}
         aria-labelledby="alert-dialog-title"
@@ -156,7 +160,7 @@ const CustomerRecord = () => {
             Confirm
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
     </>
   );
 };

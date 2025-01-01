@@ -7,7 +7,6 @@ import MultipleImageUpload from "../MultipleImageUpload";
 import CustomButton from '../CustomButton';
 import useAPiAuth from "../hooks/useApiAuth";
 
-
 function EstimatesAdd() {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -24,26 +23,26 @@ function EstimatesAdd() {
   const [images, setImages] = useState([]);
   const [submitClicked, setSubmitClicked] = useState(false);
   const { postData ,getData} = useAPiAuth();
-
+  const {setSnackbar, estimateData,} = useAppData();
   const navigate = useNavigate();
-  const { mainPayload ,setmainPayload,setEstimates,estimates,snackbar, setSnackbar, estimateData, setEstimateData} = useAppData();
+  // const { mainPayload ,setmainPayload,setEstimates,estimates,snackbar,  setEstimateData} = useAppData();
 
-  useEffect(() => {
-    if (estimateData) {
-      setFormData(estimateData.formData || {}); // Fill form data
-      setItems( estimateData.items || []); // Fill items
-      setImages(estimateData.images || []); // Fill images
-    }
-  }, [estimateData]);
+  // useEffect(() => {
+  //   if (estimateData) {
+  //     setFormData(estimateData.formData || {}); // Fill form data
+  //     setItems( estimateData.items || []); // Fill items
+  //     setImages(estimateData.images || []); // Fill images
+  //   }
+  // }, [estimateData]);
     
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
 
   useEffect(() => {
     setSubmitClicked(false);
@@ -199,7 +198,7 @@ const [customers, setCustomers] = useState([])
                   className="customer-message"
                   name="comments"
                   value={formData.comments}
-                  onChange={handleChange}
+                  // onChange={handleChange}
                 ></textarea>
                 
               </div>{" "}

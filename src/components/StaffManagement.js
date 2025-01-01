@@ -23,9 +23,9 @@ const StaffManagement = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
+    // setTimeout(() => {
       getUser(); 
-    }, 1000);
+    // }, 1000);
 
   }, []);
   return (

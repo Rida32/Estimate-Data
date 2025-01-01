@@ -1,12 +1,14 @@
 import React, { useEffect, useState  } from "react";
 import CustomButton from '../CustomButton'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAppData } from "../AppContext";
 import useAPiAuth from "../hooks/useApiAuth";
 
 const Customers = () => {
   const navigate = useNavigate();
-  const { postData } = useAPiAuth();
+  const { postData, getData } = useAPiAuth();
+  const [searchParams] = useSearchParams();
+  const customerId = searchParams.get("id");
   const [customerData, setCustomerData] = useState({
     CustomerName: "",
     firstname: "",
@@ -17,15 +19,33 @@ const Customers = () => {
     notes: "",
   });
 
-
+   const getCustomer =()=>{
+    getData(
+      `/customers/get-customer/${customerId}`, // Fetch customer data by ID
+      (data) => {
+        console.log(data)
+        setCustomerData({...data.data,})
+      },
+      (error) => {
+        console.error("Error fetching customer data:", error);
+      }
+    );
+   };
+   useEffect(() => {
+    getCustomer();
+    console.log("getdata", customerId)
+     
+    }, [])
+  
   const [errors, setErrors] = useState({});
-  const { snackbar, setSnackbar, handleSnackbarClose , customers, setCustomers, customerChange, setCustomerChange} = useAppData();
+  // const { snackbar,  handleSnackbarClose , customers, setCustomers, customerChange, setCustomerChange} = useAppData();
+  const {setSnackbar} =useAppData();
    
-  useEffect(() => {
-    if (customerChange) {
-      setCustomerData(customerChange);  // Set the customer data to be edited
-    }
-  }, [customerChange]);
+  // useEffect(() => {
+  //   if (customerChange) {
+  //     setCustomerData(customerChange);  
+  //   }
+  // }, [customerChange]);
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,9 +57,7 @@ const Customers = () => {
   
   const validate = () => {
     const newErrors = {};
-    if (!customerData.CustomerName) newErrors.CustomerName = "Please fill all required fields";
     if (!customerData.email) newErrors.email = "Please fill all required fields";
-    if (!customerData.internalname) newErrors.internalname = "Please fill all required fields";
 
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) {
@@ -61,22 +79,23 @@ const Customers = () => {
         message: "Customer details saved successfully!",
         severity: "success",
       });
-      if (customerData.id !== undefined) {
-        setCustomers((prevCustomers) =>
-          prevCustomers.map((customer) =>
-            customer.id === customerData.id
-              ? { ...customer, ...customerData } 
-              : customer
-          )
-        );
-      } else {
+      // if (customerData.id !== undefined) {
+      //   setCustomers((prevCustomers) =>
+      //     prevCustomers.map((customer) =>
+      //       customer.id === customerData.id
+      //         ? { ...customer, ...customerData } 
+      //         : customer
+      //     )
+      //   );
+      // } else {
        
-        const newCustomer = { ...customerData, id: customers.length + 1 }; 
-        setCustomers((prevCustomers) => [...prevCustomers, newCustomer]);
-      }
+      //   const newCustomer = { ...customerData, id: customers.length + 1 }; 
+      //   setCustomers((prevCustomers) => [...prevCustomers, newCustomer]);
+      // }
       const payload = {
-        firstName: customerData.firstname,
-        lastName: customerData.lastname,  
+        id :customerId,
+        firstName: customerData.firstName,
+        lastName: customerData.lastName,  
         email: customerData.email,       
         address: customerData.address,     
       };
@@ -96,7 +115,7 @@ const Customers = () => {
             address: "",
             notes: "",
           });
-          setCustomerChange(null);
+          // setCustomerChange(null);
           setErrors({});
           navigate("/customerRecord");
         },
@@ -104,7 +123,7 @@ const Customers = () => {
           console.error("user error:", error);
           setSnackbar({
           open: true,
-          message: "Failed to save estimate",
+          message: "Failed to save customer",
           severity: "error",
         });
         },
@@ -126,21 +145,13 @@ const Customers = () => {
 
   {/* Row 1 */}
   <div className="row">
-    <div className="customersinfo">
-      <label>Customers Name <span className="text-danger">*</span></label>
-      <input type="text"
-       name="CustomerName" 
-       placeholder="Customer Name"
-       value={customerData.CustomerName}
-       onChange={handleChange}
-        />{errors.CustomerName && <p className="error-text">{errors.CustomerName}</p>}
-    </div>
+
     <div className="customersinfo">
       <label>First Name</label>
       <input type="text"
-       name="firstname"
+       name="firstName"
        placeholder="First Name" 
-       value={customerData.firstname}
+       value={customerData.firstName}
         onChange={handleChange}
 
        />
@@ -148,9 +159,9 @@ const Customers = () => {
     <div className="customersinfo">
       <label>Last Name</label>
       <input type="text" 
-      name="lastname" 
+      name="lastName" 
       placeholder="Last Name"
-      value={customerData.lastname}
+      value={customerData.lastName}
       onChange={handleChange}
        />
     </div>
@@ -167,15 +178,7 @@ const Customers = () => {
 
   {/* Row 2 */}
   <div className="row">
-    <div className="customersinfo">
-      <label>Internal Customers Name <span className="text-danger">*</span></label>
-      <input type="text" 
-      name="internalname" 
-      placeholder="Customer Display Name" 
-      value={customerData.internalname}
-      onChange={handleChange}
-      />{errors.internalname && <p className="error-text">{errors.internalname}</p>}
-    </div>
+
     <div className="customersinfo">
       <label>Address</label>
       <input type="text"
@@ -189,14 +192,15 @@ const Customers = () => {
 
   {/* Row 3 */}
   <div className="textarea-with-button">
-    <textarea
+    {/* <textarea
       rows="4"
       className="customer-notes"
       name="notes"
       placeholder="Notes"
       value={customerData.notes}
       onChange={handleChange}
-    ></textarea>
+    ></textarea> */}
+    <div></div>
     <CustomButton  onClick={handleSave}>
       Save
     </CustomButton>
