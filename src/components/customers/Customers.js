@@ -35,7 +35,11 @@ const Customers = () => {
     getCustomer();
     console.log("getdata", customerId)
      
-    }, [])
+    }, []);
+
+    
+    
+
   
   const [errors, setErrors] = useState({});
   // const { snackbar,  handleSnackbarClose , customers, setCustomers, customerChange, setCustomerChange} = useAppData();
@@ -74,11 +78,7 @@ const Customers = () => {
   const handleSave = () => {
     if (validate()) {
     
-      setSnackbar({
-        open: true,
-        message: "Customer details saved successfully!",
-        severity: "success",
-      });
+     
       // if (customerData.id !== undefined) {
       //   setCustomers((prevCustomers) =>
       //     prevCustomers.map((customer) =>
@@ -117,6 +117,11 @@ const Customers = () => {
           });
           // setCustomerChange(null);
           setErrors({});
+          setSnackbar({
+            open: true,
+            message: data.message,
+            severity: "success",
+          });
           navigate("/customerRecord");
         },
         (error)=>{
