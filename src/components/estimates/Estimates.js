@@ -6,13 +6,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CustomButton from '../CustomButton';
 import useAPiAuth from "../hooks/useApiAuth";
 import { formatDateToCustomString } from "../Utils";
-// import Dialog from '@mui/material/Dialog';
-// import DialogActions from '@mui/material/DialogActions';
-// import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
-// import DialogTitle from '@mui/material/DialogTitle';
-// import Button from '@mui/material/Button';
-// import EditIcon from "@mui/icons-material/Edit";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import EditIcon from "@mui/icons-material/Edit";
 
 
 
@@ -21,6 +21,8 @@ const Estimates = () => {
   const {  setmainPayload,  } = useAppData();
   const [estimates, setEstimates] = useState([]);
   const { getData } = useAPiAuth();
+  const [isEditModalOpen, setEditModalOpen] = useState(false); 
+  const [editRowData, setEditRowData] = useState(null);
   // const [isModalOpen, setModalOpen] = useState(false);
   // const [rowToDelete, setRowToDelete] = useState(null);
   // const [estimateData, setEstimateData] =useState([]);
@@ -66,6 +68,21 @@ const Estimates = () => {
       getUser(); 
 
   }, []);
+
+  const handleEditClick = (row) => {
+    setEditRowData({ ...row }); 
+    setEditModalOpen(true);
+  };
+
+  const handleSaveEdit = () => {
+    if (editRowData) {
+      const updatedEstimates = estimates.map((row) =>
+        row.id === editRowData.id ? editRowData : row
+      );
+      setEstimates(updatedEstimates); 
+    }
+    setEditModalOpen(false); 
+  };
 
   
   return (
@@ -130,10 +147,9 @@ const Estimates = () => {
 
 
                    <td className="d-flex justify-content-between align-items-center">
-                      {/* <IconButton className="delete-button"
-                        onClick={() => handleEditClick(row)}>
-                      <EditIcon style={{ color: "blue", fontSize: 24 }}/>
-                      </IconButton> */}
+                   <IconButton className="edit-button" onClick={() => handleEditClick(row)}>
+                          <EditIcon style={{ color: "blue", fontSize: 24 }} />
+                        </IconButton>
                       <IconButton className="delete-button"
                         //  onClick={() => handleDeleteClick(index)}
                          >
@@ -160,29 +176,72 @@ const Estimates = () => {
         </div>
       </div>
 
-      {/* Confirmation Modal */}
-      {/* <Dialog
-        open={isModalOpen}
-        onClose={closeModal}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Confirm Delete"}</DialogTitle>
+      <Dialog open={isEditModalOpen} onClose={() => setEditModalOpen(false)}>
+        <DialogTitle>Edit Estimate</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete this row?
-          </DialogContentText>
+          {editRowData && (
+            <>
+              <TextField
+                fullWidth
+                label="Customers"
+                value={editRowData.customerName || ''}
+                onChange={(e) => setEditRowData({ ...editRowData, customerName: e.target.value })}
+                margin="dense"
+              />
+              <TextField
+                fullWidth
+                label="Estimate No"
+                value={editRowData.estimateNumber || ''}
+                onChange={(e) => setEditRowData({ ...editRowData, estimateNumber: e.target.value })}
+                margin="dense"
+              />
+              <TextField
+                fullWidth
+                label="Tags"
+                value={editRowData.tags || ''}
+                onChange={(e) => setEditRowData({ ...editRowData, tags: e.target.value })}
+                margin="dense"
+              />
+              <TextField
+                fullWidth
+                label="Approved Date"
+                value={editRowData.approvedDate || ''}
+                onChange={(e) => setEditRowData({ ...editRowData, approvedDate: e.target.value })}
+                margin="dense"
+              />
+              <TextField
+                fullWidth
+                label="Date"
+                value={editRowData.date || ''}
+                onChange={(e) => setEditRowData({ ...editRowData, date: e.target.value })}
+                margin="dense"
+              />
+              <TextField
+                fullWidth
+                label="Contact"
+                value={editRowData.contact || ''}
+                onChange={(e) => setEditRowData({ ...editRowData, contact: e.target.value })}
+                margin="dense"
+              />
+              <TextField
+                fullWidth
+                label="Status"
+                value={editRowData.status || ''}
+                onChange={(e) => setEditRowData({ ...editRowData, status: e.target.value })}
+                margin="dense"
+              />
+            </>
+          )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeModal} color="primary">
+          <Button onClick={() => setEditModalOpen(false)} color="primary">
             Cancel
           </Button>
-          <Button onClick={confirmDelete} color="error" autoFocus>
-            Confirm
+          <Button onClick={handleSaveEdit} color="primary">
+            Save
           </Button>
         </DialogActions>
-      </Dialog> */}
-
+      </Dialog>
     </>
   );
 };

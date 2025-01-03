@@ -64,8 +64,6 @@ const CustomerRecord = () => {
     setRowToDelete(id);
       
 };
-  
-
 
   const getUser = () => {
     getData(
