@@ -90,7 +90,7 @@ const Estimates = () => {
       <div style={{ height: "100%" }}>
         <div className="data-form-container">
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginLeft: "25px" }}>
-         <h2 style={{ fontSize: "25px", margin: 0, fontWeight:"bold", }}>Estimate</h2>
+         <h2 style={{ fontSize: "25px", margin: 0, fontWeight:"bold", }}>Estimates</h2>
          <CustomButton className="button-add btn"
             onClick={() => {navigate("/estimates/add");}}>
               Add
