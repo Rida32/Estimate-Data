@@ -10,7 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
- import { useAppData } from "../AppContext";
+import { useAppData } from "../AppContext";
 
 
 const CustomerRecord = () => {
@@ -37,6 +37,7 @@ const CustomerRecord = () => {
     setModalOpen(false);
     setRowToDelete(null);
   };
+  
   const confirmDelete = () => {
     if (rowToDelete !== null) {
       getData(

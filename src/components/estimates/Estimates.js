@@ -13,6 +13,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import EditIcon from "@mui/icons-material/Edit";
+import DialogContentText from '@mui/material/DialogContentText';
 
 
 
@@ -23,7 +24,9 @@ const Estimates = () => {
   const { getData } = useAPiAuth();
   const [isEditModalOpen, setEditModalOpen] = useState(false); 
   const [editRowData, setEditRowData] = useState(null);
-  // const [isModalOpen, setModalOpen] = useState(false);
+  const [rowToDelete, setRowToDelete] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const {setSnackbar} =useAppData();
   // const [rowToDelete, setRowToDelete] = useState(null);
   // const [estimateData, setEstimateData] =useState([]);
 
@@ -83,6 +86,29 @@ const Estimates = () => {
     }
     setEditModalOpen(false); 
   };
+  const closeModal = () => {
+    setModalOpen(false);
+    setRowToDelete(null);
+  };
+  
+  const confirmDelete = () => {
+    if (rowToDelete !== null) {
+      getData(
+        `/estimates/delete-estimate/${rowToDelete}`, 
+        () => {
+          setSnackbar("Estimates deleted successfully!", "success");
+          setRowToDelete(null);
+          getUser();
+          closeModal(); 
+        },
+        (error) => {
+          setSnackbar("Failed to delete estimates. Please try again.", "error");
+          console.error("Error deleting estimates:", error);
+        }
+      );
+    }
+    
+  };
 
   
   return (
@@ -119,31 +145,31 @@ const Estimates = () => {
                 {estimates.map((row, index) => (
                   <tr key={index}>
                   <td  className="table-cell"
-                    style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>
+                    style={{ cursor: "pointer" }} key={row.id}
+                    onClick={() => {setmainPayload(row);navigate(`/estimates/Preview/${row.id}`);}}>
                     {row.id}</td>
                     <td  className="table-cell"
-                    style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>
+                    style={{ cursor: "pointer" }} key={row.id}
+                    onClick={() => {setmainPayload(row);navigate(`/estimates/Preview/${row.id}`);}}>
                     {row.customerName}</td>
                     <td className="table-cell"
-                    style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.estimateNumber}</td>
+                    style={{ cursor: "pointer" }} key={row.id}
+                    onClick={() => {setmainPayload(row);navigate(`/estimates/Preview?id=${row.id}`);}}>{row.estimateNumber}</td>
                     <td className="table-cell"
-                    style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.tags}</td>
+                    style={{ cursor: "pointer" }} key={row.id}
+                    onClick={() => {setmainPayload(row);navigate(`/estimates/Preview?id=${row.id}`);}}>{row.tags}</td>
                     <td className="table-cell"
-                    style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{formatDateToCustomString(row.approvedDate)}</td>
+                    style={{ cursor: "pointer" }} key={row.id}
+                    onClick={() => {setmainPayload(row);navigate(`/estimates/Preview?id=${row.id}`);}}>{formatDateToCustomString(row.approvedDate)}</td>
                     <td className="table-cell"
-                    style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{formatDateToCustomString(row.date)}</td>
+                    style={{ cursor: "pointer" }} key={row.id}
+                    onClick={() => {setmainPayload(row);navigate(`/estimates/Preview?id=${row.id}`);}}>{formatDateToCustomString(row.date)}</td>
                     <td className="table-cell"
-                    style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.contact}</td>
+                    style={{ cursor: "pointer" }} key={row.id}
+                    onClick={() => {setmainPayload(row);navigate(`/estimates/Preview?id=${row.id}`);}}>{row.contact}</td>
                     <td className="table-cell"
-                    style={{ cursor: "pointer" }} key={index}
-                    onClick={() => {setmainPayload(row);navigate("/estimates/Preview");}}>{row.status}</td>
+                    style={{ cursor: "pointer" }} key={row.id}
+                    onClick={() => {setmainPayload(row);navigate(`/estimates/Preview?id=${row.id}`);}}>{row.status}</td>
 
 
                    <td className="d-flex justify-content-between align-items-center">
@@ -151,7 +177,9 @@ const Estimates = () => {
                           <EditIcon style={{ color: "blue", fontSize: 24 }} />
                         </IconButton>
                       <IconButton className="delete-button"
-                        //  onClick={() => handleDeleteClick(index)}
+                        onClick={() => {setRowToDelete(row.id);
+                          setModalOpen(true);}
+                        }
                          >
                       <DeleteIcon style={{ color: 'red', fontSize: 24 }}/>
                        </IconButton>
@@ -239,6 +267,27 @@ const Estimates = () => {
           </Button>
           <Button onClick={handleSaveEdit} color="primary">
             Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={isModalOpen}
+        onClose={closeModal}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Confirm Delete"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this row?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeModal} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={confirmDelete} color="error" autoFocus>
+            Confirm
           </Button>
         </DialogActions>
       </Dialog>

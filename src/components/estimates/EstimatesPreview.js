@@ -1,19 +1,40 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect , useState} from "react";
+import { useNavigate, useParams  } from "react-router-dom";
 import { useAppData } from "../AppContext";
 import MultipleImageUpload from "../MultipleImageUpload";
 import CustomButton from '../CustomButton';
-
-
+import useAPiAuth from "../hooks/useApiAuth";
 
 
 function EstimatesPreview () {
   const navigate = useNavigate();
-  const { mainPayload } = useAppData();
+  const { id } = useParams();
+  const { getData } = useAPiAuth();
+  const [estimate, setEstimate] = useState([]);
 
+
+  const getUser = () => {
+    console.log("getting id", id);
+    getData(
+       `/estimates/get-estimate/${id}`,
+
+      (data)=>{
+        console.log("Fetched data:", data);
+        setEstimate(data.data || {});
+      },
+      (error) => {
+        console.error("Error fetching estimate:", error.message || error);
+      },
+    );
+  };
   useEffect(() => {
-    console.log("test", mainPayload);
-  }, []);
+    if (id) {
+      getUser();
+    } else {
+      console.error("ID not found in URL parameters.");
+    }
+  }, [id]);
+  
 
   return (
     <div className="preview">
@@ -34,15 +55,21 @@ function EstimatesPreview () {
           </tr>
         </thead>
         <tbody>
+        {estimate ? (
           <tr>
-            <td>{mainPayload.formData?.customers}</td>
-            <td>{mainPayload.formData?.estimateNo}</td>
-            <td>{mainPayload.formData?.tags}</td>
-            <td>{mainPayload.formData?.approvedDate}</td>
-            <td>{mainPayload.formData?.date}</td>
-            <td>{mainPayload.formData?.contact}</td>
-            <td>{mainPayload.formData?.status}</td>
+            <td>{estimate.customerName || "N/A"}</td>
+            <td>{estimate.estimateNumber || "N/A"}</td>
+            <td>{estimate.tags || "N/A"}</td>
+            <td>{estimate.approvedDate || "N/A"}</td>
+            <td>{estimate.date || "N/A"}</td>
+            <td>{estimate.contact || "N/A"}</td>
+            <td>{estimate.status || "N/A"}</td>
           </tr>
+        ) : (
+          <tr>
+                  <td colSpan="7">Loading...</td>
+                </tr>
+              )}
         </tbody>
       </table>
     </div>
@@ -62,19 +89,25 @@ function EstimatesPreview () {
            </tr>
             </thead>
           <tbody>
-               {mainPayload?.items.map((item, index) => (
+          {estimate?.items?.length > 0 ? (
+            estimate.items.map((item, index) => (
                <tr key={index}>
                    <td>{item.item}</td>
                    <td>{item.qty}</td>
                    <td>{item.rate}</td>
                    <td>{item.qty * item.rate}</td>
                </tr>
-                ))}
+                ))
+              ) : (
+                <tr>
+                <td colSpan="4">No item details available</td>
+              </tr>
+            )}
               </tbody>
              </table>
               </div>
 
-      <MultipleImageUpload images={mainPayload.images} sowButton={false}/>
+      {/* <MultipleImageUpload images={mainPayload.images} sowButton={false}/> */}
 
       <div className="d-flex justify-content-end">
         <CustomButton

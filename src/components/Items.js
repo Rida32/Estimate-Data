@@ -91,7 +91,7 @@ function Items({items, setItems}) {
       });
       
     } else {
-      setSnackbarOpen(true); // Trigger the snackbar
+      setSnackbarOpen(true);
     }
     
   };
@@ -132,18 +132,8 @@ function Items({items, setItems}) {
           <tbody>
             {items.map((item) => (
                 <tr key={item.id}>
-                <td onClick={() => handleEditField(item.id, "item")}>
-                  {editableField === "item" && editItemId === item.id ? (
-                    <input
-                      type="text"
-                      value={item.item}
-                      onChange={(e) => handleEditValueChange(e, item.id, "item")}
-                      onBlur={handleBlur}
-                      autoFocus
-                    />
-                  ) : (
-                    item.item
-                  )}
+                <td onClick={() => handleEditField(item.id, "name")}>
+                {item.item}
                 </td>
                 <td onClick={() => handleEditField(item.id, "description")}>
                   {editableField === "description" && editItemId === item.id ? (

@@ -103,7 +103,7 @@ function EstimatesAdd() {
       comments: formData.comments,
       status: formData.status,
       items: items.map(item => ({
-        name: item.name,
+        item: item.item,
         qty: item.qty,
         rate: item.rate,
         costPrice: item.costPrice,
@@ -111,6 +111,7 @@ function EstimatesAdd() {
     };
   
     console.log("Payload to send:", payload);
+    // return
     postData(
       `/estimates/add`,
       // formData,

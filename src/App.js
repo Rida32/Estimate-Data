@@ -28,7 +28,7 @@ function App() {
           <Route path="/" element={<Layout />} >
           <Route path="estimates/add" element={<EstimatesAdd />} />
           <Route path="estimates" element={<Estimates />} />
-          <Route path="estimates/Preview" element={<EstimatesPreview />} />
+          <Route path="estimates/Preview/:id" element={<EstimatesPreview />} />
           <Route path="customers" element={<Customers />} />
           <Route path="customerRecord" element={<CustomerRecord />} />
           <Route path="staffmanagement" element={<StaffManagement />} />
