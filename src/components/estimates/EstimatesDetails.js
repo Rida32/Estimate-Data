@@ -36,25 +36,22 @@ function EstimatesDetails({ formData, setFormData, submitClicked, customers }) {
               </label>
               <Autocomplete
                 options={customers}
-                // value={formData.customers}
                 value={
-                  customers.find(
-                    (customer) => customer.customerId === formData.customerId
-                  ) || null
+                  formData.customerId
+                    ? customers.find(
+                        (customer) => customer.id === formData.customerId
+                      )
+                    : null
                 }
-                isOptionEqualToValue={(option, value) =>
-                          option.customerId === value.customerId
-                        }
                 getOptionLabel={(option) =>
-                  option.firstName ? option.firstName : option.firstName || ""
+                  option.firstName ? option.firstName : ""
                 }
-                freeSolo
                 onChange={(event, newValue) => {
                   console.log("value", newValue);
                   setFormData((prevData) => ({
                     ...prevData,
-                    customerId: newValue.id,
-                    customerName: newValue.firstName,
+                    customerId: newValue?.id,
+                    customerName: newValue?.firstName,
                   }));
                 }}
                 renderInput={(params) => (
@@ -62,21 +59,6 @@ function EstimatesDetails({ formData, setFormData, submitClicked, customers }) {
                     {...params}
                     placeholder="Name"
                     error={submitClicked && !formData.customerId}
-                    //       helperText={
-                    //         submitClicked && !formData.customerId
-                    //           ? "Please fill the above field"
-                    //           : ""
-                    //       }
-                    //       sx={{
-                    //         "& .MuiOutlinedInput-root.Mui-focused": {
-                    //           "& fieldset": {
-                    //             borderColor: "black",
-                    //           },
-                    //         },
-                    //       }}
-                    //     />
-                    //   )}
-                    // />
                     sx={{
                       "& .MuiOutlinedInput-root.Mui-focused": {
                         "& fieldset": {
