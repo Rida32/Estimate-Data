@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import EstimatesDetails from "../estimates/EstimatesDetails";
 import Items from "../Items";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAppData } from "../AppContext";
 import MultipleImageUpload from "../MultipleImageUpload";
 import CustomButton from '../CustomButton';
@@ -25,6 +25,8 @@ function EstimatesAdd() {
   const { postData ,getData} = useAPiAuth();
   const {setSnackbar, estimateData,} = useAppData();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const estimateId = searchParams.get("id");
   // const { mainPayload ,setmainPayload,setEstimates,estimates,snackbar,  setEstimateData} = useAppData();
 
   // useEffect(() => {
@@ -51,6 +53,8 @@ function EstimatesAdd() {
   const total = items.reduce((sum, item) => sum + (item.qty * item.rate || 0), 0);
   const totalExpenses = items.reduce((sum, item) => sum + (item.qty * item.costPrice || 0), 0);
 
+
+
   const handleSubmit = () => {
     setSubmitClicked(true);
     setIsLoading(true);
@@ -76,6 +80,9 @@ function EstimatesAdd() {
       setIsLoading(false);
       return;
     }
+
+    
+  
     // const updatedEstimate = {
     //   formData,
     //   items,
@@ -127,7 +134,7 @@ function EstimatesAdd() {
         setFormData({
           customers: "",
           estimateNo: "",
-          tags: "",
+          tags: [],
           approvedDate: "",
           date: "",
           contact: "",
@@ -174,6 +181,35 @@ const [customers, setCustomers] = useState([])
       getUser(); 
 
   }, []);  
+
+  const getEstimate =()=>{
+    getData(
+      `/estimates/get-estimate/${estimateId}`, 
+      (data) => {
+        console.log("estimate data", data)
+        const estimateData = { ...data.data, id : data.data.customerId };
+        estimateData.tags = Array.isArray(estimateData.tags)
+          ? estimateData.tags
+          : estimateData.tags.split(","); // Convert a comma-separated string to an array
+        setFormData(estimateData);
+      },
+      (error) => {
+        console.error("Error fetching customer data:", error);
+      }
+    );
+   };
+   useEffect(() => {
+    getEstimate();
+    console.log("getdata", estimateId)
+     
+    }, []);
+
+    useEffect(() => {
+      console.log("formdata",formData);
+    
+  
+    }, [formData])
+    
 
   return (
     <>

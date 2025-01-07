@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Autocomplete, TextField } from "@mui/material";
 
-
 function EstimatesDetails({ formData, setFormData, submitClicked, customers }) {
   const navigate = useNavigate();
   // const { customers } = useAppData();
@@ -37,56 +36,63 @@ function EstimatesDetails({ formData, setFormData, submitClicked, customers }) {
               </label>
               <Autocomplete
                 options={customers}
-                value={formData.customers}
+                // value={formData.customers}
+                value={
+                  customers.find(
+                    (customer) => customer.customerId === formData.customerId
+                  ) || null
+                }
+                isOptionEqualToValue={(option, value) =>
+                          option.customerId === value.customerId
+                        }
                 getOptionLabel={(option) =>
-        option.firstName ? option.firstName : option.firstName || ""
-      }
+                  option.firstName ? option.firstName : option.firstName || ""
+                }
                 freeSolo
                 onChange={(event, newValue) => {
-                  console.log("value", newValue)
-                  setFormData((prevData ) => ({
-                    ...prevData, 
-                    customerId : newValue.id,
-                    customerName : newValue.firstName
+                  console.log("value", newValue);
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    customerId: newValue.id,
+                    customerName: newValue.firstName,
                   }));
-
                 }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     placeholder="Name"
                     error={submitClicked && !formData.customerId}
-              //       helperText={
-              //         submitClicked && !formData.customerId
-              //           ? "Please fill the above field"
-              //           : ""
-              //       }
-              //       sx={{
-              //         "& .MuiOutlinedInput-root.Mui-focused": {
-              //           "& fieldset": {
-              //             borderColor: "black",
-              //           },
-              //         },
-              //       }}
-              //     />
-              //   )}
-              // />
-               sx={{
-               "& .MuiOutlinedInput-root.Mui-focused": {
-                "& fieldset": {
-                  borderColor: "black",
-            },
-            },
-                }}
-             />
-             )}
+                    //       helperText={
+                    //         submitClicked && !formData.customerId
+                    //           ? "Please fill the above field"
+                    //           : ""
+                    //       }
+                    //       sx={{
+                    //         "& .MuiOutlinedInput-root.Mui-focused": {
+                    //           "& fieldset": {
+                    //             borderColor: "black",
+                    //           },
+                    //         },
+                    //       }}
+                    //     />
+                    //   )}
+                    // />
+                    sx={{
+                      "& .MuiOutlinedInput-root.Mui-focused": {
+                        "& fieldset": {
+                          borderColor: "black",
+                        },
+                      },
+                    }}
+                  />
+                )}
               />
-  {/* Display error message in span for uniformity */}
-  {submitClicked && !formData.customerId && (
-    <span className="text-error">Please fill the above field</span>
-  )}
+              {/* Display error message in span for uniformity */}
+              {submitClicked && !formData.customerId && (
+                <span className="text-error">Please fill the above field</span>
+              )}
             </div>
-            
+
             <div className="form-group">
               <label> Estimate No</label>
               <input

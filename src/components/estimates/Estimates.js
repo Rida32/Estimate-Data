@@ -11,7 +11,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import EditIcon from "@mui/icons-material/Edit";
 import DialogContentText from '@mui/material/DialogContentText';
 
@@ -72,20 +71,11 @@ const Estimates = () => {
 
   }, []);
 
-  const handleEditClick = (row) => {
-    setEditRowData({ ...row }); 
-    setEditModalOpen(true);
-  };
+  const handleEditClick = (id) => {
+    navigate(`/estimates/add?id=${id}`);
+};
 
-  const handleSaveEdit = () => {
-    if (editRowData) {
-      const updatedEstimates = estimates.map((row) =>
-        row.id === editRowData.id ? editRowData : row
-      );
-      setEstimates(updatedEstimates); 
-    }
-    setEditModalOpen(false); 
-  };
+  
   const closeModal = () => {
     setModalOpen(false);
     setRowToDelete(null);
@@ -173,7 +163,9 @@ const Estimates = () => {
 
 
                    <td className="d-flex justify-content-between align-items-center">
-                   <IconButton className="edit-button" onClick={() => handleEditClick(row)}>
+                   <IconButton className="edit-button"
+                     onClick={() => handleEditClick(row.id)}
+                    >
                           <EditIcon style={{ color: "blue", fontSize: 24 }} />
                         </IconButton>
                       <IconButton className="delete-button"
@@ -204,7 +196,7 @@ const Estimates = () => {
         </div>
       </div>
 
-      <Dialog open={isEditModalOpen} onClose={() => setEditModalOpen(false)}>
+      {/* <Dialog open={isEditModalOpen} onClose={() => setEditModalOpen(false)}>
         <DialogTitle>Edit Estimate</DialogTitle>
         <DialogContent>
           {editRowData && (
@@ -269,7 +261,7 @@ const Estimates = () => {
             Save
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
       <Dialog
         open={isModalOpen}
         onClose={closeModal}
