@@ -100,7 +100,8 @@ function EstimatesAdd() {
     //   setEstimates((prevEstimates) => [...prevEstimates, updatedEstimate]);
     // } 
     const payload = {
-      estimateNumber: formData.estimateNo, 
+      id:13,
+      estimateNumber: formData.estimateNumber, 
       customerId: formData.customerId,     
       customerName: formData.customerName,                  
       contact: formData.contact,
@@ -111,6 +112,7 @@ function EstimatesAdd() {
       status: formData.status,
       items: items.map(item => ({
         item: item.item,
+        description:item.description,
         qty: item.qty,
         rate: item.rate,
         costPrice: item.costPrice,
@@ -127,7 +129,7 @@ function EstimatesAdd() {
         console.log("API Success:", data)
         setSnackbar({
           open: true,
-          message: "Estimate saved successfully!",
+          message:data.message,
           severity: "success",
         });
        
@@ -192,6 +194,7 @@ const [customers, setCustomers] = useState([])
           ? estimateData.tags
           : estimateData.tags.split(","); // Convert a comma-separated string to an array
         setFormData(estimateData);
+        setItems(data.data.items);
       },
       (error) => {
         console.error("Error fetching customer data:", error);
@@ -204,11 +207,19 @@ const [customers, setCustomers] = useState([])
      
     }, []);
 
-    useEffect(() => {
-      console.log("formdata",formData);
+    // useEffect(() => {
+    //   console.log("formdata",formData);
     
   
-    }, [formData])
+    // }, [formData])
+
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    };
     
 
   return (
@@ -235,7 +246,7 @@ const [customers, setCustomers] = useState([])
                   className="customer-message"
                   name="comments"
                   value={formData.comments}
-                  // onChange={handleChange}
+                  onChange={handleChange}
                 ></textarea>
                 
               </div>{" "}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Autocomplete, TextField } from "@mui/material";
+import { formatDate, formatDateToInput } from "../Utils";
 
 function EstimatesDetails({ formData, setFormData, submitClicked, customers }) {
   const navigate = useNavigate();
@@ -79,9 +80,9 @@ function EstimatesDetails({ formData, setFormData, submitClicked, customers }) {
               <label> Estimate No</label>
               <input
                 type="text"
-                name="estimateNo"
+                name="estimateNumber"
                 placeholder="Number"
-                value={formData.estimateNo}
+                value={formData.estimateNumber}
                 onChange={handleChange}
               />
             </div>
@@ -124,7 +125,7 @@ function EstimatesDetails({ formData, setFormData, submitClicked, customers }) {
                 type="date"
                 placeholder="yyyy/mm/dd"
                 name="approvedDate"
-                value={formData.approvedDate}
+                value={formatDateToInput(formData.approvedDate)}
                 onChange={handleChange}
               />
             </div>
@@ -140,7 +141,7 @@ function EstimatesDetails({ formData, setFormData, submitClicked, customers }) {
                 type="date"
                 name="date"
                 placeholder="yyyy/mm/dd"
-                value={formData.date}
+                value={formatDateToInput(formData.date)}
                 onChange={handleChange}
               />
               {submitClicked && !formData.date && (

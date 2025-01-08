@@ -72,6 +72,14 @@ const Estimates = () => {
   }, []);
 
   const handleEditClick = (id) => {
+    const estimateToEdit = estimates.find((est) => est.id === id);
+    if (estimateToEdit) {
+      setEditRowData({
+        ...estimateToEdit,
+        approvedDate: formatDateToCustomString(estimateToEdit.approvedDate),
+        date: formatDateToCustomString(estimateToEdit.date),
+      });
+    }
     navigate(`/estimates/add?id=${id}`);
 };
 
