@@ -26,31 +26,6 @@ const Estimates = () => {
   const [rowToDelete, setRowToDelete] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const {setSnackbar} =useAppData();
-  // const [rowToDelete, setRowToDelete] = useState(null);
-  // const [estimateData, setEstimateData] =useState([]);
-
-  // const handleDeleteClick = (index) => {
-  //   setRowToDelete(index);
-  //   setModalOpen(true);
-  // };
-
-  // const closeModal = () => {
-  //   setModalOpen(false);
-  //   setRowToDelete(null);
-  // };
-
-  // const confirmDelete = () => {
-  //   if (rowToDelete !== null) {
-  //     estimates.splice(rowToDelete, 1);
-  //     setmainPayload([...estimates]);
-  //   }
-  //   closeModal();
-  // };
-
-  // const handleEditClick = (row) => {
-  //   setEstimateData(row); 
-  //   navigate("/estimates/add"); 
-  // };
 
   
   const getUser = () => {

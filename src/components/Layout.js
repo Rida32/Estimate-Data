@@ -49,7 +49,7 @@ const styles = {
     minHeight: "100vh",
   },
   sidebar: {
-    width: "16%",
+    width: "23%",
     background: "#f4f4f4",
     borderRight: "1px solid #ddd",
   },

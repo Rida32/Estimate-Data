@@ -1,27 +1,24 @@
 import React, { useEffect , useState} from "react";
 import { useNavigate, useParams  } from "react-router-dom";
-import CustomButton from '../CustomButton';
 import useAPiAuth from "../hooks/useApiAuth";
 
-
-function EstimatesPreview () {
+const InvoicePreview = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { getData } = useAPiAuth();
-  const [estimate, setEstimate] = useState([]);
-
+  const [invoice, setInvoice] = useState([]);
 
   const getUser = () => {
     console.log("getting id", id);
     getData(
-       `/estimates/get-estimate/${id}`,
+       `/invoices/get-invoice/${id}`,
 
       (data)=>{
         console.log("Fetched data:", data);
-        setEstimate(data.data || {});
+        setInvoice(data.data || {});
       },
       (error) => {
-        console.error("Error fetching estimate:", error.message || error);
+        console.error("Error fetching invoice:", error.message || error);
       },
     );
   };
@@ -32,36 +29,36 @@ function EstimatesPreview () {
       console.error("ID not found in URL parameters.");
     }
   }, [id]);
-  
 
   return (
-    <div className="preview">
+  <>
+   <div className="preview">
       <div>
-  <div className="data-form-container">
-    <h2 className="Estimate">Estimate Details</h2>
+  <div className="customer-table">
+    <h2 className="Estimate">Invioce Details</h2>
     <div className="table-responsive">
-      <table className="table table-bordered">
+      <table className="customertab">
         <thead>
           <tr>
             <th>Customers</th>
-            <th>Estimate No</th>
-            <th>Tags</th>
-            <th>Approved Date</th>
+            {/* <th>Estimate No</th> */}
+            <th>Invoice Number</th>
             <th>Date</th>
             <th>Contact</th>
             <th>Status</th>
+            <th>Comments</th>
           </tr>
         </thead>
         <tbody>
-        {estimate ? (
+        {invoice ? (
           <tr>
-            <td>{estimate.customerName || "N/A"}</td>
-            <td>{estimate.estimateNumber || "N/A"}</td>
-            <td>{estimate.tags || "N/A"}</td>
-            <td>{estimate.approvedDate || "N/A"}</td>
-            <td>{estimate.date || "N/A"}</td>
-            <td>{estimate.contact || "N/A"}</td>
-            <td>{estimate.status || "N/A"}</td>
+            <td>{invoice.customerName || "N/A"}</td>
+            {/* <td>{invoice.estimateNumber || "N/A"}</td> */}
+            <td>{invoice.invoiceNumber || "N/A"}</td>
+            <td>{invoice.dueDate || "N/A"}</td>
+            <td>{invoice.contact || "N/A"}</td>
+            <td>{invoice.status || "N/A"}</td>
+            <td>{invoice.comments || "N/A"}</td>
           </tr>
         ) : (
           <tr>
@@ -78,7 +75,7 @@ function EstimatesPreview () {
       <div className="invoice-form-container mt-4">
           <h2>Item Details</h2>
           <div className="table-responsive">
-          <table className="invoice-items-table table table-bordered">
+          <table className="customertab">
             <thead>
             <tr>
            <th>Name</th>
@@ -88,8 +85,8 @@ function EstimatesPreview () {
            </tr>
             </thead>
           <tbody>
-          {estimate?.items?.length > 0 ? (
-            estimate.items.map((item, index) => (
+          {invoice?.items?.length > 0 ? (
+            invoice.items.map((item, index) => (
                <tr key={index}>
                    <td>{item.item}</td>
                    <td>{item.qty}</td>
@@ -106,21 +103,9 @@ function EstimatesPreview () {
              </table>
               </div>
               </div>
-
-      {/* <MultipleImageUpload images={mainPayload.images} sowButton={false}/> */}
-
-      <div className="d-flex justify-content-end mt-4">
-        <CustomButton
-           style={{width: "10vh"}}
-          onClick={() => {
-            navigate("/estimates");
-          }}
-        >
-          back
-        </CustomButton>
-      </div>
     </div>
-  );
+  </>
+  )
 }
 
-export default EstimatesPreview;
+export default InvoicePreview

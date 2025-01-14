@@ -17,11 +17,17 @@ const Header = () => {
     return (
         <header style={styles.header}>
             <div style={styles.logo}> 
+            <img 
+                    src="https://lh3.googleusercontent.com/kKaWGqBLttri7RicHIgIiroIE3ufOjGdcEckhMKji4BlT_jlEYxUwUFtFrCoFqHqJE9f6DgFTSrTh4Tz3ykcoW56P_ZuDmC_IUu8LSFY7JzkpE4Ul0FD" 
+                    alt="Google Logo" 
+                    style={styles.logoImage} 
+                />
             </div>
-            <nav style={styles.navGroup}>
-                <a href="#" style={styles.navLink}>Home</a>
-                <a href="#" style={styles.navLink}>About</a>
-                <a href="#" style={styles.navLink}>Contact</a>
+            {/* <nav style={styles.navGroup}>
+            <span style={styles.userName}>{`${firstName} ${lastName}`}</span> */}
+          
+            <div style={{ position: 'relative', marginLeft: '90%', marginRight: '1px' }}>
+      <nav style={styles.navGroup}>
                 <div
                 style={styles.userInfo}
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -50,15 +56,12 @@ const Header = () => {
                         </div>
                     )}
                 </div>
-                {/* {firstName} {lastName}<br></br>
-                {email}</div>
-                <a href="#" onClick={() => {navigate("/") 
-                Cookies.set("token", "")} 
-                
-                } style={styles.navLink}>
-                <i className="fas fa-sign-out-alt"></i>
-                </a> */}
             </nav>
+            </div>
+            <div style={styles.userInfoRight}>
+        <div style={styles.userName}>{`${firstName} ${lastName}`}</div>
+        <div style={styles.userEmail}>{email}</div>
+      </div>
         </header>
     );
 };
@@ -71,31 +74,38 @@ const styles = {
         padding: '10px 20px',
         backgroundColor: '#333',
         color: '#fff',
-        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)'
+        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
     },
     logo: {
-        fontSize: '20px',
-        fontWeight: 'bold'
-    },
-    nav: {
         display: 'flex',
-        justifyContent: 'space-between',
         alignItems: 'center',
-        width: '100%',
     },
-    navLinkHover: {
-        color: '#ddd'
+    // Added styles for the Google logo image
+    logoImage: {
+        width: '32px',
+        height: '32px',
     },
     navGroup: {
         display: 'flex',
         alignItems: 'center',
         gap: '15px',
     },
-    navLink: {
+    userInfoRight: {
+        display: 'flex',
+        flexDirection: 'column', // Stack name and email
+        alignItems: 'flex-end', // Align to the right
+        marginLeft: 'auto', // Push to the far right
+        marginRight: '15px', // Add spacing from dropdown
         color: '#fff',
-        textDecoration: 'none',
+    },
+    // Added styles for the user's full name
+    userName: {
         fontSize: '16px',
-        transition: 'color 0.3s ease',
+        color: '#fff',
+    },
+    userEmail: {
+        fontSize: '12px', // Smaller font size for email
+        color: '#ddd', // Slightly lighter color
     },
     userInfo: {
         position: 'relative',

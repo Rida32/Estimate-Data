@@ -115,9 +115,9 @@ function Items({items, setItems}) {
   return (
     <div className="card">
       <div className="card-header">Items</div>
-      <div className="container">
-        <table>
-          <thead>
+      <div className="container table-responsive">
+        <table className="">
+          <thead >
             <tr>
               <th className="text-start">Item</th>
               <th className="text-start">Description</th>

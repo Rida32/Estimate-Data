@@ -7,6 +7,8 @@ import useAPiAuth from "../hooks/useApiAuth";
 const Customers = () => {
   const navigate = useNavigate();
   const { postData, getData } = useAPiAuth();
+  const [errors, setErrors] = useState({});
+  const {setSnackbar} =useAppData();
   const [searchParams] = useSearchParams();
   const customerId = searchParams.get("id");
   const [customerData, setCustomerData] = useState({
@@ -36,20 +38,6 @@ const Customers = () => {
     console.log("getdata", customerId)
      
     }, []);
-
-    
-    
-
-  
-  const [errors, setErrors] = useState({});
-  // const { snackbar,  handleSnackbarClose , customers, setCustomers, customerChange, setCustomerChange} = useAppData();
-  const {setSnackbar} =useAppData();
-   
-  // useEffect(() => {
-  //   if (customerChange) {
-  //     setCustomerData(customerChange);  
-  //   }
-  // }, [customerChange]);
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -147,50 +135,54 @@ const Customers = () => {
 
         <div className="container-customer">
         <header className="customerhead">Customers Info</header>
+        <div className="container-fluid">
 
   {/* Row 1 */}
-  <div className="row">
+  <div className="row gx-3 gy-2">
 
-    <div className="customersinfo">
+    <div className="col-12 col-md-6 mb-2 customersinfo">
       <label>First Name</label>
       <input type="text"
        name="firstName"
        placeholder="First Name" 
        value={customerData.firstName}
         onChange={handleChange}
-
+          className="form-control w-100"
        />
     </div>
-    <div className="customersinfo">
+    <div className="col-12 col-md-6 mb-2 customersinfo">
       <label>Last Name</label>
       <input type="text" 
       name="lastName" 
       placeholder="Last Name"
       value={customerData.lastName}
       onChange={handleChange}
+       className="form-control w-100"
        />
     </div>
-    <div className="customersinfo">
+    <div className="col-12 col-md-6 mb-2 customersinfo">
       <label>E-Mail <span className="text-danger">*</span></label>
       <input type="text"
        name="email" 
        placeholder="@gmail.com" 
        value={customerData.email}
        onChange={handleChange}
+        className="form-control w-100"
        /> {errors.email && <p className="error-text">{errors.email}</p>}
     </div>
   </div>
 
   {/* Row 2 */}
-  <div className="row">
+  <div className="row gx-3 gy-2">
 
-    <div className="customersinfo">
+    <div className="col-12 col-md-6 mb-2 customersinfo">
       <label>Address</label>
       <input type="text"
        name="address"
        placeholder="Address"
        value={customerData.address}
         onChange={handleChange}
+         className="form-control w-100"
         />
     </div>
   </div>
@@ -213,7 +205,7 @@ const Customers = () => {
 </div>
 
       </div>
-     
+     </div>
     </>
   )
 }

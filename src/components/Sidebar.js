@@ -1,15 +1,17 @@
 import { Navigate, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
+
+
 const Sidebar = () => {
   const menuItems = [
     { name: "Dashboard", icon: "🏠" },
     { name: "Customers", icon: "👤", path: "/customerRecord" },
     { name: "Staff Management", icon: "👥", path: "/staffmanagement" },
     { name: "Estimates", icon: "📊", path: "/estimates" },
-    { name: "Sales", icon: "🛒" },
-    { name: "Bill", icon: "🧾" },
-    { name: "Invoice", icon: "📄" },
+    { name: "Sales", icon: "🛒" , },
+    { name: "Bill", icon: "🧾",   },
+    { name: "Invoice", icon: "📄", path: "/Invoice" },
     { name: "Items", icon: "📦" },
   ];
   const navigate = useNavigate();
@@ -49,7 +51,6 @@ const sidebarStyles = {
     minHeight: "100vh",
   },
   sidebar: {
-    width: "240px",
     color: "#ffffff",
     fontFamily: "'Roboto', sans-serif",
     borderRight: "1px solid #2a2a2a",

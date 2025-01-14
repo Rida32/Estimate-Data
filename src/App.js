@@ -11,6 +11,9 @@ import Customers from './components/customers/Customers';  //this
 import CustomerRecord from './components/customers/CustomerRecord';  //this
 import CreateAccount from './components/CreateAccount';
 import StaffManagement from './components/StaffManagement';
+import Invoice from './components/invoice/Invoice';
+import InvoiceAdd from './components/invoice/InvoiceAdd';
+import InvoicePreview from './components/invoice/InvoicePreview';
 
 
 
@@ -32,6 +35,9 @@ function App() {
           <Route path="customers" element={<Customers />} />
           <Route path="customerRecord" element={<CustomerRecord />} />
           <Route path="staffmanagement" element={<StaffManagement />} />
+          <Route path="Invoice" element={<Invoice />} />
+          <Route path="InvoiceAdd" element={<InvoiceAdd />} />
+          <Route path="InvoicePreview/:id" element={<InvoicePreview />} />
           </Route>
         </Routes>
 

@@ -36,8 +36,9 @@ const useAPiAuth = () => {
       errorFun(error);
     }
   };
+  
 
-  return { postData, getData  };
+  return { postData, getData,   };
 };
 
 export default useAPiAuth;

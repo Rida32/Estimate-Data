@@ -111,14 +111,6 @@ function EstimatesDetails({ formData, setFormData, submitClicked, customers }) {
                 )}
               />
             </div>
-            {/* <input
-                type="text"
-                name="tags"
-                placeholder="Tags" 
-                value={formData.tags}
-                onChange={handleChange}  
-                />
-            </div> */}
             <div className="form-group">
               <label>Approved Date</label>
               <input
@@ -181,13 +173,6 @@ function EstimatesDetails({ formData, setFormData, submitClicked, customers }) {
                 )}
               />
             </div>
-            {/* <input
-                type="text"
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-              />
-            </div> */}
           </div>
         </div>
       </div>
