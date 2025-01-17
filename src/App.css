@@ -802,4 +802,155 @@ h2 {
     box-shadow: .2em -.2em 0 0 currentcolor;
   }
 }
+.sales-dashboard {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.sales-dashboard h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sales-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.sales-table th,
+.sales-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.sales-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.sales-table .status {
+  padding: 5px 10px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.status.pending {
+  background-color: #ffc107;
+}
+
+.status.approved {
+  background-color: #28a745;
+}
+
+.status.needs-approval {
+  background-color: #dc3545;
+}
+
+.stats-boxes {
+  display: flex;
+  justify-content: space-around;
+  gap: 15px;
+}
+
+.stat-box {
+  flex: 1;
+  text-align: center;
+  padding: 20px;
+  
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.stat-box h3 {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.stat-box.open-sales {
+  background-color: #789a3d;
+}
+
+.stat-box.approved-sales {
+  background-color: #dd4545;
+}
+
+.stat-box.total-sales {
+  background-color: #2c8268;;
+}
+.dashboard {
+  padding: 20px;
+  background-color: #f5f5f5;
+  text-align: center;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: linear-gradient(to right, #28a745, #218838);
+  color: white;
+  padding: 30px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h2 {
+  font-size: 2.5em;
+  margin: 0;
+}
+
+.stat-card p {
+  font-size: 1.2em;
+  margin: 5px 0 0;
+}
+
+.sales-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sales-table th, .sales-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.sales-table th {
+  background: #f4f4f4;
+}
+
+.status {
+  padding: 5px 5px;
+  border-radius: 5px;
+  color: white;
+}
+
+.status.pending {
+  background: #789a3d;
+}
+
+.status.approved {
+  background: #dd4545;
+}
+
+.status.needs-approval {
+  background: #d176a4;
+}
 

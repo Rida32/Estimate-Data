@@ -23,7 +23,7 @@ const Customers = () => {
 
    const getCustomer =()=>{
     getData(
-      `/customers/get-customer/${customerId}`, // Fetch customer data by ID
+      `/customers/get-customer/${customerId}`,
       (data) => {
         console.log(data)
         setCustomerData({...data.data,})
@@ -90,7 +90,6 @@ const Customers = () => {
       console.log("Payload to send:", payload);
       postData(
         `/customers/add`,
-        // customerData,
         payload,
         (data)=>{
           console.log("test", data);
@@ -103,7 +102,6 @@ const Customers = () => {
             address: "",
             notes: "",
           });
-          // setCustomerChange(null);
           setErrors({});
           setSnackbar({
             open: true,

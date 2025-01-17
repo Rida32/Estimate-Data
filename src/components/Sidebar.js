@@ -1,18 +1,19 @@
 import { Navigate, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import { patch } from "@mui/material";
 
 
 
 const Sidebar = () => {
   const menuItems = [
-    { name: "Dashboard", icon: "🏠" },
+    { name: "Dashboard", icon: "🏠" , path:"/DummyData"},
     { name: "Customers", icon: "👤", path: "/customerRecord" },
     { name: "Staff Management", icon: "👥", path: "/staffmanagement" },
     { name: "Estimates", icon: "📊", path: "/estimates" },
-    { name: "Sales", icon: "🛒" , },
-    { name: "Bill", icon: "🧾",   },
+    { name: "Sales", icon: "🛒" , path:"/SalesDashboard"},
+    { name: "Bill", icon: "🧾",  path: "/Card"  },
     { name: "Invoice", icon: "📄", path: "/Invoice" },
-    { name: "Items", icon: "📦" },
+    { name: "Items", icon: "📦", path: "/ItemsRecord" },
   ];
   const navigate = useNavigate();
 
