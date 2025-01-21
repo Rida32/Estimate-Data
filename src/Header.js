@@ -11,6 +11,7 @@ const Header = () => {
 
     const handleLogout = () => {
         Cookies.set("token", "");
+        // Cookies.remove("token");
         navigate("/");
     };
   

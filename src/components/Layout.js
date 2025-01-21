@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { Outlet } from 'react-router-dom';
 import Header from "../Header";
 import Footer from "../Footer";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Layout = () => {
+  const token = Cookies.get("token");
+  const navigate = useNavigate();
+  const pathname = window.location.pathname;
+         console.log('Current Path:', pathname);
+      
+      //    useEffect(() => {
+      //    if (pathname === "/") { 
+      //     if (token == null) { 
+      //       navigate("/"); 
+      //     }
+      //   } else {
+      //     if (token != null) { 
+      //       navigate(pathname); 
+      //     }
+      //   }
+      // }, [pathname]);
+      useEffect(() => {
+        if (!token) {
+          navigate("/");
+        } 
+      }, [ pathname]);
+    
     return (
       <>
       <Header/>

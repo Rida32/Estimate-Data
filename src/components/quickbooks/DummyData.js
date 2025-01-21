@@ -24,7 +24,7 @@ const DummyData = () => {
       current: 135,
       range1: 246,
       range2: 789,
-      range3: 879,
+      range3: 879,  
       range4: 345,
       total: 765,
     },
@@ -160,14 +160,13 @@ const DummyData = () => {
             <ToggleButtonGroup
               value={toggle}
               exclusive
-
-              onChange={(event, newToggle) => { 
-                if (!newToggle){
-                  return
-                };
+              onChange={(event, newToggle) => {
+                if (!newToggle) {
+                  return;
+                }
                 setToggle(newToggle);
 
-                console.log("toogle", newToggle)
+                console.log("toogle", newToggle);
               }}
               aria-label="Report Toggle"
             >

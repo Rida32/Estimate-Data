@@ -1,6 +1,6 @@
 import './App.css';
 import { DataProvider } from "./components/AppContext";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from './components/Layout';
 import SnakBar from "./components/SnakBar";
 import Login from './components/Login';
@@ -19,11 +19,13 @@ import ItemsAdd from './components/items/ItemsAdd';
 import DummyData from './components/quickbooks/DummyData';
 import SalesDashboard from './components/quickbooks/SalesDashboard';
 import Card from './components/quickbooks/Card';
-
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 
 function App() {
-
+  
+ 
   return (
  <>
   <DataProvider>
@@ -31,7 +33,7 @@ function App() {
       <BrowserRouter>
         <Routes>
 
-          {/* <Route index element={<Login />} /> */}
+          <Route index element={<Login />} />
           <Route path="/CreateAccount" element={<CreateAccount />} />
           <Route path="/" element={<Layout />} >
           <Route path="estimates/add" element={<EstimatesAdd />} />
