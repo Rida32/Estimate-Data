@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import ReportTable from "./ReportTable";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 const DummyData = () => {
   const [toggle, setToggle] = useState("");
@@ -238,24 +240,34 @@ const DummyData = () => {
                   >
                     Run report
                   </button>
-                  <div style={{ position: "relative" }}>
+                 
+                </div>
+              </div>
+            </div>
+            <table className="table table-striped" style={{ marginTop: "0px" }}>
+              <thead>
+                <tr>
+                  <th className="text-start "
+                  style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  Customer
+                  <div className="text-end" >
                     <button
                       className="btn btn-light"
                       style={{
                         border: "1px solid #ccc",
-                        padding: "5px",
-                        fontSize: "1.2rem",
+                        padding: "2px 2px",
+                        fontSize: "0.8rem",
+                        lineHeight: "1",
                       }}
                       onClick={() => setDropdownOpen(!dropdownOpen)}
                     >
-                      Sort by
+                      <FontAwesomeIcon icon="fa-solid fa-sort" />
                     </button>
                     {dropdownOpen && (
                       <div
                         className="dropdown-menu"
                         style={{
                           position: "absolute",
-                          right: "0",
                           zIndex: 1000,
                           display: "block",
                         }}
@@ -275,13 +287,7 @@ const DummyData = () => {
                       </div>
                     )}
                   </div>
-                </div>
-              </div>
-            </div>
-            <table className="table table-striped" style={{ marginTop: "0px" }}>
-              <thead>
-                <tr>
-                  <th className="text-start">Customer</th>
+                  </th>
                   <th className="text-start">Current</th>
                   <th className="text-start">1 - 30</th>
                   <th className="text-start">31 - 60</th>

@@ -521,19 +521,6 @@ h2 {
   justify-content: flex-start; 
   align-items: center;
 }
- /* .CustomButton{
-  padding: 10px 10px;
-  width: 10vh; 
-  background-color: #858687;
-  color: white;
-  font-size: 13px;
-  border: none;
-  border-radius: 8px;
-  text-transform: uppercase;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(147, 147, 147, 0.1);
-  transition: all 0.3s ease;
-} */
 .CustomButton:hover {
   background-color: #a3a3a3;
   box-shadow: 0 6px 8px rgba(150, 150, 150, 0.2);
@@ -639,7 +626,6 @@ h2 {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
 }
-/* General container styling */
 .record-container {
   padding: 20px;
   background-color: #f9f9f9;
@@ -648,7 +634,6 @@ h2 {
  
 }
 
-/* Record header styling */
 .Record {
   margin-bottom: 20px;
 }

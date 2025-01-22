@@ -17,12 +17,9 @@ const CustomerRecord = () => {
   const navigate = useNavigate();
   const { getData } = useAPiAuth();
   const [customers, setCustomers,] =useState([]);
-  // const {  customerChange, setCustomerChange } = useAppData();
   const [isModalOpen, setModalOpen] = useState(false);
   const [rowToDelete, setRowToDelete] = useState(null);
   const {setSnackbar} =useAppData();
-  // const token = Cookies.get("token");
-  
   
   // const handleDeleteClick = (index) => {
   //   setRowToDelete(index);

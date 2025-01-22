@@ -18,9 +18,8 @@ import ItemsRecord from './components/items/ItemsRecord';
 import ItemsAdd from './components/items/ItemsAdd';
 import DummyData from './components/quickbooks/DummyData';
 import SalesDashboard from './components/quickbooks/SalesDashboard';
-import Card from './components/quickbooks/Card';
-import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import DistanceCalculation from './components/calculation/DistanceCalculation';
+
 
 
 function App() {
@@ -49,7 +48,7 @@ function App() {
           <Route path="ItemsRecord" element={<ItemsRecord />} />
           <Route path="DummyData" element={<DummyData />} />
           <Route path="SalesDashboard" element={<SalesDashboard />} />
-          <Route path="Card" element={<Card />} />
+          <Route path="DistanceCalculation" element={<DistanceCalculation />} />
           </Route>
         </Routes>
 

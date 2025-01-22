@@ -5,6 +5,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Autocomplete, TextField } from "@mui/material";
 
 
 function Items({items, setItems}) {
@@ -201,6 +202,41 @@ function Items({items, setItems}) {
             ))}
           <tr>
               <td>
+              {/* <Autocomplete
+                options={customers}
+                value={
+                  formData.itemsId
+                    ? customers.find(
+                        (customer) => customer.id === formData.itemsId
+                      )
+                    : null
+                }
+                getOptionLabel={(option) =>
+                  option.firstName ? option.firstName : ""
+                }
+                onChange={(event, newValue) => {
+                  console.log("value", newValue);
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    itemsId: newValue?.id,
+                    item: newValue?.item,
+                  }));
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="Name"
+                    error={submitClicked && !formData.itemsId}
+                    sx={{
+                      "& .MuiOutlinedInput-root.Mui-focused": {
+                        "& fieldset": {
+                          borderColor: "black",
+                        },
+                      },
+                    }}
+                  />
+                )}
+              /> */}
                 <select
                   className="form-control"
                   name="item"

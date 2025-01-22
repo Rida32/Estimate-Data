@@ -70,7 +70,6 @@ function EstimatesDetails({ formData, setFormData, submitClicked, customers }) {
                   />
                 )}
               />
-              {/* Display error message in span for uniformity */}
               {submitClicked && !formData.customerId && (
                 <span className="text-error">Please fill the above field</span>
               )}
