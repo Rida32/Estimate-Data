@@ -19,6 +19,7 @@ import ItemsAdd from './components/items/ItemsAdd';
 import DummyData from './components/quickbooks/DummyData';
 import SalesDashboard from './components/quickbooks/SalesDashboard';
 import DistanceCalculation from './components/calculation/DistanceCalculation';
+import RouteCalculation from './components/calculation/RouteCalculation';
 
 
 
@@ -32,7 +33,7 @@ function App() {
       <BrowserRouter>
         <Routes>
 
-          <Route index element={<Login />} />
+          {/* <Route index element={<Login />} /> */}
           <Route path="/CreateAccount" element={<CreateAccount />} />
           <Route path="/" element={<Layout />} >
           <Route path="estimates/add" element={<EstimatesAdd />} />
@@ -49,6 +50,7 @@ function App() {
           <Route path="DummyData" element={<DummyData />} />
           <Route path="SalesDashboard" element={<SalesDashboard />} />
           <Route path="DistanceCalculation" element={<DistanceCalculation />} />
+          <Route path="RouteCalculation" element={<RouteCalculation />} />
           </Route>
         </Routes>
 

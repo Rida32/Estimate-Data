@@ -19,6 +19,23 @@ const DistanceCalculation = () => {
   const [log, setLog] = useState([]);
   const [clickedButtons, setClickedButtons] = useState({});
   const [customCalculation, setCustomCalculation] = useState("");
+  
+  // code for routes
+  const [selectedScenario, setSelectedScenario] = useState('');    //code for dropdown
+  const [results, setResults] = useState([]);
+  const [error, setError] = useState('');
+  const [inputValues, setInputValues] = useState({
+    startTown: '',
+    endTown: '',
+    maxStops: '',
+    maxDistance: '',
+  });
+   
+  const calculateDistanceRoute = (start, end) => {
+    const directRoute = `${start}-${end}`;
+    const reverseRoute = `${end}-${start}`;
+    return distances[directRoute] || distances[reverseRoute] || null;
+  };
 
   const calculateDistance = () => {
     const towns = inputPath.trim().split("-");
@@ -49,6 +66,7 @@ const DistanceCalculation = () => {
       setResult("Error: Invalid Path");
     }
   };
+
   const handleButtonClick = (button) => {
     setClickedButtons((prevState) => ({
       ...prevState,
@@ -85,59 +103,165 @@ const DistanceCalculation = () => {
           : "Error: Invalid Path"
       );
     } else {
-      setCustomCalculation("Error: Select at least two towns");
+      setCustomCalculation("Please Select at least two towns");
     }
   };
 
+ 
+
+  const handleScenarioChange = (e) => {
+    setSelectedScenario(e.target.value);
+    setResults([]);
+    setError('');
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputValues({ ...inputValues, [name]: value });
+  };
+  const calculateRoutes = () => {
+    setError('');
+    setResults([]);
+
+    const { startTown, endTown, maxStops, maxDistance } = inputValues;
+
+    if (!selectedScenario) {
+      setError('Please select a scenario.');
+      return;
+    }
+
+    // Validate required inputs
+    if (
+      (selectedScenario !== 'shortestRoute' && (!startTown || !endTown)) ||
+      (selectedScenario === 'maxStops' && !maxStops) ||
+      (selectedScenario === 'maxDistance' && !maxDistance)
+    ) {
+      setError('Please fill in all required fields.');
+      return;
+    }
+
+    let simulatedResults = [];
+
+    switch (selectedScenario) {
+      case 'noMoreThanThreeStops':
+        simulatedResults = [
+          `Route C-C with no more than 3 stops: Example Route 1, Example Route 2`,
+        ];
+        break;
+      case 'exactlyFourStops':
+        simulatedResults = [`Route A-C in exactly 4 stops: Example Route`];
+        break;
+      case 'shortestRoute':
+        const distance = calculateDistanceRoute(startTown, endTown);
+        if (distance) {
+          simulatedResults = [`Shortest Route ${startTown}-${endTown}: ${distance} units`];
+        } else {
+          setError('No direct route found.');
+          return;
+        }
+        break;
+      case 'allRoutesUnder30':
+        simulatedResults = [
+          `All Routes C-C under 30 distance: Example Route 1, Example Route 2`,
+        ];
+        break;
+      default:
+        setError('Scenario not implemented yet.');
+        return;
+    }
+
+    setResults(simulatedResults);
+  };
+  
 
   return (
     <>
-      <div style={{ height: "100%" }}>
-        <div style={{ padding: "20px", fontFamily: "Arial" }}>
-          <h2>Distance Calculator</h2>
-          <div style={{ marginBottom: "10px" }}>
-            <input
-              type="text"
-              value={inputPath}
-              placeholder="Enter path (e.g., A-B-C)"
-              onChange={(e) => setInputPath(e.target.value)}
-              style={{ padding: "10px", width: "300px" }}
-            />
-            <button
-              onClick={calculateDistance}
-              style={{
-                marginLeft: "10px",
-                padding: "10px 20px",
-                cursor: "pointer",
-              }}
-            >
-              Calculate
-            </button>
-          </div>
+      <div className="container-fluid h-100 bg-light py-4">
+        <div className="container" style={{ padding: "20px", fontFamily: "Arial" }}>
+        
+          <h1 className="text-center mb-4">Route Calculator</h1>
+          <div className="card p-4 bg-opacity-25">
+      <div className="mb-3">
+        <label htmlFor="scenario" className="form-label">Select Scenario:</label>
+        <select
+          id="scenario"
+          value={selectedScenario}
+          onChange={handleScenarioChange}
+          className="form-select"
+        >
+          <option value="">-- Select Scenario --</option>
+          <option value="noMoreThanThreeStops">
+            Find routes from C to C with no more than 3 stops
+          </option>
+          <option value="exactlyFourStops">
+            Find routes from A to C in exactly 4 stops
+          </option>
+          <option value="shortestRoute">
+            Find the shortest route between two towns
+          </option>
+          <option value="allRoutesUnder30">
+            Find all routes between C and C with a total distance less than 30
+          </option>
+        </select>
+      </div>
+      <div className="row g-4">
+          {/* route selection */}
+      <div className="col-md-6">
+        <h2>Specify Details:</h2>
+        <div className="mb-3">
+          <label htmlFor="startTown" className="form-label">Start Town:</label>
+          <input
+            type="text"
+            id="startTown"
+            name="startTown"
+            value={inputValues.startTown}
+            onChange={handleInputChange}
+             className="form-control"
+          />
+        </div>
+        <div>
+          <label htmlFor="endTown" className="form-label">End Town:</label>
+          <input
+            type="text"
+            id="endTown"
+            name="endTown"
+            value={inputValues.endTown}
+            onChange={handleInputChange}
+             className="form-control"
+          />
+        </div>
+        {selectedScenario === 'maxStops' && (
           <div>
-            <strong>Result:</strong> {result}
+            <label htmlFor="maxStops" className="form-label">Max Stops:</label>
+            <input
+              type="number"
+              id="maxStops"
+              name="maxStops"
+              value={inputValues.maxStops}
+              onChange={handleInputChange}
+               className="form-control"
+            />
           </div>
-          <div style={{ marginTop: "20px" }}>
-            <h3>Logs</h3>
-            <ul>
-              {log.map((entry, index) => (
-                <li key={index}>
-                  Path: {entry.path}, Distance: {entry.distance}
-                </li>
-              ))}
-            </ul>
+        )}
+        {selectedScenario === 'maxDistance' && (
+          <div>
+            <label htmlFor="maxDistance" className="form-label">Max Distance:</label>
+            <input
+              type="number"
+              id="maxDistance"
+              name="maxDistance"
+              value={inputValues.maxDistance}
+              onChange={handleInputChange}
+               className="form-control"
+            />
           </div>
+        )}
+        
+      </div>
           {/* Added buttons for towns */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "40px",
-
-              alignItems: "center",
-            }}
-          >
-            <div className="row">
+          <div className="col-md-6 d-flex flex-column align-items-center">
+          <h2>Select Towns:</h2>
+            {/* <div className="row">
               <button
                 onClick={() => handleButtonClick("A")}
                 style={{
@@ -146,7 +270,7 @@ const DistanceCalculation = () => {
                   cursor: "pointer",
                 }}
               >
-                A
+              A
               </button>
               <button
                 onClick={() => handleButtonClick("B")}
@@ -192,31 +316,54 @@ const DistanceCalculation = () => {
                 }}
               >
                 D
-              </button>
+              </button> 
+            </div>*/}
+            <div className="d-flex flex-wrap gap-2">
+              {['A', 'B', 'C', 'D', 'E'].map((town) => (
+                <button
+                  key={town}
+                  onClick={() => handleButtonClick(town)}
+                  className={`btn ${
+                    clickedButtons[town] ? 'btn-primary' : 'btn-outline-secondary'
+                  }`}
+                  style={{ width: '60px', height: '60px' }}
+                >
+                  {town}
+                </button>
+              ))}
             </div>
           </div>
+          </div>
+          </div>
           {/* Added div to show custom calculation */}
-          <div style={{ marginTop: "20px" }}>
+          <div className="mt-4">
             <button
-              onClick={handleCustomCalculation}
-              style={{
-                marginTop: "10px",
-                padding: "10px 20px",
-                cursor: "pointer",
-              }}
+              onClick={() => { calculateRoutes(); handleCustomCalculation(); }}
+              className="btn btn-success mb-3"
             >
-              Calculate Selected
+              Calculate 
             </button>
-            <div
-              style={{
-                marginTop: "10px",
-                padding: "10px",
-                border: "1px solid #ccc",
-                backgroundColor: "#f9f9f9",
-              }}
-            >
-              <strong>Custom Calculation:</strong> {customCalculation}
+            <div className="card p-3 bg-light" >
+              {/* <strong> Calculation:</strong>
+              {error && <p style={{ color: 'red' }}>{error}</p>}
+               {customCalculation}   */}
+               <span
+                style={{color: customCalculation === "Please Select at least two towns" ? "red" : "inherit",
+                    }}
+                      >
+                {customCalculation}
+                        </span>
             </div>
+            <div className="card p-3 bg-light">
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {results.length > 0 && (
+          <ul>
+            {results.map((result, index) => (
+              <li key={index}>{result}</li>
+            ))}
+          </ul>
+        )}
+      </div>
           </div>
         </div>
       </div>
