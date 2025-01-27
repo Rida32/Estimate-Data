@@ -33,8 +33,9 @@ function App() {
       <BrowserRouter>
         <Routes>
 
-          {/* <Route index element={<Login />} /> */}
+          <Route index element={<Login />} />
           <Route path="/CreateAccount" element={<CreateAccount />} />
+          <Route path="DistanceCalculation" element={<DistanceCalculation />} />
           <Route path="/" element={<Layout />} >
           <Route path="estimates/add" element={<EstimatesAdd />} />
           <Route path="estimates" element={<Estimates />} />
@@ -49,7 +50,7 @@ function App() {
           <Route path="ItemsRecord" element={<ItemsRecord />} />
           <Route path="DummyData" element={<DummyData />} />
           <Route path="SalesDashboard" element={<SalesDashboard />} />
-          <Route path="DistanceCalculation" element={<DistanceCalculation />} />
+          {/* <Route path="DistanceCalculation" element={<DistanceCalculation />} /> */}
           <Route path="RouteCalculation" element={<RouteCalculation />} />
           </Route>
         </Routes>
