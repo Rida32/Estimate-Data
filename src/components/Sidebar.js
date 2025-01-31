@@ -1,6 +1,5 @@
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { patch } from "@mui/material";
 
 
 
@@ -12,13 +11,13 @@ const Sidebar = () => {
     { name: "Estimates", icon: "📊", path: "/estimates" },
     { name: "Sales", icon: "🛒" , path:"/SalesDashboard"},
     { name: "Bill", icon: "🧾",  path: "/DistanceCalculation"  },
-    { name: "Routes", icon: "🧾",  path: "/RouteCalculation"  }, //extra
     { name: "Invoice", icon: "📄", path: "/Invoice" },
     { name: "Items", icon: "📦", path: "/ItemsRecord" },
   ];
   const navigate = useNavigate();
 
   return (
+   <>
     <div 
     style={sidebarStyles.sidebar} 
     className="sidebar">
@@ -28,7 +27,7 @@ const Sidebar = () => {
           key={index}
           onClick={() => navigate(item.path)}
           style={{ cursor: "pointer" }}
-        >
+        > 
           <span
              style={sidebarStyles.icon}
               className="icon fs-4"
@@ -44,6 +43,7 @@ const Sidebar = () => {
         </div>
       ))}
     </div>
+    </>
   );
 };
 const sidebarStyles = {
@@ -57,7 +57,7 @@ const sidebarStyles = {
     fontFamily: "'Roboto', sans-serif",
     borderRight: "1px solid #2a2a2a",
     padding: "10px 0",
-    paddingTop: "35px", 
+    paddingTop: "6%", 
     zIndex: 2,
     
     

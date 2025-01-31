@@ -363,8 +363,9 @@ const DistanceCalculation = () => {
             }}>
             <p style={{ margin: 0 , color:"black"}}>Route Calculation:</p>
               <h3 style={{ margin: 0,}}>
-               <ul>
-              {error && <p style={{ color: "red", fontSize: "15px", }}>{error}</p>}
+               <ul style={{ margin: 0,}}>
+              {error && <ul style={{ color: "red", fontSize: "15px",     marginTop: "10px",
+                marginBottom: "1rem", marginRight:"3.5rem" }}>{error}</ul>}
               {results.length > 0 &&  ( 
                 <ul> 
                   {results.map((result, index) => (
@@ -375,6 +376,7 @@ const DistanceCalculation = () => {
                       justifyContent: 'center',
                      color: "black", 
                      fontSize: "15px",
+                     marginTop: "10px",
                      
                      }}
                     >{result}</ui>

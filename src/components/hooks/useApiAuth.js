@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 
 const useAPiAuth = () => {
   const token = Cookies.get("token");
-  const baseUrl = "http://192.168.18.35:9000";
+  const baseUrl = "http://localhost:9000";
 
 
   const postData = async (

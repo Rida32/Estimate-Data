@@ -38,7 +38,7 @@ const CreateAccount = () => {
     setErrorMessage("");
     setLoading(true);
 
-    setTimeout(() => {
+    
     postData(
       `/auth/signup`,
       newUser,
@@ -64,7 +64,7 @@ const CreateAccount = () => {
 
 
     );
-  }, 3000);
+  
     }
 
   return (

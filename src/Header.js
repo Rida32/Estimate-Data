@@ -17,17 +17,17 @@ const Header = () => {
   
     return (
         <header style={styles.header}>
-            <div style={styles.logo}> 
+            {/* <div style={styles.logo}> 
             <img 
                     src="https://lh3.googleusercontent.com/kKaWGqBLttri7RicHIgIiroIE3ufOjGdcEckhMKji4BlT_jlEYxUwUFtFrCoFqHqJE9f6DgFTSrTh4Tz3ykcoW56P_ZuDmC_IUu8LSFY7JzkpE4Ul0FD" 
                     alt="Google Logo" 
                     style={styles.logoImage} 
                 />
-            </div>
-            {/* <nav style={styles.navGroup}>
-            <span style={styles.userName}>{`${firstName} ${lastName}`}</span> */}
-          
-            <div style={{ position: 'relative', marginLeft: '90%', marginRight: '1px' }}>
+            </div> */}
+
+            <div className='d-flex justify-content-end'
+            //  style={{ position: 'relative', marginLeft: '90%', marginRight: '1px' }}
+            >
       <nav style={styles.navGroup}>
                 <div
                 style={styles.userInfo}
@@ -70,7 +70,7 @@ const Header = () => {
 const styles = {
     header: {
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'end',
         alignItems: 'center',
         padding: '10px 20px',
         backgroundColor: '#333',
@@ -94,9 +94,8 @@ const styles = {
     userInfoRight: {
         display: 'flex',
         flexDirection: 'column', // Stack name and email
-        alignItems: 'flex-end', // Align to the right
-        marginLeft: 'auto', // Push to the far right
-        marginRight: '15px', // Add spacing from dropdown
+        alignItems: 'flex-end',   
+        marginRight: '15px', 
         color: '#fff',
     },
     // Added styles for the user's full name
@@ -109,9 +108,7 @@ const styles = {
         color: '#ddd', // Slightly lighter color
     },
     userInfo: {
-        position: 'relative',
-        display: 'flex',
-        alignItems: 'center',
+        
         cursor: 'pointer',
         color: '#fff',
     },

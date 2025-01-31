@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomButton from './CustomButton';
 import Snackbar from '@mui/material/Snackbar';
@@ -6,6 +6,7 @@ import MuiAlert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Autocomplete, TextField } from "@mui/material";
+import useAPiAuth from "../../src/components/hooks/useApiAuth";
 
 
 function Items({items, setItems}) {
@@ -20,7 +21,25 @@ function Items({items, setItems}) {
   const [editItemId, setEditItemId] = useState(null);
   const [editableField, setEditableField] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const navigate=useNavigate()
+  const [itemOptions, setItemOptions] = useState([]); 
+  const { getData } = useAPiAuth(); 
+  const navigate = useNavigate();
+ 
+  const fetchItems = () => {
+    getData(
+      `/items/get-all`, 
+      (data) => {
+        setItemOptions(data.data || []); 
+      },
+      (error) => {
+        console.error("Error fetching items:", error);
+      }
+    );
+  };
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -40,6 +59,36 @@ function Items({items, setItems}) {
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
+
+  
+  // Function to handle item selection from dropdown and append it to the row
+const handleItemSelection = (event, selectedItem) => {
+  if (selectedItem) {
+    // Find the full item data based on the selected label
+    const selectedItemData = itemOptions.find((item) => item.item === selectedItem.label);
+
+    if (selectedItemData) {
+      // Check if the item already exists in the table
+      const existingItem = items.find((item) => item.item === selectedItemData.item);
+
+      if (!existingItem) {
+        // If not existing, add it as a new row with fetched data
+        const newItemData = {
+          id: items.length + 1,
+          item: selectedItemData.item,  // Use item name from API
+          description: selectedItemData.description,  // Fetch description
+          qty: 1, // Default quantity
+          rate: parseFloat(selectedItemData.rate), // Fetch rate
+          amount: 1 * parseFloat(selectedItemData.rate), // Calculate amount
+          costPrice: parseFloat(selectedItemData.costPrice), // Fetch cost price
+          isMisc: false,
+        };
+
+        setItems((prevItems) => [...prevItems, newItemData]);
+      }
+    }
+  }
+};
 
   
   const addItem = () => {
@@ -117,31 +166,28 @@ function Items({items, setItems}) {
     <div className="card">
       <div className="card-header">Items</div>
       <div className="container table-responsive">
-        <table className="">
+        <table>
           <thead >
             <tr>
-              <th className="text-start">Item</th>
+              <th className="text-start " style={{width:"13em"}}>Item</th>
               <th className="text-start">Description</th>
-              <th className="text-center">Qty</th>
-              <th className="text-end">Rate</th>
-              <th className="text-end">Amount</th>
-              <th className="text-end">Cost Price</th>
-             
+              <th className="text-start">Qty</th>
+              <th className="text-start">Rate</th>
+              <th className="text-start">Amount</th>
+              <th className="text-center">Cost Price</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {items.map((item) => (
-                <tr key={item.id}>
-                <td onClick={() => handleEditField(item.id, "name")}>
-                {item.item}
-                </td>
-                <td onClick={() => handleEditField(item.id, "description")}>
+              <tr key={item.id}>
+                <td>{item.item}</td>
+                <td>
                   {editableField === "description" && editItemId === item.id ? (
                     <input
                       type="text"
                       value={item.description}
-                      onChange={(e) => handleEditValueChange(e, item.id, "description")}
+                      onChange={(e) => handleInputChange(e, item.id, "description")}
                       onBlur={handleBlur}
                       autoFocus
                     />
@@ -149,107 +195,39 @@ function Items({items, setItems}) {
                     item.description
                   )}
                 </td>
-                <td className="text-center" onClick={() => handleEditField(item.id, "qty")}>
-                  {editableField === "qty" && editItemId === item.id ? (
-                    <input
-                      type="number"
-                      value={item.qty}
-                      onChange={(e) => handleEditValueChange(e, item.id, "qty")}
-                      onBlur={handleBlur}
-                      autoFocus
-                    />
-                  ) : (
-                    item.qty
-                  )}
+                <td className="text-center">{item.qty}</td>
+                <td className="text-center">{item.rate}</td>
+                <td className="text-center">{item.qty * item.rate}</td>
+                <td className="text-center">{item.costPrice}</td>
+                <td>
+                  <IconButton
+                    className="btn delete-icon d-flex flex-column justify-content-center"
+                    onClick={() => setItems((prevItems) => prevItems.filter((i) => i.id !== item.id))}
+                  >
+                    <DeleteIcon style={{ color: 'red', fontSize: 24 }}/>
+                  </IconButton>
                 </td>
-                <td className="text-end" onClick={() => handleEditField(item.id, "rate")}>
-                  {editableField === "rate" && editItemId === item.id ? (
-                    <input
-                      type="number"
-                      value={item.rate}
-                      onChange={(e) => handleEditValueChange(e, item.id, "rate")}
-                      onBlur={handleBlur}
-                      autoFocus
-                    />
-                  ) : (
-                    item.rate
-                  )}
-                </td>
-                    <td className="text-end">{item.qty * item.rate}</td>
-                    <td className="text-end" onClick={() => handleEditField(item.id, "costPrice")}>
-                  {editableField === "costPrice" && editItemId === item.id ? (
-                    <input
-                      type="number"
-                      value={item.costPrice}
-                      onChange={(e) => handleEditValueChange(e, item.id, "costPrice")}
-                      onBlur={handleBlur}
-                      autoFocus
-                    />
-                  ) : (
-                    item.costPrice
-                  )}
-                </td>
-                   
-                  <td>
-                    
-                    <IconButton
-                         className="btn delete-icon d-flex flex-column justify-content-center" onClick={() =>
-                         setItems((prevItems) => prevItems.filter((i) => i.id !== item.id)) }>
-                         <DeleteIcon style={{ color: 'red', fontSize: 24 }}/>
-                    </IconButton>
-                  </td>
-                </tr>
+              </tr>
             ))}
-          <tr>
+            <tr>
               <td>
-              {/* <Autocomplete
-                options={customers}
-                value={
-                  formData.itemsId
-                    ? customers.find(
-                        (customer) => customer.id === formData.itemsId
-                      )
-                    : null
-                }
-                getOptionLabel={(option) =>
-                  option.firstName ? option.firstName : ""
-                }
-                onChange={(event, newValue) => {
-                  console.log("value", newValue);
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    itemsId: newValue?.id,
-                    item: newValue?.item,
-                  }));
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    placeholder="Name"
-                    error={submitClicked && !formData.itemsId}
-                    sx={{
-                      "& .MuiOutlinedInput-root.Mui-focused": {
-                        "& fieldset": {
-                          borderColor: "black",
-                        },
-                      },
-                    }}
-                  />
-                )}
-              /> */}
-                <select
-                  className="form-control"
-                  name="item"
-                  value={newItem.item}
-                  onChange={handleInputChange}
-                >
-                  <option value="" disabled>
-                    Select Item
-                  </option>
-                  <option value="Laptop">Laptop</option>
-                  <option value="Mouse">Mouse</option>
-                  <option value="Keyboard">Keyboard</option>
-                </select>
+                <Autocomplete
+                  size="small"
+                  fullWidth
+                  options={itemOptions.map((item) => ({
+                    id: item.id,
+                    label: item.item,
+                  }))}
+                  getOptionLabel={(option) => option.label || ""}
+                  onChange={handleItemSelection} 
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      placeholder="Select or Add Item"
+                      className="d-flex align-content-center"
+                    />
+                  )}
+                />
               </td>
               <td>
                 <textarea
@@ -259,7 +237,7 @@ function Items({items, setItems}) {
                   placeholder="Enter description"
                   name="description"
                   value={newItem.description}
-                  onChange={handleInputChange}
+                  // onChange={handleInputChange}
                 ></textarea>
               </td>
               <td>
@@ -268,7 +246,7 @@ function Items({items, setItems}) {
                   placeholder="Qty"
                   name="qty"
                   value={newItem.qty}
-                  onChange={handleInputChange}
+                  // onChange={handleInputChange}
                 />
               </td>
               <td>
@@ -277,29 +255,24 @@ function Items({items, setItems}) {
                   placeholder="Rate"
                   name="rate"
                   value={newItem.rate}
-                  onChange={handleInputChange}
+                  // onChange={handleInputChange}
                 />
               </td>
-              <td>{newItem.qty && newItem.rate ? newItem.qty * newItem.rate : 0}</td>
+              <td className="text-center">{newItem.qty && newItem.rate ? newItem.qty * newItem.rate : 0}</td>
               <td>
                 <input
                   type="number"
                   placeholder="Cost Price"
                   name="costPrice"
                   value={newItem.costPrice}
-                  onChange={handleInputChange}
+                  // onChange={handleInputChange}
                 />
-              </td>
-              <td>
-                <CustomButton className="btn" onClick={addItem}
-                >
-                  Add
-                </CustomButton>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+     
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={3000}

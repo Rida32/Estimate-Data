@@ -66,7 +66,7 @@ const ItemsAdd = () => {
       if (validate()) {
    
         const payload = {
-          id :itemsId,
+          id :itemsId || 0,
           item: itemsData.item,
           rate: Number(itemsData.rate),  
           costPrice:Number(itemsData.costPrice),       
@@ -142,7 +142,7 @@ const ItemsAdd = () => {
             <label>Cost Price <span className="text-danger">*</span></label>
              <input 
              type="number"
-              name="costprice" 
+              name="costPrice" 
              value={itemsData.costPrice}
               onChange={handleChange}
                className="form-control w-100"

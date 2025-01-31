@@ -100,7 +100,7 @@ function EstimatesAdd() {
     //   setEstimates((prevEstimates) => [...prevEstimates, updatedEstimate]);
     // } 
     const payload = {
-      id:13,
+      id:estimateId,
       estimateNumber: formData.estimateNumber, 
       customerId: formData.customerId,     
       customerName: formData.customerName,                  
@@ -146,9 +146,7 @@ function EstimatesAdd() {
         setItems([]);
         setImages([]);
 
-        setTimeout(() => {
           setIsLoading(false);
-        }, 2000);
         navigate("/estimates");
       },
       (error)=>{

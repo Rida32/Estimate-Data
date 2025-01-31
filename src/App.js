@@ -50,7 +50,6 @@ function App() {
           <Route path="ItemsRecord" element={<ItemsRecord />} />
           <Route path="DummyData" element={<DummyData />} />
           <Route path="SalesDashboard" element={<SalesDashboard />} />
-          {/* <Route path="DistanceCalculation" element={<DistanceCalculation />} /> */}
           <Route path="RouteCalculation" element={<RouteCalculation />} />
           </Route>
         </Routes>

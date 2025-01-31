@@ -34,7 +34,9 @@ const Estimates = () => {
       `/estimates/get-all`,
       (data)=>{
         console.log("test", data);
-        setEstimates(data.data);
+        const sortedInvoices = data.data.sort((a, b) => b.id - a.id);
+        setEstimates(sortedInvoices);
+        // setEstimates(data.data);
       },
       (error) => {
         console.error("user error:", error);

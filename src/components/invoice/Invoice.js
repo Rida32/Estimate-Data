@@ -22,7 +22,10 @@ const Invoice = () => {
           `/invoices/get-all`,
           (data)=>{
             console.log("test", data);
-            setInvoice(data.data);
+
+            const sortedInvoices = data.data.sort((a, b) => b.id - a.id);
+            setInvoice(sortedInvoices);
+            // setInvoice(data.data);
           },
           (error) => {
             console.error("user error:", error);

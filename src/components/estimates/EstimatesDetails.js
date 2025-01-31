@@ -44,7 +44,7 @@ function EstimatesDetails({ formData, setFormData, submitClicked, customers }) {
                       )
                     : null
                 }
-                getOptionLabel={(option) =>
+                getOptionLabel={(option) => 
                   option.firstName ? option.firstName : ""
                 }
                 onChange={(event, newValue) => {

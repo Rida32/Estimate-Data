@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const useAPi = () => {
-  const  baseUrl ="http://192.168.18.35:9000"
+  const  baseUrl ="http://localhost:9000"
   const postData = async (
     endPoint,
     data,

@@ -56,7 +56,9 @@ const ItemsRecord = () => {
       `/items/get-all`,
       (data) => {
         console.log("test", data);
-        setitemsData(data.data);
+        const sortedInvoices = data.data.sort((a, b) => b.id - a.id);
+        setitemsData(sortedInvoices);
+        // setitemsData(data.data);
         
       },
       (error) => {
@@ -117,9 +119,8 @@ const ItemsRecord = () => {
                         <td> {items.id} </td>
                         <td> {items.item || "N/A"} </td>
                         <td> {items.description} </td>
-                        <td> {items.costPrice} </td>
                         <td> {items.rate} </td>
-
+                        <td> {items.costPrice} </td>
                         <td 
                         className="d-flex justify-content-between align-items-center">
                       <IconButton className="delete-button"
